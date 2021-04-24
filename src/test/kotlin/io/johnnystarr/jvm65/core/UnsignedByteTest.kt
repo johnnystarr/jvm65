@@ -1,0 +1,53 @@
+package io.johnnystarr.jvm65.core
+
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
+
+internal class UnsignedByteTest {
+    private var byte = UnsignedByte(0)
+
+    @BeforeEach
+    fun setUp() {
+        byte = UnsignedByte(0)
+    }
+
+    @Test
+    fun `add 1 to zero byte`() {
+        byte += 1
+        assertEquals(1, byte.value)
+    }
+
+    @Test
+    fun `add 256 to zero byte`() {
+        byte += 256
+        // wrap-over occurs when adding is 0xFF + n
+        assertEquals(0, byte.value)
+    }
+
+    @Test
+    fun `add 257 to zero byte`() {
+        byte += 257
+        // anything past 256 should wrap and remain
+        assertEquals(1, byte.value)
+    }
+
+    @Test
+    fun `subtract 1 from zero byte`() {
+        byte -= 1
+        assertEquals(0xFF, byte.value)
+    }
+
+    @Test
+    fun `subtract 2 from zero byte`() {
+        byte -= 2
+        assertEquals(0xFE, byte.value)
+    }
+
+    @Test
+    fun `positive subtraction 5 from 10`() {
+        byte.value = 10
+        byte -= 5
+        assertEquals(5, byte.value)
+    }
+}

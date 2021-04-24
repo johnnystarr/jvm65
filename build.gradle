@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+    id 'com.adarshr.test-logger' version '3.0.0'
     id 'application'
 }
 
@@ -29,12 +30,12 @@ compileTestKotlin {
 }
 
 application {
-    mainClassName = 'MainKt'
+    mainClassName = 'io.johnnystarr.jvm65.MainKt'
 }
 
 jar {
     manifest {
-        attributes("Main-Class": "MainKt")
+        attributes("Main-Class": "io.johnnystarr.jvm65.MainKt")
     }
     from {
         configurations.compileClasspath.collect {

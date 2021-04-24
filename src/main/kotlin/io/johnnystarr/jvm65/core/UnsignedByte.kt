@@ -1,13 +1,21 @@
 package io.johnnystarr.jvm65.core
 
-data class UnsignedByte(var value: Int) {
-    operator fun plus(increment: Int): UnsignedByte {
+data class UnsignedByte(var value: Int) : Unsigned {
+    override operator fun plus(increment: Int): UnsignedByte {
         val newValue = value + increment
-        if (newValue == 256) {
-            return UnsignedByte(0)
-        } else if (newValue > 256) {
-            return UnsignedByte(newValue - 256)
+        return when {
+            newValue == 256 -> UnsignedByte(0)
+            newValue > 256  -> UnsignedByte(newValue - 256)
+            else -> UnsignedByte(newValue)
         }
-        return UnsignedByte(newValue)
+    }
+
+    override operator fun minus(decrement: Int): UnsignedByte {
+        val newValue = value - decrement
+        return when {
+            newValue == -1 -> UnsignedByte(0xFF)
+            newValue < -1 -> UnsignedByte(newValue + 256)
+            else -> UnsignedByte(newValue)
+        }
     }
 }
