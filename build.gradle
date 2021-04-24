@@ -30,12 +30,12 @@ compileTestKotlin {
 }
 
 application {
-    mainClassName = 'MainKt'
+    mainClassName = 'io.johnnystarr.jvm65.MainKt'
 }
 
 jar {
     manifest {
-        attributes("Main-Class": "MainKt")
+        attributes("Main-Class": "io.johnnystarr.jvm65.MainKt")
     }
     from {
         configurations.compileClasspath.collect {

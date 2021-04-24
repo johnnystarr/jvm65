@@ -9,4 +9,13 @@ data class UnsignedByte(var value: Int) : Unsigned {
             else -> UnsignedByte(newValue)
         }
     }
+
+    override operator fun minus(decrement: Int): UnsignedByte {
+        val newValue = value - decrement
+        return when {
+            newValue == -1 -> UnsignedByte(0xFF)
+            newValue < -1 -> UnsignedByte(newValue + 256)
+            else -> UnsignedByte(newValue)
+        }
+    }
 }

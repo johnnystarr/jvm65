@@ -31,4 +31,23 @@ internal class UnsignedByteTest {
         // anything past 256 should wrap and remain
         assertEquals(1, byte.value)
     }
+
+    @Test
+    fun `subtract 1 from zero byte`() {
+        byte -= 1
+        assertEquals(0xFF, byte.value)
+    }
+
+    @Test
+    fun `subtract 2 from zero byte`() {
+        byte -= 2
+        assertEquals(0xFE, byte.value)
+    }
+
+    @Test
+    fun `positive subtraction 5 from 10`() {
+        byte.value = 10
+        byte -= 5
+        assertEquals(5, byte.value)
+    }
 }
