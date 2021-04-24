@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
     println("JVM65!")
 
     var byte = UnsignedByte(1)
-    byte += 256
+    byte += 230
 
     println("The byte value is $byte")
 
