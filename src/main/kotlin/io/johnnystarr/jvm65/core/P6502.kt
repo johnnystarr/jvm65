@@ -1,6 +1,6 @@
 package io.johnnystarr.jvm65.core
 
-class M6502() : Processor {
+class P6502() : Processor {
     var a = UnsignedByte(0) // A Register
     var x = UnsignedByte(0) // X Register
     var y = UnsignedByte(0) // Y Register
