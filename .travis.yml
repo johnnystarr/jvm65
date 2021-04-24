@@ -4,12 +4,17 @@ dist: xenial
 jdk:
   - openjdk11
 
-script: ./gradlew check
+stages:
+  - build
+  - test
+  - name: publish
+    if: branch = main
 
 jobs:
   include:
+    - stage: build
+      script: ./gradle build
     - stage: test
       script: ./gradlew test
     - stage: publish
-        - if: branch = main
       script: ./gradlew publish
