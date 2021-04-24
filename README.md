@@ -1,4 +1,6 @@
 # jvm65
+[![Build Status](https://www.travis-ci.com/johnnystarr/jvm65.svg?branch=main)](https://www.travis-ci.com/johnnystarr/jvm65)
+
 A JVM library that provides a 6502 simulator.
 
 ### Implementation
