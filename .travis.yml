@@ -13,7 +13,7 @@ stages:
 jobs:
   include:
     - stage: build
-      script: ./gradlew build
+      script: ./gradlew jar
     - stage: test
       script: ./gradlew test
     - stage: publish
