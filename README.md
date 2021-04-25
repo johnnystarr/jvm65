@@ -10,6 +10,8 @@
 
 A JVM library that provides a 6502 simulator.
 
+### Code Coverage
+![coverage-report](https://codecov.io/gh/johnnystarr/jvm65/branch/main/graphs/sunburst.svg)
 ### Implementation
 jvm65 is written in Kotlin but is interoperable with any JVM language.
 

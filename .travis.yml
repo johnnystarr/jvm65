@@ -10,7 +10,6 @@ stages:
   - name: publish
     if: branch = main
   - deploy
-    if: branch = main
 
 jobs:
   include:
