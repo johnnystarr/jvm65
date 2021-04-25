@@ -50,4 +50,32 @@ internal class UnsignedByteTest {
         byte -= 5
         assertEquals(5, byte.value)
     }
+
+    @Test
+    fun `shift 1 left 1`() {
+        byte.value = 1
+        byte.shiftLeft()
+        assertEquals(2, byte.value)
+    }
+
+    @Test
+    fun `shift 2 left 1`() {
+        byte.value = 2
+        byte.shiftLeft()
+        assertEquals(4, byte.value)
+    }
+
+    @Test
+    fun `shift 1 right 1`() {
+        byte.value = 1
+        byte.shiftRight()
+        assertEquals(0, byte.value)
+    }
+
+    @Test
+    fun `shift 2 right 1`() {
+        byte.value = 2
+        byte.shiftRight()
+        assertEquals(1, byte.value)
+    }
 }

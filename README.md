@@ -1,5 +1,9 @@
 # jvm65
 [![Build Status](https://www.travis-ci.com/johnnystarr/jvm65.svg?branch=main)](https://www.travis-ci.com/johnnystarr/jvm65)
+[![Maintainability](https://api.codeclimate.com/v1/badges/311c828a5923cafd1bea/maintainability)](https://codeclimate.com/github/johnnystarr/jvm65/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/311c828a5923cafd1bea/test_coverage)](https://codeclimate.com/github/johnnystarr/jvm65/test_coverage)
+
+![jvm65-logo](doc/jvm65.png)
 
 A JVM library that provides a 6502 simulator.
 

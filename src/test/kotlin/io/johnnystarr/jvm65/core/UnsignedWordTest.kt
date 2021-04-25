@@ -50,4 +50,32 @@ internal class UnsignedWordTest {
         word -= 5
         assertEquals(5, word.value)
     }
+
+    @Test
+    fun `shift 1 left 1`() {
+        word.value = 1
+        word.shiftLeft()
+        assertEquals(2, word.value)
+    }
+
+    @Test
+    fun `shift 2 left 1`() {
+        word.value = 2
+        word.shiftLeft()
+        assertEquals(4, word.value)
+    }
+
+    @Test
+    fun `shift 1 right 1`() {
+        word.value = 1
+        word.shiftRight()
+        assertEquals(0, word.value)
+    }
+
+    @Test
+    fun `shift 2 right 1`() {
+        word.value = 2
+        word.shiftRight()
+        assertEquals(1, word.value)
+    }
 }

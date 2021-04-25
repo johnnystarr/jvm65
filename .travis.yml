@@ -3,3 +3,18 @@ language: jvm
 dist: xenial
 jdk:
   - openjdk11
+
+stages:
+  - build
+  - test
+  - name: publish
+    if: branch = main
+
+jobs:
+  include:
+    - stage: build
+      script: ./gradlew jar --scan
+    - stage: test
+      script: ./gradlew test
+    - stage: publish
+      script: ./gradlew publish

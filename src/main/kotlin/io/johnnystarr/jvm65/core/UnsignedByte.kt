@@ -1,6 +1,7 @@
 package io.johnnystarr.jvm65.core
 
 data class UnsignedByte(var value: Int) : Unsigned {
+
     override operator fun plus(increment: Int): UnsignedByte {
         val newValue = value + increment
         return when {
@@ -17,5 +18,13 @@ data class UnsignedByte(var value: Int) : Unsigned {
             newValue < -1 -> UnsignedByte(newValue + 256)
             else -> UnsignedByte(newValue)
         }
+    }
+
+    override fun shiftLeft() {
+        this.value = this.value shl 1
+    }
+
+    override fun shiftRight() {
+        this.value = this.value ushr 1
     }
 }
