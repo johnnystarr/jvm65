@@ -1,4 +1,7 @@
 node {
+	stage('Checkout') {
+		checkout scm
+	}
 	stage("Assemble") {
 		sh "./gradlew assemble"
 	}
