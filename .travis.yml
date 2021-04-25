@@ -20,22 +20,17 @@ jobs:
 #      script:
 #        - ./gradlew test
 #        - bash <(curl -s https://codecov.io/bash)
-    - stage: release
-      script: ./gradlew build
-      provider: releases
-      api_key: ${GITHUB_TOKEN}
-      file: ./build/distributions/*.tar ./build/distributions/*.zip
-
     #- stage: publish
     #  script: ./gradlew publish
-
-    release:
-      provider: releases
-      api_key:
-        secure: "vhuHTz+A5RzIiO8OI3zD9Dn8yx/JL83POrJbmNvM68RUsYXi8cqXf1vvQ6mFqW8ezU+LJt1+un6i7yoi8m9bKYlYfkBVSfZ0bJmu+f9WLD8ImuSuoCROgwXCQfxXSkbNRYRTCsgmaUHetAmcYrxDudeo0bmE2a6YsxmG5p9BYrX5xatZu6gjKTCUe1BXxR/32lnxbF18LzOz2mZDooaNX2WO/kMo+uh36bm756ulC9SN18ME4acZ+X62cWMifRCq1hqBk/PFFavEWF/PoS9EiZ9UAuSf0nKkgGAQ3FAuKDlq+8ambk/ifNlwsJx54RIUwWUIXlo5ujaPQY103Q6Bw+PcwRV2l6ePm8mGuCyYcFLjunWODxX+5RhD28FpPE57KpaMMa8tNBN9Y95I+bfpz6JY1PjC7tZOmoQ4Ln234Ok/t9Hd+STsLussmBcBsHHtNcY5vY4QOSwuws0A77mLIqP2xOMKQHgMn02H96J1qqBlFboZ0iyUFwDgdYLYLBwnkhwNXOjOwa3+WHLyB2SA3FopywsZq7MlBleZhH3zlswvnj3EeNoTZtxr0TrMrHITDCSvnTcBytKVCN6+cQncoq3CbZ7WGQ16GA8ImSBcL24w7WAizEHIf2lHF88Xbpx9zWHKBNdIkrwKTQnWk1j1hnqH5Om4LRAEFtgFYZyoc5o="
-      file_glob: true
-      file: ./build/distributions/*.*
-      skip_cleanup: true
-      on:
-        all_branches: true
-        tags: false
+    - stage: release
+      script: ./gradlew build
+      deploy:
+        provider: releases
+        api_key:
+          secure: "vhuHTz+A5RzIiO8OI3zD9Dn8yx/JL83POrJbmNvM68RUsYXi8cqXf1vvQ6mFqW8ezU+LJt1+un6i7yoi8m9bKYlYfkBVSfZ0bJmu+f9WLD8ImuSuoCROgwXCQfxXSkbNRYRTCsgmaUHetAmcYrxDudeo0bmE2a6YsxmG5p9BYrX5xatZu6gjKTCUe1BXxR/32lnxbF18LzOz2mZDooaNX2WO/kMo+uh36bm756ulC9SN18ME4acZ+X62cWMifRCq1hqBk/PFFavEWF/PoS9EiZ9UAuSf0nKkgGAQ3FAuKDlq+8ambk/ifNlwsJx54RIUwWUIXlo5ujaPQY103Q6Bw+PcwRV2l6ePm8mGuCyYcFLjunWODxX+5RhD28FpPE57KpaMMa8tNBN9Y95I+bfpz6JY1PjC7tZOmoQ4Ln234Ok/t9Hd+STsLussmBcBsHHtNcY5vY4QOSwuws0A77mLIqP2xOMKQHgMn02H96J1qqBlFboZ0iyUFwDgdYLYLBwnkhwNXOjOwa3+WHLyB2SA3FopywsZq7MlBleZhH3zlswvnj3EeNoTZtxr0TrMrHITDCSvnTcBytKVCN6+cQncoq3CbZ7WGQ16GA8ImSBcL24w7WAizEHIf2lHF88Xbpx9zWHKBNdIkrwKTQnWk1j1hnqH5Om4LRAEFtgFYZyoc5o="
+        file_glob: true
+        file: ./build/distributions/*.*
+        skip_cleanup: true
+        on:
+          all_branches: true
+          tags: false
