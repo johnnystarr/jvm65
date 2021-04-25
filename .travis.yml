@@ -9,7 +9,7 @@ stages:
   - test
   - name: publish
     if: branch = main
-  - deploy
+  - release
 
 jobs:
   include:
@@ -21,7 +21,7 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
     - stage: publish
       script: ./gradlew publish
-    - stage: deploy
+    - stage: release
       script: ./gradlew assembleDist
       deploy:
         provider: releases
