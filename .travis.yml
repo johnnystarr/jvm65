@@ -35,5 +35,8 @@ deploy:
   file_glob: true
   file: ./build/distributions/*.*
   skip_cleanup: true
+  branches:
+    only:
+      - main
   on:
     tags: false
