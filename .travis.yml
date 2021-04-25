@@ -23,12 +23,14 @@ jobs:
     #- stage: publish
     #  script: ./gradlew publish
     - stage: deploy
-      script: ./gradlew build
+      script: ./gradlew assembleDist
       deploy:
         provider: releases
         api_key: ${GITHUB_TOKEN}
         file_glob: true
-        file: ./build/distributions/*.*
+        file:
+          - build/distributions/*.tar
+          - build/distributions/*.zip
         on:
-          all_branches: true
+          branch: main
           tags: false
