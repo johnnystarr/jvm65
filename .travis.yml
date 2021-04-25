@@ -22,6 +22,6 @@ jobs:
     - stage: test
       script:
         - ./gradlew test
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+        - ./cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
     - stage: publish
       script: ./gradlew publish
