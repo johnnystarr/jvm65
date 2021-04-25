@@ -72,5 +72,12 @@ internal class P6502Test {
         cpu.negativeFlag = true
 
         assertEquals(0b11001111, cpu.status().value)
+        assertEquals(0b11001111, cpu.sr.value)
+    }
+
+    @Test
+    fun `step pc forward one`() {
+        cpu.step()
+        assertEquals(1, cpu.pc.value)
     }
 }

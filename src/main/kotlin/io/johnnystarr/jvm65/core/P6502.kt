@@ -4,7 +4,7 @@ class P6502() : Processor {
     var a = UnsignedByte(0)  // A Register
     var x = UnsignedByte(0)  // X Register
     var y = UnsignedByte(0)  // Y Register
-    var sr = UnsignedWord(0) // Status Register
+    var sr = UnsignedByte(0) // Status Register
     var pc = UnsignedWord(0) // Program Counter
 
     // flags
@@ -27,6 +27,11 @@ class P6502() : Processor {
         if (this.decimalFlag) s.value = s.value or 0b00001000
         if (this.overflowFlag) s.value = s.value or 0b01000000
         if (this.negativeFlag) s.value = s.value or 0b10000000
+        this.sr = s
         return s
+    }
+
+    override fun step() {
+        this.pc += 1
     }
 }
