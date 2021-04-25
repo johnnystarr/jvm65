@@ -92,7 +92,7 @@ publishing {
 publishing {
     repositories {
         maven {
-            url archivaUrl
+            url "http://192.168.1.128:8080/repository/snapshots/"
             credentials {
                 username "admin"
                 password "$System.env.ARCHIVA_PASSWORD"
