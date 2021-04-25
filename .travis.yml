@@ -14,7 +14,6 @@ stages:
   - name: publish
     if: branch = main
   - release
-    if: branch = main
 
 jobs:
   include:
