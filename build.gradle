@@ -7,7 +7,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'org.johnnystarr'
+group = 'io.johnnystarr'
 version = '0.1.0-SNAPSHOT'
 
 repositories {
@@ -78,5 +78,25 @@ if (hasProperty('buildScan')) {
     buildScan {
         termsOfServiceUrl = 'https://gradle.com/terms-of-service'
         termsOfServiceAgree = 'yes'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url "http://build-systems:8080/repository/snapshots/"
+            credentials {
+                username "admin"
+                password "$System.env.ARCHIVA_PASSWORD"
+            }
+        }
     }
 }
