@@ -10,11 +10,18 @@ stages:
   - name: publish
     if: branch = main
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 jobs:
   include:
     - stage: build
       script: ./gradlew jar --scan
     - stage: test
-      script: ./gradlew test
+      script:
+        - ./gradlew test
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - stage: publish
       script: ./gradlew publish
