@@ -1,7 +1,11 @@
 # jvm65
 [![Build Status](https://www.travis-ci.com/johnnystarr/jvm65.svg?branch=main)](https://www.travis-ci.com/johnnystarr/jvm65)
-[![Maintainability](https://api.codeclimate.com/v1/badges/311c828a5923cafd1bea/maintainability)](https://codeclimate.com/github/johnnystarr/jvm65/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/311c828a5923cafd1bea/test_coverage)](https://codeclimate.com/github/johnnystarr/jvm65/test_coverage)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=security_rating)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=bugs)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=ncloc)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
 
 ![jvm65-logo](doc/jvm65.png)
 

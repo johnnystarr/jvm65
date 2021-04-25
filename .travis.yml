@@ -10,12 +10,6 @@ stages:
   - name: publish
     if: branch = main
 
-addons:
-  sonarcloud:
-    organization: "johnnystarr_jvm65"
-    token:
-      secure: "CcJ9hE1BtH5FN/gcw94xTuHstHvBR3flTotzCkb/HtTD1XxxQQGPR/Lcm5oBwUGS0mIcPDwG/MHXSUe+QqaZLYbifepkZO6D0eAaXTYYyLrvb+7m+twNVekZV1VQ71CK7Pbo3OBt5eubRz2361RDFUzsRag5ueyxwx6mf+zwjxj2vvgYsPJi/NFxvBkUu36CbDO8kmXzpR4kkyi+M2AgV0nlbU5zMBdw2d20fZM37neeVgQXELElbNxix/YG1fGoaqk0k/uim5VgZMY8fenxzjSszmEA0xVp8tBochbB7PN2cJUmoYik7q8KJvfD0SI6dN3d30n43AWJFCLospL1sXFVCY6R0AdaoQ9cnrwQS8/6z94fPNLKN0sPotFj73DyjQcaoVSKgOVw3CJOgRfUgf/nYwI7WFtYX0IQUGk3tYSGbkltMK71OVqm2P6aQg65RCwEaIo5Id4xItKlgpBhJlapXfJOfk1tPTikOUC6y0ARCDQ7hHxDTZhxpNmppWO2OKw8kZmCR8XfeH1v2a5qV0VqzqRqHJv+MU3XyWdxDmHKXc4NWZZAc1MDedL3vsregeJl6BbJ+EqeCEIdvhYne/r4o26r7UcmLSdP7Xyh06S+vDqr/l5psJPmuecEkGqbrbHtWtfgob1OTGfzlAbDkoxuZgVe7JeC5rLDkl93qYE="
-
 jobs:
   include:
     - stage: build
@@ -23,6 +17,5 @@ jobs:
     - stage: test
       script:
         - ./gradlew test
-        - sonar-scanner
     - stage: publish
       script: ./gradlew publish
