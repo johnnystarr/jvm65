@@ -3,6 +3,7 @@ plugins {
     id 'com.adarshr.test-logger' version '3.0.0'
     id 'application'
     id 'maven-publish'
+    id 'jacoco'
 }
 
 group = 'org.johnnystarr'
@@ -20,6 +21,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
 }
 
 compileKotlin {
