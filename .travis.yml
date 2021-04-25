@@ -16,6 +16,8 @@ jobs:
       script: ./gradlew jar --scan
     - stage: test
       script:
+        - bash <(curl -s https://codecov.io/bash)
         - ./gradlew test
+        -
     - stage: publish
       script: ./gradlew publish
