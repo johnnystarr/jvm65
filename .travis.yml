@@ -10,10 +10,11 @@ stages:
   - name: publish
     if: branch = main
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+addons:
+  sonarcloud:
+    organization: "johnnystarr_jvm65"
+    token:
+      secure: ${SONAR_TOKEN}
 
 jobs:
   include:
@@ -22,7 +23,6 @@ jobs:
     - stage: test
       script:
         - ./gradlew test
-        - ./cc-test-reporter sum-coverage build/test-results/*.xml --exit-code $TRAVIS_TEST_RESULT
-        - ./cc-test-reporter upload-coverage
+        - sonar-scanner
     - stage: publish
       script: ./gradlew publish
