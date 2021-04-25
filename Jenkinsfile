@@ -1,14 +1,28 @@
-node {
-	stage('Checkout') {
-		checkout scm
-	}
-	stage("Assemble") {
-		sh "./gradlew assemble"
-	}
-	stage("Build") {
-		sh "./gradlew build --scan"
-	}
-	stage("Test") {
-		sh "./gradlew test"
-	}
+pipeline {
+    agent any
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+            	checkout scm
+            }
+        }
+        stage('Assemble') {
+            steps {
+            	sh "./gradlew assemble"
+            }
+        }
+        stage('Build') {
+            steps {
+            	sh "./gradlew jar"
+            }
+        }
+        stage('Test') {
+            steps {
+            	sh "./gradlew test"
+            }
+        }
+    }
 }
