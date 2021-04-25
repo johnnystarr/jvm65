@@ -4,11 +4,6 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Checkout') {
-            steps {
-            	checkout scm
-            }
-        }
         stage('Assemble') {
             steps {
             	sh "./gradlew assemble"
@@ -24,16 +19,16 @@ pipeline {
             	sh "./gradlew test"
             }
         }
-        stage('Clean') {
-       		steps {
-       			deleteDir()
-       		}
-        }
         stage('Publish') {
        		steps {
        			withCredentials([string(credentialsId: 'ARCHIVA_PASSWORD', variable: 'ARCHIVA_PASSWORD')]) {
        				sh "./gradlew publish"
        			}
+       		}
+        }
+        stage('Clean') {
+       		steps {
+       			deleteDir()
        		}
         }
     }
