@@ -5,18 +5,18 @@ jdk:
   - openjdk11
 
 stages:
-  #- build
+  - build
   - test
-  - name: publish
-    if: branch = main
+  #- name: publish
+  #  if: branch = main
 
 jobs:
   include:
-#    - stage: build
-#      script: ./gradlew jar --scan
+    - stage: build
+      script: ./gradlew jar --scan
     - stage: test
       script:
         - ./gradlew test
         - bash <(curl -s https://codecov.io/bash)
-    - stage: publish
-      script: ./gradlew publish
+    #- stage: publish
+    #  script: ./gradlew publish
