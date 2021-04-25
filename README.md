@@ -5,8 +5,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=security_rating)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=bugs)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=ncloc)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=johnnystarr_jvm65&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=johnnystarr_jvm65)
-
+[![codecov](https://codecov.io/gh/johnnystarr/jvm65/branch/main/graph/badge.svg?token=0R7WKAOCSG)](https://codecov.io/gh/johnnystarr/jvm65)
 ![jvm65-logo](doc/jvm65.png)
 
 A JVM library that provides a 6502 simulator.
