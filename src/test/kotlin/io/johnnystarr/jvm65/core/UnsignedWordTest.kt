@@ -33,6 +33,14 @@ internal class UnsignedWordTest {
     }
 
     @Test
+    fun `add 1 to -1`() {
+        word.value = -1
+        word += 1
+        assertEquals(0, word.value)
+        assertEquals(RegisterState.ZEROED, word.state)
+    }
+
+    @Test
     fun `subtract 1 from zero word`() {
         word -= 1
         assertEquals(0xFFFF, word.value)
@@ -49,6 +57,14 @@ internal class UnsignedWordTest {
         word.value = 10
         word -= 5
         assertEquals(5, word.value)
+    }
+
+    @Test
+    fun `subtract 1 from 1 to zero`() {
+        word.value = 1
+        word -= 1
+        assertEquals(0, word.value)
+        assertEquals(RegisterState.ZEROED, word.state)
     }
 
     @Test
@@ -77,5 +93,12 @@ internal class UnsignedWordTest {
         word.value = 2
         word.shiftRight()
         assertEquals(1, word.value)
+    }
+
+    @Test
+    fun `set word to zero`() {
+        word.value = 1
+        word.clear()
+        assertEquals(0, word.value)
     }
 }
