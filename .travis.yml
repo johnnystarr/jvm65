@@ -1,6 +1,10 @@
 ---
-language: jvm
-dist: xenial
+language: java
+os:
+  - linux
+  - osx
+  - windows
+
 jdk:
   - openjdk11
 
