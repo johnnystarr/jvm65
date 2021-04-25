@@ -26,8 +26,7 @@ jobs:
       script: ./gradlew build
       deploy:
         provider: releases
-        api_key:
-          secure: "JyB6uzrgFBYHRoIqt2vA2H5DaE9nKe8BDdm9g4WNZLlXsyVieZvRhJeQQ3icu1CK3ZWYuJqlWxGDlHsl1WVN45iucrevRQw/m+JftjhWIdx5HmXeWTtFW3thjKJjER+MujRnUe5SdROAHnSmShgX+J1H1qBAirXJ8NeRMknWNHtr8uttAQJXHkUIYjs7kS4qO5HhetKhGWGLTwM9dId2bTHIGm0ficBNZn8rqTA+x94OcT9mEGkHACZD3IzXEgV+xI3iCWNbJoL5pmCR8v0U1ccoYiTvr5R12jCGGpJAxK0Q54nNh4o0jSprOdD/mHnk+bFZHOP+jx3S1ka2WkN/RTNqYZNVOdbAktHVWBDW8vJ5E0yKxxEQKCXwcTJuGB+yIqyCbBF+gQV3mCwZCi/lVBo3Wefe4nCBLn5XF9llW9/Nbj2TDXKSV4WS11/me8H/lRtraK04ywvWblLIOsjQ88y2p+Tsms66gqu799uz2wVdoTpNhYr3WpFi36FVJzqYn45/amHsensRyNNmjd1zsvCFAsZxcWIuyT1Kouae6pAbSRvYbPcn4raQL+YaD3j5NP8t5TvaGzPOEgz7721GPMls8QJNhJT4I9Rha1ePF8VYv+gYFlTd8uArDnk0cR5CiCc2G/V/6Tk3nW2SXyazYh7Z4+erCo407h87BpelwWg="
+        api_key: ${GITHUB_TOKEN}
         file_glob: true
         file: ./build/distributions/*.*
         on:
