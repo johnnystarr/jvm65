@@ -5,12 +5,7 @@ os:
   - osx
 
 jdk:
-  - openjdk8
-  - openjdk10
   - openjdk11
-  - oraclejdk8
-  - oraclejdk10
-  - oraclejdk11
 
 stages:
   - build
@@ -18,6 +13,7 @@ stages:
   - name: publish
     if: branch = main
   - release
+    if: branch = main
 
 jobs:
   include:
