@@ -6,6 +6,7 @@ os:
 
 jdk:
   - openjdk11
+  - oraclejdk11
 
 stages:
   - build
