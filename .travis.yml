@@ -29,7 +29,7 @@ jobs:
         api_key: ${GITHUB_TOKEN}
         file_glob: true
         file: build/distributions/*
-        cleanup: false
+        skip_cleanup: true
         on:
           branch: main
           tags: true
