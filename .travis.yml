@@ -6,7 +6,7 @@ jdk:
 
 stages:
   #- build
-  - test
+  #- test
   #- name: publish
   #  if: branch = main
   - release
@@ -15,12 +15,13 @@ jobs:
   include:
     #- stage: build
     #  script: ./gradlew jar --scan
-    - stage: test
-      script:
-        - ./gradlew test
-        - bash <(curl -s https://codecov.io/bash)
+#    - stage: test
+#      script:
+#        - ./gradlew test
+#        - bash <(curl -s https://codecov.io/bash)
     - stage: release
-      provider: release
+      script: ./gradlew build
+      provider: releases
       api_key: ${GITHUB_TOKEN}
       file: ./build/distributions/*.tar ./build/distributions/*.zip
 
