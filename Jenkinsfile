@@ -24,5 +24,10 @@ pipeline {
             	sh "./gradlew test"
             }
         }
+        stage('Clean') {
+       		steps {
+       			deleteDir(".")
+       		}
+        }
     }
 }
