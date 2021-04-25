@@ -25,4 +25,40 @@ internal class P6502Test {
         assertEquals(0, cpu.sr.value)
         assertEquals(0, cpu.pc.value)
     }
+
+    @Test
+    fun `test carry flag on status method`() {
+        cpu.carryFlag = true
+        assertEquals(1, cpu.status().value)
+    }
+
+    @Test
+    fun `test zero flag on status method`() {
+        cpu.zeroFlag = true
+        assertEquals(2, cpu.status().value)
+    }
+
+    @Test
+    fun `test interrupt disable flag on status method`() {
+        cpu.interruptDisableFlag = true
+        assertEquals(4, cpu.status().value)
+    }
+
+    @Test
+    fun `test decimal flag on status method`() {
+        cpu.decimalFlag = true
+        assertEquals(8, cpu.status().value)
+    }
+
+    @Test
+    fun `test overflow flag on status method`() {
+        cpu.overflowFlag = true
+        assertEquals(64, cpu.status().value)
+    }
+
+    @Test
+    fun `test negative flag on status method`() {
+        cpu.negativeFlag = true
+        assertEquals(128, cpu.status().value)
+    }
 }
