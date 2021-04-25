@@ -15,6 +15,7 @@ jobs:
     - stage: build
       script: ./gradlew jar --scan
     - stage: test
-      script: ./gradlew test
+      script:
+        - ./gradlew test
     - stage: publish
       script: ./gradlew publish
