@@ -17,3 +17,12 @@ jvm65 is written in Kotlin but is interoperable with any JVM language.
 
 - 6502 centric emulators
 - Embedded systems simulation
+
+### Latest Snapshot Maven
+```xml
+<dependency>
+  <groupId>io.johnnystarr</groupId>
+  <artifactId>jvm65</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+</dependency>
+```

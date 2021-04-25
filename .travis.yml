@@ -9,6 +9,7 @@ stages:
   - test
   #- name: publish
   #  if: branch = main
+  - release
 
 jobs:
   include:
@@ -18,5 +19,10 @@ jobs:
       script:
         - ./gradlew test
         - bash <(curl -s https://codecov.io/bash)
+    - stage: release
+      provider: release
+      api_key: ${GITHUB_TOKEN}
+      file: ./build/distributions/*.tar ./build/distributions/*.zip
+
     #- stage: publish
     #  script: ./gradlew publish
