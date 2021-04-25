@@ -21,14 +21,12 @@ class P6502() : Processor {
 
     override fun status(): UnsignedByte {
         val s = UnsignedByte(0)
-        when {
-            this.carryFlag -> s.value = s.value or 0b00000001
-            this.zeroFlag  -> s.value = s.value or 0b00000010
-            this.interruptDisableFlag -> s.value = s.value or 0b00000100
-            this.decimalFlag -> s.value = s.value or 0b00001000
-            this.overflowFlag -> s.value = s.value or 0b01000000
-            this.negativeFlag -> s.value = s.value or 0b10000000
-        }
+        if (this.carryFlag) s.value = s.value or 0b00000001
+        if (this.zeroFlag) s.value = s.value or 0b00000010
+        if (this.interruptDisableFlag) s.value = s.value or 0b00000100
+        if (this.decimalFlag) s.value = s.value or 0b00001000
+        if (this.overflowFlag) s.value = s.value or 0b01000000
+        if (this.negativeFlag) s.value = s.value or 0b10000000
         return s
     }
 }

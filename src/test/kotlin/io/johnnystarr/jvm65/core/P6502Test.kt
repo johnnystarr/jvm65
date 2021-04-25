@@ -61,4 +61,16 @@ internal class P6502Test {
         cpu.negativeFlag = true
         assertEquals(128, cpu.status().value)
     }
+
+    @Test
+    fun `test all flags for status method`() {
+        cpu.carryFlag = true
+        cpu.zeroFlag = true
+        cpu.interruptDisableFlag = true
+        cpu.decimalFlag = true
+        cpu.overflowFlag = true
+        cpu.negativeFlag = true
+
+        assertEquals(0b11001111, cpu.status().value)
+    }
 }
