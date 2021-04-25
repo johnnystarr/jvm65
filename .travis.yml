@@ -5,7 +5,7 @@ jdk:
   - openjdk11
 
 stages:
-  - build
+  #- build
   - test
   #- name: publish
   #  if: branch = main
@@ -13,8 +13,8 @@ stages:
 
 jobs:
   include:
-    - stage: build
-      script: ./gradlew jar --scan
+    #- stage: build
+    #  script: ./gradlew jar --scan
     - stage: test
       script:
         - ./gradlew test
