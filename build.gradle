@@ -7,6 +7,10 @@ plugins {
     id 'jacoco'
 }
 
+ext {
+    buildArchivaUrl = "http://192.168.1.128:8080/repository/snapshots/"
+}
+
 group = 'io.johnnystarr'
 version = '0.1.0-SNAPSHOT'
 
@@ -92,7 +96,7 @@ publishing {
 publishing {
     repositories {
         maven {
-            url "http://192.168.1.128:8080/repository/snapshots/"
+            url buildArchivaUrl
             credentials {
                 username "admin"
                 password "$System.env.ARCHIVA_PASSWORD"

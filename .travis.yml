@@ -1,28 +1,31 @@
 ---
-language: jvm
-dist: xenial
+language: java
+os:
+  - linux
+  - osx
+
 jdk:
   - openjdk11
+  - oraclejdk11
 
 stages:
-  #- build
-  #- test
-  #- name: publish
-  #  if: branch = main
-  - deploy
-    #if: branch = main
+  - build
+  - test
+  - name: publish
+    if: branch = main
+  - release
 
 jobs:
   include:
-    #- stage: build
-    #  script: ./gradlew jar --scan
-#    - stage: test
-#      script:
-#        - ./gradlew test
-#        - bash <(curl -s https://codecov.io/bash)
-    #- stage: publish
-    #  script: ./gradlew publish
-    - stage: deploy
+    - stage: build
+      script: ./gradlew jar --scan
+    - stage: test
+      script:
+        - ./gradlew test
+        - bash <(curl -s https://codecov.io/bash)
+    - stage: publish
+      script: ./gradlew publish
+    - stage: release
       script: ./gradlew assembleDist
       deploy:
         provider: releases

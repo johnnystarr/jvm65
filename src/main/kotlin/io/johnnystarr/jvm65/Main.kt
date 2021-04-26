@@ -1,13 +1,10 @@
 package io.johnnystarr.jvm65
 
-import io.johnnystarr.jvm65.core.UnsignedByte
+import io.johnnystarr.jvm65.core.MemoryManager
 
 fun main(args: Array<String>) {
-    println("JVM65!")
+    val map = MemoryManager(0xFFFF)
+    map.memory[0x0A]?.value = 13
 
-    var byte = UnsignedByte(1)
-    byte += 230
-
-    println("The byte value is $byte")
-
+    println(map.memory[0x0A])
 }

@@ -16,6 +16,7 @@ internal class UnsignedByteTest {
     fun `add 1 to zero byte`() {
         byte += 1
         assertEquals(1, byte.value)
+        assertEquals(RegisterState.NONE, byte.state)
     }
 
     @Test
@@ -23,6 +24,7 @@ internal class UnsignedByteTest {
         byte += 256
         // wrap-over occurs when adding is 0xFF + n
         assertEquals(0, byte.value)
+        assertEquals(RegisterState.ZEROED, byte.state)
     }
 
     @Test
@@ -30,18 +32,29 @@ internal class UnsignedByteTest {
         byte += 257
         // anything past 256 should wrap and remain
         assertEquals(1, byte.value)
+        assertEquals(RegisterState.POSITIVE_WRAPAROUND, byte.state)
+    }
+
+    @Test
+    fun `add 1 to -1`() {
+        byte.value = -1
+        byte += 1
+        assertEquals(0, byte.value)
+        assertEquals(RegisterState.ZEROED, byte.state)
     }
 
     @Test
     fun `subtract 1 from zero byte`() {
         byte -= 1
         assertEquals(0xFF, byte.value)
+        assertEquals(RegisterState.NEGATIVE_WRAPAROUND, byte.state)
     }
 
     @Test
     fun `subtract 2 from zero byte`() {
         byte -= 2
         assertEquals(0xFE, byte.value)
+        assertEquals(RegisterState.NEGATIVE_WRAPAROUND, byte.state)
     }
 
     @Test
@@ -49,6 +62,15 @@ internal class UnsignedByteTest {
         byte.value = 10
         byte -= 5
         assertEquals(5, byte.value)
+        assertEquals(RegisterState.NONE, byte.state)
+    }
+
+    @Test
+    fun `subtract 1 from 1 to zero`() {
+        byte.value = 1
+        byte -= 1
+        assertEquals(0, byte.value)
+        assertEquals(RegisterState.ZEROED, byte.state)
     }
 
     @Test
@@ -56,6 +78,7 @@ internal class UnsignedByteTest {
         byte.value = 1
         byte.shiftLeft()
         assertEquals(2, byte.value)
+        assertEquals(RegisterState.NONE, byte.state)
     }
 
     @Test
@@ -63,6 +86,7 @@ internal class UnsignedByteTest {
         byte.value = 2
         byte.shiftLeft()
         assertEquals(4, byte.value)
+        assertEquals(RegisterState.NONE, byte.state)
     }
 
     @Test
@@ -70,6 +94,7 @@ internal class UnsignedByteTest {
         byte.value = 1
         byte.shiftRight()
         assertEquals(0, byte.value)
+        assertEquals(RegisterState.ZEROED, byte.state)
     }
 
     @Test
@@ -77,5 +102,14 @@ internal class UnsignedByteTest {
         byte.value = 2
         byte.shiftRight()
         assertEquals(1, byte.value)
+        assertEquals(RegisterState.NONE, byte.state)
+    }
+
+    @Test
+    fun `set byte to zero`() {
+        byte.value = 1
+        byte.clear()
+        assertEquals(0, byte.value)
+        assertEquals(RegisterState.ZEROED, byte.state)
     }
 }
