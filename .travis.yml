@@ -24,7 +24,7 @@ jobs:
         - ./gradlew test
         - bash <(curl -s https://codecov.io/bash)
     - stage: publish
-      script: ./gradlew publish
+      script: echo "waiting to publish to maven central"
     - stage: release
       script: ./gradlew assembleDist
       deploy:
