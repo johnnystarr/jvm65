@@ -18,6 +18,9 @@ open class P6502() : Processor {
     // memory manager
     var mmu = MemoryManager(0xFFFF)
 
+    // stack
+    var stack = EightBitStack()
+
     override fun execute(): Boolean {
        return false
     }
