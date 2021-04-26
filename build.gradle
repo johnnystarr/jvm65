@@ -7,6 +7,11 @@ plugins {
     id 'jacoco'
 }
 
+ext {
+    koin_version = "3.0.1"
+    buildArchivaUrl = "http://192.168.1.128:8080/repository/snapshots/"
+}
+
 group = 'io.johnnystarr'
 version = '0.1.0-SNAPSHOT'
 
@@ -15,8 +20,10 @@ repositories {
 }
 
 dependencies {
+    implementation "io.insert-koin:koin-core-ext:$koin_version"
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation "io.insert-koin:koin-test-junit5:$koin_version"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
 }
 
@@ -92,7 +99,7 @@ publishing {
 publishing {
     repositories {
         maven {
-            url "http://192.168.1.128:8080/repository/snapshots/"
+            url buildArchivaUrl
             credentials {
                 username "admin"
                 password "$System.env.ARCHIVA_PASSWORD"
