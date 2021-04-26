@@ -1,6 +1,6 @@
 package io.johnnystarr.jvm65.core
 
-class P6502() : Processor {
+open class P6502() : Processor {
     var a = UnsignedByte(0)  // A Register
     var x = UnsignedByte(0)  // X Register
     var y = UnsignedByte(0)  // Y Register
@@ -14,6 +14,9 @@ class P6502() : Processor {
     var decimalFlag = false
     var overflowFlag = false
     var negativeFlag = false
+
+    // memory manager
+    var mmu = MemoryManager(0xFFFF)
 
     override fun execute(): Boolean {
        return false
