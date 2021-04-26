@@ -12,8 +12,10 @@ class EightBitStack() : Stack<UnsignedByte> {
         return this.elements.last()
     }
 
-    override fun pop() {
+    override fun pop() : UnsignedByte {
+        val element = this.elements[this.elements.size -1]
         this.elements.removeAt(this.elements.size - 1)
+        return element
     }
 
     override fun isEmpty(): Boolean {
