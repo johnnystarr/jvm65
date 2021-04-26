@@ -10,11 +10,16 @@ test: ## Test Project
 	$(GR) test
 
 push-branch: ## Push Branch to Remotes
-	git push origin $(BRANCH)
+	@git push origin $(BRANCH)
 
-push-main: ## Push Main to Remotes
-	git push -u origin main
-	git push -u build main
+push-main-build: ## Push Main to local Build
+	@git push -u build main
+
+pr-create: ## Create a Pull Request on Github
+	@gh pr create
+
+pr-merge: ## Merge a Pull Request
+	@gh pr merge --delete-branch
 
 commit: ## Commit changes to Git
 	@printf "Commit Message: "; read message; git add -A; git commit -m "$$message"
