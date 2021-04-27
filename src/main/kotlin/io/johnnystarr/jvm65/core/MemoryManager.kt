@@ -22,4 +22,9 @@ class MemoryManager(size: Int, var cpu: P6502) : MMU {
         val y = this.cpu.y.value
         return this.at(index + y)
     }
+
+    override fun put(address: Int, byte: Register) {
+        if (byte is UnsignedByte)
+            this.memory[address] = byte
+    }
 }
