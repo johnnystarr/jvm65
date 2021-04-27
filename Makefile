@@ -12,7 +12,7 @@ test: ## Test Project
 branch: ## Create an New Branch
 	@ruby -e "print 'Branch Name: '; b=gets.downcase.gsub(' ', '-'); system(\"git checkout -b feature/#{b}\")"
 
-push-branch: ## Push Branch to Remotes
+push: ## Push to Origin
 	@git push origin $(BRANCH)
 
 push-main-build: ## Push Main to local Build
