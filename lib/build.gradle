@@ -74,6 +74,7 @@ tasks.named('jar') {
     manifest {
         attributes('Implementation-Title': rootProject.name, 'Implementation-Version': version)
     }
+    baseName = rootProject.name
 }
 
 if (hasProperty('buildScan')) {
@@ -100,7 +101,7 @@ task sourcesJar(type: Jar) {
 }
 
 artifacts {
-    archives javadocJar, sourcesJar
+    archives jar
 }
 
 signing {
