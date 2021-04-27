@@ -9,6 +9,9 @@ build: ## Build JAR
 test: ## Test Project
 	$(GR) test
 
+branch: ## Create an New Branch
+	@ruby -e "print 'Branch Name: '; b=gets.downcase.gsub(' ', '-'); system(\"git checkout -b feature/#{b}\")"
+
 push-branch: ## Push Branch to Remotes
 	@git push origin $(BRANCH)
 
