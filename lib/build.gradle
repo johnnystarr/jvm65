@@ -3,6 +3,7 @@ plugins {
     id 'com.adarshr.test-logger' version '3.0.0'
     id "org.sonarqube" version "3.1.1"
     id 'java-library'
+    id 'java-library-distribution'
     id 'maven'
     id 'maven-publish'
     id 'jacoco'
@@ -149,5 +150,11 @@ uploadArchives {
                 }
             }
         }
+    }
+}
+
+distributions {
+    main {
+        distributionBaseName = rootProject.name
     }
 }
