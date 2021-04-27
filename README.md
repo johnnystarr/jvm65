@@ -20,7 +20,23 @@ jvm65 is written in Kotlin but is interoperable with any JVM language.
 - 6502 centric emulators
 - Embedded systems simulation
 
-### Latest Snapshot Maven
+### Leverage in Gradle Project
+
+```groovy
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.johnnystarr:jvm65:0.1.0-SNAPSHOT'
+}
+```
+
+### Leverage in Maven Project
 ```xml
 <dependency>
   <groupId>io.johnnystarr</groupId>

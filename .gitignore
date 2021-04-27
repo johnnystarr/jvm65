@@ -1,6 +1,7 @@
 .idea/
 .gradle/
 build/
+lib/build/
 *DS_Store
 *.gpg
 gradle.properties
