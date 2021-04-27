@@ -28,6 +28,7 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    api 'org.apache.commons:commons-math3:3.6.1'
 }
 
 test {
@@ -69,14 +70,9 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = '11'
 }
 
-jar {
+tasks.named('jar') {
     manifest {
-        attributes("Main-Class": "io.johnnystarr.jvm65.MainKt")
-    }
-    from {
-        configurations.compileClasspath.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
+        attributes('Implementation-Title': rootProject.name, 'Implementation-Version': version)
     }
 }
 
@@ -91,18 +87,6 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-        }
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            url buildArchivaUrl
-            credentials {
-                username "admin"
-                password "$System.env.ARCHIVA_PASSWORD"
-            }
         }
     }
 }
