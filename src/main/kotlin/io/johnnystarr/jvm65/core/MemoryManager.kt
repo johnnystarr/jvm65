@@ -1,6 +1,6 @@
 package io.johnnystarr.jvm65.core
 
-class MemoryManager(size: Int, cpu: Processor? = null) : MMU {
+class MemoryManager(size: Int, var cpu: P6502) : MMU {
     override var memory: HashMap<Int, UnsignedByte> = HashMap()
 
     init {
@@ -11,5 +11,15 @@ class MemoryManager(size: Int, cpu: Processor? = null) : MMU {
 
     override fun at(index: Int): UnsignedByte? {
         return this.memory[index]
+    }
+
+    override fun atX(index: Int): UnsignedByte? {
+        val x = this.cpu.x.value
+        return this.at(index + x)
+    }
+
+    override fun atY(index: Int): UnsignedByte? {
+        val y = this.cpu.y.value
+        return this.at(index + y)
     }
 }
