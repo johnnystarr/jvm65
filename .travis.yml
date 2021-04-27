@@ -15,9 +15,8 @@ before_install:
 stages:
   - build
   - test
-  - name: publish
+  - name: release
     if: branch = main AND type NOT IN (pull_request)
-  - release
 
 jobs:
   include:
@@ -27,16 +26,5 @@ jobs:
       script:
         - ./gradlew test
         - bash <(curl -s https://codecov.io/bash)
-    - stage: publish
-      script: ./gradlew uploadArchives
     - stage: release
-      script: ./gradlew assembleDist
-      deploy:
-        provider: releases
-        api_key: ${GITHUB_TOKEN}
-        file_glob: true
-        file: lib/build/distributions/*
-        skip_cleanup: true
-        on:
-          branch: main
-          tags: true
+      script: ./gradlew uploadArchives
