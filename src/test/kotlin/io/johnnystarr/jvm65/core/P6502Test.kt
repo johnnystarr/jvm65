@@ -80,4 +80,21 @@ internal class P6502Test {
         cpu.step()
         assertEquals(1, cpu.pc.value)
     }
+
+    @Test
+    fun `add a byte to memory and step it`() {
+        cpu.mmu.at(0)?.value = 1
+        val current = cpu.step()
+        assertEquals(1, current?.value)
+        assertEquals(cpu.pc.value, 1)
+    }
+
+    @Test
+    fun `add 2 bytes to memory and peek last`() {
+        cpu.mmu.at(0)?.value = 1
+        cpu.mmu.at(1)?.value = 2
+        val next = cpu.peek()
+        assertEquals(2, next?.value)
+        assertEquals(0, cpu.pc.value)
+    }
 }

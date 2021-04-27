@@ -2,6 +2,7 @@ package io.johnnystarr.jvm65.core
 
 interface Processor {
     fun execute(): Boolean
-    fun status(): UnsignedByte
-    fun step()
+    fun status(): Register
+    fun step(): Register?
+    fun peek(): Register?
 }

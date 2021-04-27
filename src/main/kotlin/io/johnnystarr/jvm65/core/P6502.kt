@@ -1,6 +1,6 @@
 package io.johnnystarr.jvm65.core
 
-open class P6502() : Processor {
+class P6502() : Processor {
     var a = UnsignedByte(0)  // A Register
     var x = UnsignedByte(0)  // X Register
     var y = UnsignedByte(0)  // Y Register
@@ -16,7 +16,7 @@ open class P6502() : Processor {
     var negativeFlag = false
 
     // memory manager
-    var mmu = MemoryManager(0xFFFF)
+    var mmu = MemoryManager(0xFFFF, this)
 
     // stack
     var stack = EightBitStack()
@@ -37,7 +37,13 @@ open class P6502() : Processor {
         return s
     }
 
-    override fun step() {
+    override fun step(): UnsignedByte? {
+        val current = this.mmu.at(this.pc.value)
         this.pc += 1
+        return current
+    }
+
+    override fun peek(): UnsignedByte? {
+        return this.mmu.at(this.pc.value + 1)
     }
 }
