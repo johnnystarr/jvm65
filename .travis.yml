@@ -16,7 +16,7 @@ stages:
   - build
   - test
   - name: publish
-    if: branch = main
+    if: branch = main AND type NOT IN (pull_request)
   - release
 
 jobs:
