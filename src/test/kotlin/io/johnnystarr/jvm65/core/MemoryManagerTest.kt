@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class MemoryManagerTest {
-    private lateinit var mmu: MMU
+    private lateinit var mmu: MemoryManager
 
     @BeforeEach
     fun setUp() {
-        mmu = MemoryManager(0xFFFF)
+        mmu = MemoryManager(0xFFFF, P6502())
     }
 
     @Test
@@ -20,7 +20,21 @@ internal class MemoryManagerTest {
 
     @Test
     fun `set final memory address`() {
-        mmu.memory[0xFFFF]?.value = 1
-        assertEquals(1, mmu.memory[0xFFFF]?.value)
+        mmu.at(0xFFFF)?.value = 1
+        assertEquals(1, mmu.at(0xFFFF)?.value)
+    }
+
+    @Test
+    fun `set memory address and cpu x to test atX`() {
+        mmu.at(2)?.value = 1
+        mmu.cpu.x.value = 1
+        assertEquals(1, mmu.atX(1)?.value)
+    }
+
+    @Test
+    fun `set memory address and cpu y to test atY`() {
+        mmu.at(2)?.value = 1
+        mmu.cpu.y.value = 1
+        assertEquals(1, mmu.atY(1)?.value)
     }
 }
