@@ -13,4 +13,6 @@ interface Register {
     fun shiftLeft()
     fun shiftRight()
     fun clear()
+    fun inc()
+    fun dec()
 }
