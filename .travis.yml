@@ -27,4 +27,4 @@ jobs:
         - ./gradlew test
         - bash <(curl -s https://codecov.io/bash)
     - stage: release
-      script: ./gradlew uploadArchives
+      script: ./gradlew build uploadArchives
