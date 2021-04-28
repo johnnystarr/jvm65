@@ -1,9 +1,18 @@
 package io.johnnystarr.jvm65.core
 
+/**
+ * Concrete class for 6502 Stack
+ * @constructor creates an EightBitStack
+ */
 class EightBitStack() : Stack<UnsignedByte> {
 
     override val elements: MutableList<UnsignedByte> = mutableListOf()
 
+    /**
+     * Pushes a byte to the stack
+     * @param element the byte pushed on the stack
+     * @return Unit
+     */
     override fun push(element: UnsignedByte) {
         this.elements.add(element)
     }
