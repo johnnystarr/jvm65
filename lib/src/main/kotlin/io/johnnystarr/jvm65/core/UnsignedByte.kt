@@ -1,3 +1,7 @@
+/**
+ * @author Johnny Starr <johnnystarr@gmail.com>
+ */
+
 package io.johnnystarr.jvm65.core
 
 data class UnsignedByte(var value: Int, var state: RegisterState = RegisterState.NONE) : Register {
