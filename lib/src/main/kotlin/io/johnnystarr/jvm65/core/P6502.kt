@@ -33,7 +33,6 @@ class P6502() : Processor {
     /**
      * Execute an instruction
      * @return [Boolean] WIP
-     * TODO: update this method to perform instructions
      */
     override fun execute(): Boolean {
        return false
