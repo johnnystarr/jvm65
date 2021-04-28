@@ -3,8 +3,8 @@ BRANCH = $(shell git branch --show-current)
 
 DEFAULT_GOAL: help
 
-build: ## Build JAR
-	$(GR) jar
+build: ## Gradle Build
+	$(GR) build
 
 test: ## Test Project
 	$(GR) test
@@ -26,6 +26,9 @@ pr-merge: ## Merge a Pull Request
 
 commit: ## Commit changes to Git
 	@printf "Commit Message: "; read message; git add -A; git commit -m "$$message"
+
+clean: ## Gradle Clean
+	$(GR) clean
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
