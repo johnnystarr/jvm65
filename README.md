@@ -10,6 +10,9 @@
 
 A JVM library that provides a 6502 simulator.
 
+### State of Project
+_This project is a WIP and is available as a pre-release for evaluation only_
+
 ### Implementation
 jvm65 is written in Kotlin but is interoperable with any JVM language.
 
@@ -20,22 +23,26 @@ I have always loved the 6502 processor.  Although there are plenty of simulators
 
 - 6502 centric emulators
 - Embedded systems simulation
+- Academic studies
 
 ### Code Coverage
 ![coverage-report](https://codecov.io/gh/johnnystarr/jvm65/branch/main/graphs/sunburst.svg)
 
-### Leverage in Gradle Project
-```groovy
-repositories {
-    mavenCentral()
-}
+### Leverage in your project
 
-dependencies {
-    implementation 'io.johnnystarr:jvm65:0.1.2'
-}
+#### Gradle Groovy
+
+```groovy
+implementation 'io.johnnystarr:jvm65:0.1.2'
 ```
 
-### Leverage in Maven Project
+#### Gradle Kotlin
+
+```kotlin
+implementation("io.johnnystarr:jvm65:0.1.2")
+```
+
+#### Apache Maven
 ```xml
 <dependency>
   <groupId>io.johnnystarr</groupId>
@@ -43,3 +50,6 @@ dependencies {
   <version>0.1.2</version>
 </dependency>
 ```
+
+#### Maven Central
+https://search.maven.org/artifact/io.johnnystarr/jvm65/0.1.2/jar
