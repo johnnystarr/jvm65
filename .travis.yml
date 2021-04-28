@@ -28,3 +28,5 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
     - stage: release
       script: ./gradlew build uploadArchives
+      on:
+        tags: true
