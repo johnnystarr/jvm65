@@ -2,6 +2,7 @@
 .gradle/
 build/
 lib/build/
+.scripts/
 *DS_Store
 *.gpg
 gradle.properties
