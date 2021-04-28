@@ -102,14 +102,14 @@ tasks.named('dokkaJavadoc') {
     finalizedBy('renameDokka')
 }
 
-tasks.named('javadoc') {
+tasks.named('javadocJar') {
     dependsOn('dokkaJavadoc')
 }
 
 artifacts {
     archives jar
-    archives javadocJar
     archives sourcesJar
+    archives javadocJar
 }
 
 signing {
