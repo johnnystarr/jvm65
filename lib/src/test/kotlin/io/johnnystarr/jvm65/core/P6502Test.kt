@@ -77,13 +77,15 @@ internal class P6502Test {
 
     @Test
     fun `step pc forward one`() {
-        cpu.step()
+        cpu.mmu.put(0, UnsignedByte(1))
+        val byte = cpu.step()
         assertEquals(1, cpu.pc.value)
+        assertEquals(1, byte?.value)
     }
 
     @Test
     fun `add a byte to memory and step it`() {
-        cpu.mmu.at(0)?.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
         val current = cpu.step()
         assertEquals(1, current?.value)
         assertEquals(cpu.pc.value, 1)
@@ -91,8 +93,8 @@ internal class P6502Test {
 
     @Test
     fun `add 2 bytes to memory and peek last`() {
-        cpu.mmu.at(0)?.value = 1
-        cpu.mmu.at(1)?.value = 2
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(2))
         val next = cpu.peek()
         assertEquals(2, next?.value)
         assertEquals(0, cpu.pc.value)
