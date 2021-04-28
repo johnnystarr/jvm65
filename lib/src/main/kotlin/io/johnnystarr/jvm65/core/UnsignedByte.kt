@@ -68,4 +68,20 @@ data class UnsignedByte(var value: Int, var state: RegisterState = RegisterState
         this.value = 0
         this.state = RegisterState.ZEROED
     }
+
+    /**
+     * Increment byte by 1
+     * @return [Unit]
+     */
+    override fun inc() {
+        this.value += 1
+    }
+
+    /**
+     * Decrement byte by 1
+     * @return [Unit]
+     */
+    override fun dec() {
+        this.value -= 1
+    }
 }
