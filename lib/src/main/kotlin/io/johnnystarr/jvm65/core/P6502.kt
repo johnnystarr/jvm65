@@ -5,7 +5,9 @@
 package io.johnnystarr.jvm65.core
 
 /**
- * @constructor
+ * 6502 Processor Class
+ *
+ * @constructor Creates a P6502 Object
  */
 class P6502() : Processor {
     var a = UnsignedByte(0)  // A Register
@@ -28,10 +30,19 @@ class P6502() : Processor {
     // stack
     var stack = EightBitStack()
 
+    /**
+     * Execute an instruction
+     * @return [Boolean] WIP
+     * TODO: update this method to perform instructions
+     */
     override fun execute(): Boolean {
        return false
     }
 
+    /**
+     * Sets and returns the status register based on flags
+     * @return [UnsignedByte] an encoded byte based on flags
+     */
     override fun status(): UnsignedByte {
         val s = UnsignedByte(0)
         if (this.carryFlag) s.value = s.value or 0b00000001
@@ -44,12 +55,20 @@ class P6502() : Processor {
         return s
     }
 
+    /**
+     * Step the processor by one
+     * @return [UnsignedByte] the byte the PC is pointing to before step
+     */
     override fun step(): UnsignedByte? {
         val current = this.mmu.at(this.pc.value)
         this.pc += 1
         return current
     }
 
+    /**
+     * Peek at the next byte in memory
+     * @return [UnsignedByte] the byte that is next in line for fetching
+     */
     override fun peek(): UnsignedByte? {
         return this.mmu.at(this.pc.value + 1)
     }
