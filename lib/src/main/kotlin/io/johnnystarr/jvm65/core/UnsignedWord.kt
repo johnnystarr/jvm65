@@ -10,7 +10,10 @@ package io.johnnystarr.jvm65.core
  * @property value [Int] the initial 16-bit value of this word
  * @property state [RegisterState] current state based on various internal operations
  */
-data class UnsignedWord(var value: Int, var state: RegisterState = RegisterState.NONE) : Register {
+data class UnsignedWord (
+    override var value: Int,
+    override var state: RegisterState = RegisterState.NONE
+) : UnsignedRegister(value, state), Arithmetic {
 
     /**
      * Addition word operation
@@ -40,32 +43,5 @@ data class UnsignedWord(var value: Int, var state: RegisterState = RegisterState
             newValue < -1 -> UnsignedWord((newValue + 65536), RegisterState.NEGATIVE_WRAPAROUND)
             else -> UnsignedWord(newValue)
         }
-    }
-
-    /**
-     * Shift byte left by 1
-     * @return [Unit]
-     */
-    override fun shiftLeft() {
-        this.value = this.value shl 1
-        if (this.value == 0) this.state = RegisterState.ZEROED
-    }
-
-    /**
-     * Shift byte right by 1
-     * @return [Unit]
-     */
-    override fun shiftRight() {
-        this.value = this.value ushr 1
-        if (this.value == 0) this.state = RegisterState.ZEROED
-    }
-
-    /**
-     * Set this byte value to 0
-     * @return [Unit]
-     */
-    override fun clear() {
-        this.value = 0
-        this.state = RegisterState.ZEROED
     }
 }
