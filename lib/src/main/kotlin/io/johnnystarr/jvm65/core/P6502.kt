@@ -15,6 +15,7 @@ class P6502() : Processor, InstructionSet {
     var y = UnsignedByte(0)  // Y Register
     var sr = UnsignedByte(0) // Status Register
     var pc = UnsignedWord(0) // Program Counter
+    var sp = UnsignedWord(0) // Stack Pointer
 
     // flags
     var carryFlag = false
@@ -36,6 +37,7 @@ class P6502() : Processor, InstructionSet {
      */
     override fun execute(opcode: UnsignedByte) {
         when (opcode.value) {
+            // ADC
             0x69 -> adc(AddressMode.IMMEDIATE)
             0x65 -> adc(AddressMode.ZEROPAGE)
             0x75 -> adc(AddressMode.ZEROPAGE_X)
@@ -44,6 +46,7 @@ class P6502() : Processor, InstructionSet {
             0x79 -> adc(AddressMode.ABSOLUTE_Y)
             0x61 -> adc(AddressMode.INDIRECT_X)
             0x71 -> adc(AddressMode.INDIRECT_Y)
+            // AND
             0x29 -> and(AddressMode.IMMEDIATE)
             0x25 -> and(AddressMode.ZEROPAGE)
             0x35 -> and(AddressMode.ZEROPAGE_X)
@@ -52,6 +55,7 @@ class P6502() : Processor, InstructionSet {
             0x39 -> and(AddressMode.ABSOLUTE_Y)
             0x21 -> and(AddressMode.INDIRECT_X)
             0x31 -> and(AddressMode.INDIRECT_Y)
+            // ASL
         }
     }
 
@@ -97,6 +101,17 @@ class P6502() : Processor, InstructionSet {
      */
     override fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord {
         return (UnsignedWord((msb.value shl 8) or lsb.value))
+    }
+
+    /**
+     * Takes a word and splits it into two bytes
+     * @param word [UnsignedWord] word to be split
+     * @return [List] split word in bytes, MSB first
+     */
+    override fun splitWord(word: UnsignedWord): List<UnsignedByte> {
+        val lsb = UnsignedByte(word.value and 0xFF)
+        val msb = UnsignedByte((word.value and 0xFF00) shr 8)
+        return listOf(msb, lsb)
     }
 
     /**

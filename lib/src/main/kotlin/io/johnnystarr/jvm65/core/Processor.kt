@@ -13,4 +13,5 @@ interface Processor {
     fun step(): Register?
     fun peek(): Register?
     fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord
+    fun splitWord(word: UnsignedWord): List<UnsignedByte>
 }
