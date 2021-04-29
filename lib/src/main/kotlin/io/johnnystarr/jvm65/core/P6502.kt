@@ -34,8 +34,17 @@ class P6502() : Processor, InstructionSet {
      * Execute an instruction
      * @return [Boolean] WIP
      */
-    override fun execute(): Boolean {
-       return false
+    override fun execute(opcode: UnsignedByte) {
+        when (opcode.value) {
+            0x69 -> adc(AddressMode.IMMEDIATE)
+            0x65 -> adc(AddressMode.ZEROPAGE)
+            0x75 -> adc(AddressMode.ZEROPAGE_X)
+            0x6D -> adc(AddressMode.ABSOLUTE)
+            0x7D -> adc(AddressMode.ABSOLUTE_X)
+            0x79 -> adc(AddressMode.ABSOLUTE_Y)
+            0x61 -> adc(AddressMode.INDIRECT_X)
+            0x71 -> adc(AddressMode.INDIRECT_Y)
+        }
     }
 
     /**
