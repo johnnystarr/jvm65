@@ -105,7 +105,14 @@ internal class P6502Test {
         val msb = UnsignedByte(0xCD)
         val lsb = UnsignedByte(0xAB)
         val littleEndian = cpu.littleEndian(msb, lsb)
-
         assertEquals(0xABCD, littleEndian.value)
+    }
+
+    @Test
+    fun `split word into bytes`() {
+        val word = UnsignedWord(0xABCD)
+        val bytes = cpu.splitWord(word)
+        assertEquals(0xAB, bytes[0].value)
+        assertEquals(0xCD, bytes[1].value)
     }
 }
