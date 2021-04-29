@@ -123,8 +123,9 @@ class P6502() : Processor, InstructionSet {
         val carry = if (this.carryFlag) 1 else 0
         val byte = this.fetch().value
         when (mode) {
-            AddressMode.IMMEDIATE -> this.a = this.a + (byte + carry)
-            AddressMode.ZEROPAGE  -> this.a = this.a + this.mmu.at(byte).value
+            AddressMode.IMMEDIATE  -> this.a = this.a + (byte + carry)
+            AddressMode.ZEROPAGE   -> this.a = this.a + (this.mmu.at(byte).value + carry)
+            AddressMode.ZEROPAGE_X -> this.a = this.a + (this.mmu.atX(byte).value + carry)
             else -> throw IllegalStateException("Mode $mode does not exist.")
         }
     }
