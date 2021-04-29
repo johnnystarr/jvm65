@@ -18,7 +18,10 @@ push: ## Push to Origin
 push-main-build: ## Push Main to local Build
 	@git push -u build main
 
-pr-create: ## Create a Pull Request on Github
+pr-create: ## Create a Pull Request on 'develop' in Github
+	@gh pr create --base develop
+
+pr-create-main: ## Create a Pull Request on 'main' in Github
 	@gh pr create
 
 pr-merge: ## Merge a Pull Request
