@@ -91,6 +91,9 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transposes two bytes into little endian 16-bit number
+     * @param lsb [UnsignedByte] least significant byte
+     * @param msb [UnsignedByte] most significant byte
+     * @return [UnsignedWord] transposed combination of bytes
      */
     override fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord {
         return (UnsignedWord((msb.value shl 8) or lsb.value))
