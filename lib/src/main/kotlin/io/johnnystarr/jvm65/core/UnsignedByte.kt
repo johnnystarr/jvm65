@@ -12,7 +12,7 @@ package io.johnnystarr.jvm65.core
  */
 data class UnsignedByte (
     override var value: Int,
-    override var state: RegisterState = RegisterState.NONE
+    override var state: RegisterState = RegisterState.NONE,
 ) : UnsignedRegister(value, state), Arithmetic {
 
     /**

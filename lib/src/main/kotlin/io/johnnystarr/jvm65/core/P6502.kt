@@ -44,6 +44,14 @@ class P6502() : Processor, InstructionSet {
             0x79 -> adc(AddressMode.ABSOLUTE_Y)
             0x61 -> adc(AddressMode.INDIRECT_X)
             0x71 -> adc(AddressMode.INDIRECT_Y)
+            0x29 -> and(AddressMode.IMMEDIATE)
+            0x25 -> and(AddressMode.ZEROPAGE)
+            0x35 -> and(AddressMode.ZEROPAGE_X)
+            0x2D -> and(AddressMode.ABSOLUTE)
+            0x3D -> and(AddressMode.ABSOLUTE_X)
+            0x39 -> and(AddressMode.ABSOLUTE_Y)
+            0x21 -> and(AddressMode.INDIRECT_X)
+            0x31 -> and(AddressMode.INDIRECT_Y)
         }
     }
 
