@@ -1,6 +1,6 @@
 package io.johnnystarr.jvm65.core
 
-open class UnsignedRegister (open var value: Int, open var state: RegisterState) : Register {
+open class UnsignedRegister (open var value: Int, open var state: RegisterState = RegisterState.NONE) : Register {
 
     /**
      * Shift register left by 1
@@ -43,5 +43,29 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState)
      */
     override fun dec() {
         this.value -= 1
+    }
+
+    /**
+     * Logical AND on register
+     * @return [Unit]
+     */
+    override fun and(register: UnsignedRegister): UnsignedRegister {
+        return (UnsignedRegister(this.value and register.value))
+    }
+
+    /**
+     * Logical OR on register
+     * @return [Unit]
+     */
+    override fun or(register: UnsignedRegister): UnsignedRegister {
+        return (UnsignedRegister(this.value or register.value))
+    }
+
+    /**
+     * Logical XOR on register
+     * @return [Unit]
+     */
+    override fun xor(register: UnsignedRegister): UnsignedRegister {
+        return (UnsignedRegister(this.value xor register.value))
     }
 }
