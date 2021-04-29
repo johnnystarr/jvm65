@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.1.4](https://github.com/johnnystarr/jvm65/tree/v0.1.4) (2021-04-29)
+
+[Full Changelog](https://github.com/johnnystarr/jvm65/compare/v0.1.3...v0.1.4)
+
+**Merged pull requests:**
+
+- Pulling develop into main [\#14](https://github.com/johnnystarr/jvm65/pull/14) ([johnnystarr](https://github.com/johnnystarr))
+
 ## [v0.1.3](https://github.com/johnnystarr/jvm65/tree/v0.1.3) (2021-04-28)
 
 [Full Changelog](https://github.com/johnnystarr/jvm65/compare/v0.1.2...v0.1.3)
