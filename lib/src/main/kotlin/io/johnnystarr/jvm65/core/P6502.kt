@@ -25,7 +25,7 @@ class P6502() : Processor {
     var negativeFlag = false
 
     // memory manager
-    var mmu = MemoryManager(0xFFFF, this)
+    var mmu = MMU(0xFFFF, this)
 
     // stack
     var stack = EightBitStack()

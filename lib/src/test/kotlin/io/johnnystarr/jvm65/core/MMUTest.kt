@@ -5,12 +5,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class MemoryManagerTest {
-    private lateinit var mmu: MemoryManager
+internal class MMUTest {
+    private lateinit var mmu: MMU
 
     @BeforeEach
     fun setUp() {
-        mmu = MemoryManager(0xFFFF, P6502())
+        mmu = MMU(0xFFFF, P6502())
     }
 
     @Test
