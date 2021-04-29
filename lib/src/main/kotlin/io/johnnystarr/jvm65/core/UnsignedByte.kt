@@ -10,7 +10,10 @@ package io.johnnystarr.jvm65.core
  * @property value [Int] the initial 8-bit value of this byte
  * @property state [RegisterState] current state based on various internal operations
  */
-data class UnsignedByte(var value: Int, var state: RegisterState = RegisterState.NONE) : Register {
+data class UnsignedByte (
+    override var value: Int,
+    override var state: RegisterState = RegisterState.NONE
+) : UnsignedRegister(value, state), Arithmetic {
 
     /**
      * Addition byte operation
@@ -40,48 +43,5 @@ data class UnsignedByte(var value: Int, var state: RegisterState = RegisterState
             newValue < -1 -> UnsignedByte((newValue + 256), RegisterState.NEGATIVE_WRAPAROUND)
             else -> UnsignedByte(newValue)
         }
-    }
-
-    /**
-     * Shift byte left by 1
-     * @return [Unit]
-     */
-    override fun shiftLeft() {
-        this.value = this.value shl 1
-        if (this.value == 0) this.state = RegisterState.ZEROED
-    }
-
-    /**
-     * Shift byte right by 1
-     * @return [Unit]
-     */
-    override fun shiftRight() {
-        this.value = this.value ushr 1
-        if (this.value == 0) this.state = RegisterState.ZEROED
-    }
-
-    /**
-     * Set this byte value to 0
-     * @return [Unit]
-     */
-    override fun clear() {
-        this.value = 0
-        this.state = RegisterState.ZEROED
-    }
-
-    /**
-     * Increment byte by 1
-     * @return [Unit]
-     */
-    override fun inc() {
-        this.value += 1
-    }
-
-    /**
-     * Decrement byte by 1
-     * @return [Unit]
-     */
-    override fun dec() {
-        this.value -= 1
     }
 }
