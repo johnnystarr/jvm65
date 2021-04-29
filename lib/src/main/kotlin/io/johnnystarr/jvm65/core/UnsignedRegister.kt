@@ -47,7 +47,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
 
     /**
      * Logical AND on register
-     * @return [Unit]
+     * @return [UnsignedRegister] result of AND operation
      */
     override fun and(register: UnsignedRegister): UnsignedRegister {
         return (UnsignedRegister(this.value and register.value))
@@ -55,7 +55,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
 
     /**
      * Logical OR on register
-     * @return [Unit]
+     * @return [UnsignedRegister] result of OR operation
      */
     override fun or(register: UnsignedRegister): UnsignedRegister {
         return (UnsignedRegister(this.value or register.value))
@@ -63,7 +63,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
 
     /**
      * Logical XOR on register
-     * @return [Unit]
+     * @return [UnsignedRegister] result of XOR operation
      */
     override fun xor(register: UnsignedRegister): UnsignedRegister {
         return (UnsignedRegister(this.value xor register.value))

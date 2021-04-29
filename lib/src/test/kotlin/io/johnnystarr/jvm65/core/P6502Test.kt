@@ -99,4 +99,13 @@ internal class P6502Test {
         assertEquals(2, next?.value)
         assertEquals(0, cpu.pc.value)
     }
+
+    @Test
+    fun `little endian evaluation`() {
+        val msb = UnsignedByte(0xCD)
+        val lsb = UnsignedByte(0xAB)
+        val littleEndian = cpu.littleEndian(msb, lsb)
+
+        assertEquals(0xABCD, littleEndian.value)
+    }
 }
