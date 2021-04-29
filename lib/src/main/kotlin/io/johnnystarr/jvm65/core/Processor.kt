@@ -12,4 +12,5 @@ interface Processor {
     fun status(): Register
     fun step(): Register?
     fun peek(): Register?
+    fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord
 }

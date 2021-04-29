@@ -90,6 +90,13 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
+     * Transposes two bytes into little endian 16-bit number
+     */
+    override fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord {
+        return (UnsignedWord((msb.value shl 8) or lsb.value))
+    }
+
+    /**
      * Add with carry
      */
     override fun adc(mode: AddressMode) {
