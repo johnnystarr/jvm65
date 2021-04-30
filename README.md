@@ -33,13 +33,13 @@ I have always loved the 6502 processor.  Although there are plenty of simulators
 #### Gradle Groovy
 
 ```groovy
-implementation 'io.johnnystarr:jvm65:0.1.5'
+implementation 'io.johnnystarr:jvm65:0.1.6'
 ```
 
 #### Gradle Kotlin
 
 ```kotlin
-implementation("io.johnnystarr:jvm65:0.1.5")
+implementation("io.johnnystarr:jvm65:0.1.6")
 ```
 
 #### Apache Maven
@@ -47,12 +47,12 @@ implementation("io.johnnystarr:jvm65:0.1.5")
 <dependency>
   <groupId>io.johnnystarr</groupId>
   <artifactId>jvm65</artifactId>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
 </dependency>
 ```
 
 #### Maven Central
-https://search.maven.org/artifact/io.johnnystarr/jvm65/0.1.5/jar
+https://search.maven.org/artifact/io.johnnystarr/jvm65/0.1.6/jar
 
 ### The MOS 6502
 ![jvm65-logo](doc/6502.jpeg)
