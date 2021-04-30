@@ -4,6 +4,8 @@
 
 package io.johnnystarr.jvm65.core
 
+import java.lang.Exception
+
 /**
  * 6502 Processor Class
  *
@@ -76,10 +78,10 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
-     * Step the processor by one
+     * Step the processor by ond fetch the current byte
      * @return [UnsignedByte] the byte the PC is pointing to before step
      */
-    override fun step(): UnsignedByte? {
+    override fun fetch(): UnsignedByte {
         val current = this.mmu.at(this.pc.value)
         this.pc += 1
         return current
@@ -89,7 +91,7 @@ class P6502() : Processor, InstructionSet {
      * Peek at the next byte in memory
      * @return [UnsignedByte] the byte that is next in line for fetching
      */
-    override fun peek(): UnsignedByte? {
+    override fun peek(): UnsignedByte {
         return this.mmu.at(this.pc.value + 1)
     }
 
@@ -118,7 +120,14 @@ class P6502() : Processor, InstructionSet {
      * Add with carry
      */
     override fun adc(mode: AddressMode) {
-        // implement
+        val carry = if (this.carryFlag) 1 else 0
+        val byte = this.fetch().value
+        when (mode) {
+            AddressMode.IMMEDIATE  -> this.a = this.a + (byte + carry)
+            AddressMode.ZEROPAGE   -> this.a = this.a + (this.mmu.at(byte).value + carry)
+            AddressMode.ZEROPAGE_X -> this.a = this.a + (this.mmu.atX(byte).value + carry)
+            else -> throw IllegalStateException("Mode $mode does not exist.")
+        }
     }
 
     /**

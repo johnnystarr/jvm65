@@ -24,9 +24,10 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      * Retrieve a byte from a memory address
      * @param index [Int] the index/offset address
      * @return [UnsignedByte] returns the byte at this address
+     * @throws IllegalStateException when element missing
      */
-    override fun at(index: Int): UnsignedByte? {
-        return this.memory[index]
+    override fun at(index: Int): UnsignedByte {
+        return memory[index] ?: throw IllegalStateException("No memory address element at $index")
     }
 
     /**
@@ -34,7 +35,7 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      * @param index [Int] the index/offset address
      * @return [UnsignedByte] returns the byte at this address
      */
-    override fun atX(index: Int): UnsignedByte? {
+    override fun atX(index: Int): UnsignedByte {
         val x = this.cpu.x.value
         return this.at(index + x)
     }
@@ -44,7 +45,7 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      * @param index [Int] the index/offset address
      * @return [UnsignedByte] returns the byte at this address
      */
-    override fun atY(index: Int): UnsignedByte? {
+    override fun atY(index: Int): UnsignedByte {
         val y = this.cpu.y.value
         return this.at(index + y)
     }

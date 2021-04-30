@@ -53,3 +53,6 @@ implementation("io.johnnystarr:jvm65:0.1.4")
 
 #### Maven Central
 https://search.maven.org/artifact/io.johnnystarr/jvm65/0.1.4/jar
+
+### The MOS 6502
+![jvm65-logo](doc/6502.jpeg)

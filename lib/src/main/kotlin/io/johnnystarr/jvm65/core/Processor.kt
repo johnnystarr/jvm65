@@ -10,8 +10,8 @@ package io.johnnystarr.jvm65.core
 interface Processor {
     fun execute(opcode: UnsignedByte)
     fun status(): Register
-    fun step(): Register?
-    fun peek(): Register?
+    fun fetch(): Register
+    fun peek(): Register
     fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord
     fun splitWord(word: UnsignedWord): List<UnsignedByte>
 }
