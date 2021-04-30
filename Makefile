@@ -34,7 +34,10 @@ clean: ## Gradle Clean
 	$(GR) clean
 
 changelog: ## Generate Changelog
-	./.scripts/changelog.sh
+	@git-chglog -o CHANGELOG.md
+
+bump: ## Bump Version Across Files
+	./.scripts/bump.sh
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
