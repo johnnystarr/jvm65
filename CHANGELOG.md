@@ -1,4 +1,15 @@
 
+<a name="v0.1.6"></a>
+## [v0.1.6](https://github.com/johnnystarr/jvm65/compare/v0.1.5...v0.1.6)
+
+> 2021-04-29
+
+### Pull Requests
+
+* Merge pull request [#18](https://github.com/johnnystarr/jvm65/issues/18) from johnnystarr/feature/updating-documentation-for-test
+* Merge pull request [#17](https://github.com/johnnystarr/jvm65/issues/17) from johnnystarr/feature/new-changelog-strategy
+
+
 <a name="v0.1.5"></a>
 ## [v0.1.5](https://github.com/johnnystarr/jvm65/compare/v0.1.4...v0.1.5)
 
