@@ -2,11 +2,9 @@
 language: java
 os:
   - linux
-  - osx
 
 jdk:
   - openjdk11
-  - oraclejdk11
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_6afd0fc9428e_key -iv $encrypted_6afd0fc9428e_iv -in secring.gpg.enc -out lib/secring.gpg -d
@@ -15,8 +13,6 @@ before_install:
 stages:
   - build
   - test
-  - name: release
-    if: tag IS present
 
 jobs:
   include:
@@ -26,5 +22,3 @@ jobs:
       script:
         - ./gradlew test
         - bash <(curl -s https://codecov.io/bash)
-    - stage: release
-      script: ./gradlew build uploadArchives

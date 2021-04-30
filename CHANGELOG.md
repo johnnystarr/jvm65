@@ -1,46 +1,78 @@
-# Changelog
 
-## [v0.1.4](https://github.com/johnnystarr/jvm65/tree/v0.1.4) (2021-04-29)
+<a name="v0.1.5"></a>
+## [v0.1.5](https://github.com/johnnystarr/jvm65/compare/v0.1.4...v0.1.5)
 
-[Full Changelog](https://github.com/johnnystarr/jvm65/compare/v0.1.3...v0.1.4)
+> 2021-04-29
 
-**Merged pull requests:**
+### Refactor
 
-- Pulling develop into main [\#14](https://github.com/johnnystarr/jvm65/pull/14) ([johnnystarr](https://github.com/johnnystarr))
+* MMU and MemoryManager
 
-## [v0.1.3](https://github.com/johnnystarr/jvm65/tree/v0.1.3) (2021-04-28)
 
-[Full Changelog](https://github.com/johnnystarr/jvm65/compare/v0.1.2...v0.1.3)
+<a name="v0.1.4"></a>
+## [v0.1.4](https://github.com/johnnystarr/jvm65/compare/v0.1.3...v0.1.4)
 
-**Merged pull requests:**
+> 2021-04-29
 
-- feature/catching up on docs [\#12](https://github.com/johnnystarr/jvm65/pull/12) ([johnnystarr](https://github.com/johnnystarr))
-- dokka working now [\#11](https://github.com/johnnystarr/jvm65/pull/11) ([johnnystarr](https://github.com/johnnystarr))
-- finally settled [\#10](https://github.com/johnnystarr/jvm65/pull/10) ([johnnystarr](https://github.com/johnnystarr))
-- feature/working on stack and memory [\#9](https://github.com/johnnystarr/jvm65/pull/9) ([johnnystarr](https://github.com/johnnystarr))
-- testing logic to not run publish on prs [\#8](https://github.com/johnnystarr/jvm65/pull/8) ([johnnystarr](https://github.com/johnnystarr))
-- feature/preparing for maven central [\#7](https://github.com/johnnystarr/jvm65/pull/7) ([johnnystarr](https://github.com/johnnystarr))
+### Hotfix
 
-## [v0.1.2](https://github.com/johnnystarr/jvm65/tree/v0.1.2) (2021-04-26)
+* bumping version
 
-[Full Changelog](https://github.com/johnnystarr/jvm65/compare/v0.1.1...v0.1.2)
+### Refactor
 
-**Merged pull requests:**
+* MMU and MemoryManager
 
-- feature/memory mgmt [\#6](https://github.com/johnnystarr/jvm65/pull/6) ([johnnystarr](https://github.com/johnnystarr))
 
-## [v0.1.1](https://github.com/johnnystarr/jvm65/tree/v0.1.1) (2021-04-25)
+<a name="v0.1.3"></a>
+## [v0.1.3](https://github.com/johnnystarr/jvm65/compare/v0.1.2...v0.1.3)
 
-[Full Changelog](https://github.com/johnnystarr/jvm65/compare/v0.1.0...v0.1.1)
+> 2021-04-28
 
-**Merged pull requests:**
+### Hotfix
 
-- Feature/working on memory mgmt [\#5](https://github.com/johnnystarr/jvm65/pull/5) ([johnnystarr](https://github.com/johnnystarr))
-- Feature/getting codecov to work [\#4](https://github.com/johnnystarr/jvm65/pull/4) ([johnnystarr](https://github.com/johnnystarr))
-- outputting xml on jacoco [\#3](https://github.com/johnnystarr/jvm65/pull/3) ([johnnystarr](https://github.com/johnnystarr))
-- Feature/adding coverage [\#2](https://github.com/johnnystarr/jvm65/pull/2) ([johnnystarr](https://github.com/johnnystarr))
-- Feature/adding processor functionality [\#1](https://github.com/johnnystarr/jvm65/pull/1) ([johnnystarr](https://github.com/johnnystarr))
+* finally working docs jar
+* running build before uploads
+* skipping publish until maven central
 
-## [v0.1.0](https://github.com/johnnystarr/jvm65/tree/v0.1.0) (2021-04-24)
 
-[Full Changelog](https://github.com/johnnystarr/jvm65/compare/6752d02191918c1800814414252948e75f9b1cbf...v0.1.0)
+<a name="v0.1.2"></a>
+## [v0.1.2](https://github.com/johnnystarr/jvm65/compare/v0.1.1...v0.1.2)
+
+> 2021-04-28
+
+### Hotfix
+
+* cleaning up deploy
+* trying release as a stage
+* only on main branches
+
+### Pull Requests
+
+* Merge pull request [#6](https://github.com/johnnystarr/jvm65/issues/6) from johnnystarr/feature/memory-mgmt
+
+
+<a name="v0.1.1"></a>
+## [v0.1.1](https://github.com/johnnystarr/jvm65/compare/v0.1.0...v0.1.1)
+
+> 2021-04-28
+
+### Hotfix
+
+* using pipeline syntax
+* adding scm checkout
+* adding Jenkinsfile for local lab
+* adding travis badge for main builds
+* adding travis yaml
+
+### Pull Requests
+
+* Merge pull request [#5](https://github.com/johnnystarr/jvm65/issues/5) from johnnystarr/feature/working-on-memory-mgmt
+* Merge pull request [#4](https://github.com/johnnystarr/jvm65/issues/4) from johnnystarr/feature/getting-codecov-to-work
+* Merge pull request [#3](https://github.com/johnnystarr/jvm65/issues/3) from johnnystarr/feature/getting-jacoco-to-work-with-sonar
+
+
+<a name="v0.1.0"></a>
+## v0.1.0
+
+> 2021-04-28
+

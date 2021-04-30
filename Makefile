@@ -19,9 +19,6 @@ push-main-build: ## Push Main to local Build
 	@git push -u build main
 
 pr-create: ## Create a Pull Request on 'develop' in Github
-	@gh pr create --base develop
-
-pr-create-main: ## Create a Pull Request on 'main' in Github
 	@gh pr create
 
 pr-merge: ## Merge a Pull Request
@@ -34,7 +31,10 @@ clean: ## Gradle Clean
 	$(GR) clean
 
 changelog: ## Generate Changelog
-	./.scripts/changelog.sh
+	@git-chglog -o CHANGELOG.md
+
+bump: ## Bump Version Across Files
+	./.scripts/bump.sh
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
