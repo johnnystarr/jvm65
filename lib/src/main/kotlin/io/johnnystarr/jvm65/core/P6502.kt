@@ -177,6 +177,7 @@ class P6502() : Processor, InstructionSet {
     override fun and(mode: AddressMode) {
         a = when(mode) {
             AddressMode.IMMEDIATE -> a.and(mmu.immediate())
+            AddressMode.ZEROPAGE  -> a.and(mmu.zeroPage())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
     }

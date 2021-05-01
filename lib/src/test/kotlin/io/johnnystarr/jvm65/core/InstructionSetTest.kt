@@ -201,4 +201,22 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x29))
         assertEquals(0, cpu.a.value)
     }
+
+    @Test
+    fun `0x25 and 1 with 1 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x25))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x25 and 1 with 0 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x25))
+        assertEquals(0, cpu.a.value)
+    }
 }
