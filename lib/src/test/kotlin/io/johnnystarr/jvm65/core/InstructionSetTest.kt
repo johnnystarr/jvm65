@@ -153,4 +153,17 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x71))
         assertEquals(2, cpu.a.value)
     }
+
+    @Test
+    fun `0x71 adc 1 + ($0A),Y + carry indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x71))
+        assertEquals(3, cpu.a.value)
+    }
 }
