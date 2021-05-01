@@ -110,12 +110,11 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
     }
 
     override fun indirectX(): UnsignedByte {
-        // implement
+        // todo: implement later
         return UnsignedByte(0)
     }
 
     override fun indirectY(): UnsignedByte {
-        // implement
-        return UnsignedByte(0)
+        return atY(cpu.fetchWordIndirect().value)
     }
 }

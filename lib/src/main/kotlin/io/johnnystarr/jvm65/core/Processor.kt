@@ -12,6 +12,7 @@ interface Processor {
     fun status(): Register
     fun fetch(): Register
     fun fetchWord(): Register
+    fun fetchWordIndirect(): Register
     fun peek(): Register
     fun bigEndian(msb: UnsignedByte, lsb: UnsignedByte): UnsignedWord
     fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord

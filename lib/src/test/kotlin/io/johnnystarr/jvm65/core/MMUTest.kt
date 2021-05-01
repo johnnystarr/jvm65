@@ -90,4 +90,16 @@ internal class MMUTest {
         val byte = mmu.absoluteY()
         assertEquals(1, byte.value)
     }
+
+    @Test
+    // analogous to $(0A),Y
+    fun `indirect y address mode`() {
+        mmu.cpu.y.value = 1
+        mmu.put(0, UnsignedByte(0x0A))
+        mmu.put(0x0A, UnsignedByte(0xCD))
+        mmu.put(0x0B, UnsignedByte(0xAB))
+        mmu.put(0xABCE, UnsignedByte(1))
+        val byte = mmu.indirectY()
+        assertEquals(1, byte.value)
+    }
 }

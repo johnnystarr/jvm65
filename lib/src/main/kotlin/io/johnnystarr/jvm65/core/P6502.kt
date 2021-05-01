@@ -92,11 +92,22 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Fetch two bytes from memory into one word
-     * @return [UnsignedWord] little endian word of both bytes
+     * @return [UnsignedWord] big endian word of both bytes
      */
     override fun fetchWord(): UnsignedWord {
         val msb = fetch()
         val lsb = fetch()
+        return bigEndian(msb, lsb)
+    }
+
+    /**
+     * Fetch two bytes from memory indirectly using a pointer
+     * @return [UnsignedWord] big endian word of both bytes
+     */
+    override fun fetchWordIndirect(): UnsignedWord {
+        val pointer = fetch()
+        val msb = mmu.at(pointer.value)
+        val lsb = mmu.at(pointer.value + 1)
         return bigEndian(msb, lsb)
     }
 
