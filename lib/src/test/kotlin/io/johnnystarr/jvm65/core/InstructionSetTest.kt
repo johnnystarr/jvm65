@@ -327,4 +327,28 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x21))
         assertEquals(0, cpu.a.value)
     }
+
+    @Test
+    fun `0x31 and 1 with 1 ($0A),Y indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x31))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x31 and 1 with 0 ($0A),Y indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x31))
+        assertEquals(0, cpu.a.value)
+    }
 }
