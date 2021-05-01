@@ -44,4 +44,50 @@ internal class MMUTest {
         val byte = mmu.immediate()
         assertEquals(1, byte.value)
     }
+
+    @Test
+    fun `zero page address mode`() {
+        mmu.put(0, UnsignedByte(0x0A))
+        mmu.put(0x0A, UnsignedByte(1))
+        val byte = mmu.zeroPage()
+        assertEquals(1, byte.value)
+    }
+
+    @Test
+    fun `zero page x address mode`() {
+        mmu.cpu.x.value = 1
+        mmu.put(0, UnsignedByte(0x0A))
+        mmu.put(0x0B, UnsignedByte(1))
+        val byte = mmu.zeroPageX()
+        assertEquals(1, byte.value)
+    }
+
+    @Test
+    fun `absolute address mode`() {
+        mmu.put(0, UnsignedByte(0xCD))
+        mmu.put(1, UnsignedByte(0xAB))
+        mmu.put(0xABCD, UnsignedByte(1))
+        val byte = mmu.absolute()
+        assertEquals(1, byte.value)
+    }
+
+    @Test
+    fun `absolute x address mode`() {
+        mmu.cpu.x.value = 1
+        mmu.put(0, UnsignedByte(0xCD))
+        mmu.put(1, UnsignedByte(0xAB))
+        mmu.put(0xABCE, UnsignedByte(1))
+        val byte = mmu.absoluteX()
+        assertEquals(1, byte.value)
+    }
+
+    @Test
+    fun `absolute y address mode`() {
+        mmu.cpu.y.value = 1
+        mmu.put(0, UnsignedByte(0xCD))
+        mmu.put(1, UnsignedByte(0xAB))
+        mmu.put(0xABCE, UnsignedByte(1))
+        val byte = mmu.absoluteY()
+        assertEquals(1, byte.value)
+    }
 }
