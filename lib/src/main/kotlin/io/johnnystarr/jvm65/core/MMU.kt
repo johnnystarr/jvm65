@@ -114,6 +114,10 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
         return UnsignedByte(0)
     }
 
+    /**
+     * Retrieves byte indirectly using a zeropage pointer offset by Y
+     * @return [UnsignedByte] byte from indirect 16-bit address offset by Y
+     */
     override fun indirectY(): UnsignedByte {
         return atY(cpu.fetchWordIndirect().value)
     }
