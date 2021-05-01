@@ -151,6 +151,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.ZEROPAGE_X -> mmu.atX(fetch().value).value + carry
             AddressMode.ABSOLUTE   -> mmu.at(fetchWord().value).value + carry
             AddressMode.ABSOLUTE_X -> mmu.atX(fetchWord().value).value + carry
+            AddressMode.ABSOLUTE_Y -> mmu.atY(fetchWord().value).value + carry
             else -> throw IllegalStateException("Mode $mode does not exist.")
         }
     }

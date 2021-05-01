@@ -112,4 +112,27 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x7D))
         assertEquals(3, cpu.a.value)
     }
+
+    @Test
+    fun `0x79 adc 1 + $ABCD,Y absolute y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x79))
+        assertEquals(2, cpu.a.value)
+    }
+
+    @Test
+    fun `0x79 adc 1 + $ABCD,Y + carry absolute y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x79))
+        assertEquals(3, cpu.a.value)
+    }
 }
