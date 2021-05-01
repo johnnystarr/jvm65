@@ -59,23 +59,23 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * Logical AND on register
      * @return [UnsignedRegister] result of AND operation
      */
-    override fun and(register: UnsignedRegister): UnsignedRegister {
-        return (UnsignedRegister(this.value and register.value))
+    override fun and(register: UnsignedRegister): UnsignedByte {
+        return (UnsignedByte(this.value and register.value))
     }
 
     /**
      * Logical OR on register
      * @return [UnsignedRegister] result of OR operation
      */
-    override fun or(register: UnsignedRegister): UnsignedRegister {
-        return (UnsignedRegister(this.value or register.value))
+    override fun or(register: UnsignedRegister): UnsignedByte {
+        return (UnsignedByte(this.value or register.value))
     }
 
     /**
      * Logical XOR on register
      * @return [UnsignedRegister] result of XOR operation
      */
-    override fun xor(register: UnsignedRegister): UnsignedRegister {
-        return (UnsignedRegister(this.value xor register.value))
+    override fun xor(register: UnsignedRegister): UnsignedByte {
+        return (UnsignedByte(this.value xor register.value))
     }
 }

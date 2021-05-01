@@ -185,4 +185,20 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x71))
         assertEquals(3, cpu.a.value)
     }
+
+    @Test
+    fun `0x29 and 1 with 1 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x29))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x29 and 1 with 0 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x29))
+        assertEquals(0, cpu.a.value)
+    }
 }

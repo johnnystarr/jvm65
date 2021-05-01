@@ -167,7 +167,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value + carry
             AddressMode.INDIRECT_X -> mmu.indirectX().value + carry
             AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
-            else -> throw IllegalStateException("Mode $mode does not exist.")
+            else -> throw IllegalStateException("ADC mode $mode does not exist.")
         }
     }
 
@@ -175,7 +175,10 @@ class P6502() : Processor, InstructionSet {
      * And
      */
     override fun and(mode: AddressMode) {
-        // implement
+        a = when(mode) {
+            AddressMode.IMMEDIATE -> a.and(mmu.immediate())
+            else -> throw IllegalStateException("AND mode $mode does not exist.")
+        }
     }
 
     /**
