@@ -33,6 +33,9 @@ class P6502() : Processor, InstructionSet {
     // stack
     var stack = EightBitStack()
 
+    // if we're keeping track of cycles
+    var cycles = 0
+
     /**
      * Execute an instruction
      * @return [Boolean] WIP
@@ -88,6 +91,16 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
+     * Fetch two bytes from memory into one word
+     * @return [UnsignedWord] little endian word of both bytes
+     */
+    override fun fetchWord(): UnsignedWord {
+        val msb = this.fetch()
+        val lsb = this.fetch()
+        return (this.littleEndian(lsb, msb))
+    }
+
+    /**
      * Peek at the next byte in memory
      * @return [UnsignedByte] the byte that is next in line for fetching
      */
@@ -117,15 +130,16 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
-     * Add with carry
+     * ADC (ADd with Carry)
+     *  @param mode [AddressMode] the current contextual address mode
      */
     override fun adc(mode: AddressMode) {
         val carry = if (this.carryFlag) 1 else 0
-        val byte = this.fetch().value
-        when (mode) {
-            AddressMode.IMMEDIATE  -> this.a = this.a + (byte + carry)
-            AddressMode.ZEROPAGE   -> this.a = this.a + (this.mmu.at(byte).value + carry)
-            AddressMode.ZEROPAGE_X -> this.a = this.a + (this.mmu.atX(byte).value + carry)
+        a += when (mode) {
+            AddressMode.IMMEDIATE  -> fetch().value + carry
+            AddressMode.ZEROPAGE   -> mmu.at(fetch().value).value + carry
+            AddressMode.ZEROPAGE_X -> mmu.atX(fetch().value).value + carry
+            AddressMode.ABSOLUTE   -> mmu.at(fetchWord().value).value + carry
             else -> throw IllegalStateException("Mode $mode does not exist.")
         }
     }

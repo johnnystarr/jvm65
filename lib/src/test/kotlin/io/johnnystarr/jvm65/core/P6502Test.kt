@@ -81,6 +81,16 @@ internal class P6502Test {
         val byte = cpu.fetch()
         assertEquals(1, cpu.pc.value)
         assertEquals(1, byte.value)
+        assertEquals(1, cpu.pc.value)
+    }
+
+    @Test
+    fun `fetch word and step cpu forward two`() {
+        cpu.mmu.put(0, UnsignedByte(0xAB))
+        cpu.mmu.put(1, UnsignedByte(0xCD))
+        val word = cpu.fetchWord()
+        assertEquals(0xABCD, word.value)
+        assertEquals(2, cpu.pc.value)
     }
 
     @Test
