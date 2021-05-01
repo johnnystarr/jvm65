@@ -137,9 +137,28 @@ internal class InstructionSetTest {
     }
 
     @Test
-    fun `0x61 adc 1 + ($0A, X) indirect x`() {
-        // todo: implement
-        assertTrue(true)
+    fun `0x61 adc 1 + ($09, X) indirect x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x61))
+        assertEquals(2, cpu.a.value)
+    }
+
+    @Test
+    fun `0x61 adc 1 + ($09, X) + carry indirect x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x61))
+        assertEquals(3, cpu.a.value)
     }
 
     @Test

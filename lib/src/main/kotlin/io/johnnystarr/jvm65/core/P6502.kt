@@ -165,6 +165,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.ABSOLUTE   -> mmu.absolute().value + carry
             AddressMode.ABSOLUTE_X -> mmu.absoluteX().value + carry
             AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value + carry
+            AddressMode.INDIRECT_X -> mmu.indirectX().value + carry
             AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
             else -> throw IllegalStateException("Mode $mode does not exist.")
         }
