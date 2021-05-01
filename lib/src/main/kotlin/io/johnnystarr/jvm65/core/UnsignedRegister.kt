@@ -1,5 +1,15 @@
+/**
+ * @author Johnny Starr <johnnystarr@gmail.com>
+ */
+
 package io.johnnystarr.jvm65.core
 
+/**
+ * Base class for Unsigned objects
+ * @param value [Int] default value of register
+ * @param state [RegisterState] default state of register
+ * @constructor creates an Unsigned Register
+ */
 open class UnsignedRegister (open var value: Int, open var state: RegisterState = RegisterState.NONE) : Register {
 
     /**
