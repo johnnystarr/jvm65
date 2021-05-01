@@ -261,7 +261,7 @@ internal class InstructionSetTest {
     }
 
     @Test
-    fun `0x3D and 1 + 1 $ABCD absolute`() {
+    fun `0x3D and 1 + 1 $ABCD absolute x`() {
         cpu.a.value = 1
         cpu.x.value = 1
         cpu.mmu.put(0, UnsignedByte(0xCD))
@@ -272,13 +272,35 @@ internal class InstructionSetTest {
     }
 
     @Test
-    fun `0x3D and 1 + 0 $ABCD absolute`() {
+    fun `0x3D and 1 + 0 $ABCD absolute x`() {
         cpu.a.value = 1
         cpu.x.value = 1
         cpu.mmu.put(0, UnsignedByte(0xCD))
         cpu.mmu.put(1, UnsignedByte(0xAB))
         cpu.mmu.put(0xABCE, UnsignedByte(0))
         cpu.execute(UnsignedByte(0x3D))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x39 and 1 + 1 $ABCD absolute y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x39))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x39 and 1 + 0 $ABCD absolute y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x39))
         assertEquals(0, cpu.a.value)
     }
 }

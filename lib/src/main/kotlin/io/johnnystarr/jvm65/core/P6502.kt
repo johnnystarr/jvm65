@@ -182,6 +182,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.ZEROPAGE_X -> a.and(mmu.zeroPageX())
             AddressMode.ABSOLUTE   -> a.and(mmu.absolute())
             AddressMode.ABSOLUTE_X -> a.and(mmu.absoluteX())
+            AddressMode.ABSOLUTE_Y -> a.and(mmu.absoluteY())
             AddressMode.INDIRECT_X -> a.and(mmu.indirectX())
             AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
