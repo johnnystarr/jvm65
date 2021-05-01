@@ -239,4 +239,24 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x35))
         assertEquals(0, cpu.a.value)
     }
+
+    @Test
+    fun `0x2D and 1 + 1 $ABCD absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x2D))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x2D and 1 + 0 $ABCD absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x2D))
+        assertEquals(0, cpu.a.value)
+    }
 }
