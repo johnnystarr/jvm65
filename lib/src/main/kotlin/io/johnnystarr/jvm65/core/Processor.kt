@@ -13,6 +13,7 @@ interface Processor {
     fun fetch(): Register
     fun fetchWord(): Register
     fun peek(): Register
+    fun bigEndian(msb: UnsignedByte, lsb: UnsignedByte): UnsignedWord
     fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord
     fun splitWord(word: UnsignedWord): List<UnsignedByte>
 }

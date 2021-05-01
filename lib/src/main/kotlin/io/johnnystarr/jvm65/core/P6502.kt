@@ -95,9 +95,9 @@ class P6502() : Processor, InstructionSet {
      * @return [UnsignedWord] little endian word of both bytes
      */
     override fun fetchWord(): UnsignedWord {
-        val msb = this.fetch()
-        val lsb = this.fetch()
-        return (this.littleEndian(lsb, msb))
+        val msb = fetch()
+        val lsb = fetch()
+        return bigEndian(msb, lsb)
     }
 
     /**
@@ -106,6 +106,16 @@ class P6502() : Processor, InstructionSet {
      */
     override fun peek(): UnsignedByte {
         return this.mmu.at(this.pc.value + 1)
+    }
+
+    /**
+     * Transposes two bytes into little endian 16-bit number
+     * @param msb [UnsignedByte] most significant byte
+     * @param lsb [UnsignedByte] least significant byte
+     * @return [UnsignedWord] transposed combination of bytes
+     */
+    override fun bigEndian(msb: UnsignedByte, lsb: UnsignedByte): UnsignedWord {
+        return littleEndian(msb, lsb)
     }
 
     /**
