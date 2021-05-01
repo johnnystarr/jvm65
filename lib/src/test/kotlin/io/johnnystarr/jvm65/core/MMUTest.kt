@@ -10,7 +10,7 @@ internal class MMUTest {
 
     @BeforeEach
     fun setUp() {
-        mmu = MMU(0xFFFF, P6502())
+        mmu = P6502().mmu
     }
 
     @Test
@@ -36,5 +36,12 @@ internal class MMUTest {
         mmu.put(2, UnsignedByte(1))
         mmu.cpu.y.value = 1
         assertEquals(1, mmu.atY(1).value)
+    }
+
+    @Test
+    fun `immediate address mode`() {
+        mmu.put(0, UnsignedByte(1))
+        val byte = mmu.immediate()
+        assertEquals(1, byte.value)
     }
 }

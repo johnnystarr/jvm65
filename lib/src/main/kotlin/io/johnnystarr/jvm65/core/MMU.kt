@@ -61,15 +61,61 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
             memory[address] = byte
     }
 
+    /**
+     * Retrieves a literal byte from memory
+     * @return [UnsignedByte] byte from memory
+     */
     override fun immediate(): UnsignedByte {
         return cpu.fetch()
     }
 
+    /**
+     * Retrieves byte at zeropage address
+     * @return [UnsignedByte] byte from zeropage address
+     */
     override fun zeroPage(): UnsignedByte {
         return at(cpu.fetch().value)
     }
 
+    /**
+     * Retrieves byte at zeropage address offset by X
+     * @return [UnsignedByte] byte from zeropage address offset by x
+     */
     override fun zeroPageX(): UnsignedByte {
         return atX(cpu.fetch().value)
+    }
+
+    /**
+     * Retrieves byte at absolute 16-bit address
+     * @return [UnsignedByte] byte from absolute 16-bit address
+     */
+    override fun absolute(): UnsignedByte {
+        return at(cpu.fetchWord().value)
+    }
+
+    /**
+     * Retrieves byte at absolute 16-bit address offset by X
+     * @return [UnsignedByte] byte from absolute 16-bit address offset by X
+     */
+    override fun absoluteX(): UnsignedByte {
+        return atX(cpu.fetchWord().value)
+    }
+
+    /**
+     * Retrieves byte at absolute 16-bit address offset by Y
+     * @return [UnsignedByte] byte from absolute 16-bit address offset by Y
+     */
+    override fun absoluteY(): UnsignedByte{
+        return atY(cpu.fetchWord().value)
+    }
+
+    override fun indirectX(): UnsignedByte {
+        // implement
+        return UnsignedByte(0)
+    }
+
+    override fun indirectY(): UnsignedByte {
+        // implement
+        return UnsignedByte(0)
     }
 }

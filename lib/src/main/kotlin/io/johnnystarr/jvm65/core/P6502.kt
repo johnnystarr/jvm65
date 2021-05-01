@@ -149,9 +149,10 @@ class P6502() : Processor, InstructionSet {
             AddressMode.IMMEDIATE  -> mmu.immediate().value + carry
             AddressMode.ZEROPAGE   -> mmu.zeroPage().value + carry
             AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value + carry
-            AddressMode.ABSOLUTE   -> mmu.at(fetchWord().value).value + carry
-            AddressMode.ABSOLUTE_X -> mmu.atX(fetchWord().value).value + carry
-            AddressMode.ABSOLUTE_Y -> mmu.atY(fetchWord().value).value + carry
+            AddressMode.ABSOLUTE   -> mmu.absolute().value + carry
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value + carry
+            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value + carry
+            AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
             else -> throw IllegalStateException("Mode $mode does not exist.")
         }
     }

@@ -17,4 +17,9 @@ interface MemoryManager {
     fun immediate(): Register
     fun zeroPage(): Register
     fun zeroPageX(): Register
+    fun absolute(): Register
+    fun absoluteX(): Register
+    fun absoluteY(): Register
+    fun indirectX(): Register
+    fun indirectY(): Register
 }
