@@ -153,8 +153,8 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
-     * ADC (ADd with Carry)
-     *  @param mode [AddressMode] the current contextual address mode
+     * ADC - (ADd with Carry)
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun adc(mode: AddressMode) {
         val carry = if (carryFlag) 1 else 0
@@ -172,12 +172,18 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
-     * And
+     * AND - Logical AND Operation
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun and(mode: AddressMode) {
         a = when(mode) {
-            AddressMode.IMMEDIATE -> a.and(mmu.immediate())
-            AddressMode.ZEROPAGE  -> a.and(mmu.zeroPage())
+            AddressMode.IMMEDIATE  -> a.and(mmu.immediate())
+            AddressMode.ZEROPAGE   -> a.and(mmu.zeroPage())
+            AddressMode.ZEROPAGE_X -> a.and(mmu.zeroPageX())
+            AddressMode.ABSOLUTE   -> a.and(mmu.absolute())
+            AddressMode.ABSOLUTE_X -> a.and(mmu.absoluteX())
+            AddressMode.INDIRECT_X -> a.and(mmu.indirectX())
+            AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
     }
