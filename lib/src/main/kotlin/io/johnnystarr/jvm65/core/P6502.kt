@@ -70,13 +70,13 @@ class P6502() : Processor, InstructionSet {
      */
     override fun status(): UnsignedByte {
         val s = UnsignedByte(0)
-        if (this.carryFlag) s.value = s.value or 0b00000001
-        if (this.zeroFlag) s.value = s.value or 0b00000010
-        if (this.interruptDisableFlag) s.value = s.value or 0b00000100
-        if (this.decimalFlag) s.value = s.value or 0b00001000
-        if (this.overflowFlag) s.value = s.value or 0b01000000
-        if (this.negativeFlag) s.value = s.value or 0b10000000
-        this.sr = s
+        if (carryFlag) s.value = s.value or 0b00000001
+        if (zeroFlag) s.value = s.value or 0b00000010
+        if (interruptDisableFlag) s.value = s.value or 0b00000100
+        if (decimalFlag) s.value = s.value or 0b00001000
+        if (overflowFlag) s.value = s.value or 0b01000000
+        if (negativeFlag) s.value = s.value or 0b10000000
+        sr = s
         return s
     }
 
@@ -144,11 +144,11 @@ class P6502() : Processor, InstructionSet {
      *  @param mode [AddressMode] the current contextual address mode
      */
     override fun adc(mode: AddressMode) {
-        val carry = if (this.carryFlag) 1 else 0
+        val carry = if (carryFlag) 1 else 0
         a += when (mode) {
-            AddressMode.IMMEDIATE  -> fetch().value + carry
-            AddressMode.ZEROPAGE   -> mmu.at(fetch().value).value + carry
-            AddressMode.ZEROPAGE_X -> mmu.atX(fetch().value).value + carry
+            AddressMode.IMMEDIATE  -> mmu.immediate().value + carry
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value + carry
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value + carry
             AddressMode.ABSOLUTE   -> mmu.at(fetchWord().value).value + carry
             AddressMode.ABSOLUTE_X -> mmu.atX(fetchWord().value).value + carry
             AddressMode.ABSOLUTE_Y -> mmu.atY(fetchWord().value).value + carry

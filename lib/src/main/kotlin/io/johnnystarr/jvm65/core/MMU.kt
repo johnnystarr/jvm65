@@ -37,7 +37,7 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      */
     override fun atX(index: Int): UnsignedByte {
         val x = this.cpu.x.value
-        return this.at(index + x)
+        return at(index + x)
     }
 
     /**
@@ -47,7 +47,7 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      */
     override fun atY(index: Int): UnsignedByte {
         val y = this.cpu.y.value
-        return this.at(index + y)
+        return at(index + y)
     }
 
     /**
@@ -58,6 +58,18 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      */
     override fun put(address: Int, byte: Register) {
         if (byte is UnsignedByte)
-            this.memory[address] = byte
+            memory[address] = byte
+    }
+
+    override fun immediate(): UnsignedByte {
+        return cpu.fetch()
+    }
+
+    override fun zeroPage(): UnsignedByte {
+        return at(cpu.fetch().value)
+    }
+
+    override fun zeroPageX(): UnsignedByte {
+        return atX(cpu.fetch().value)
     }
 }

@@ -14,4 +14,7 @@ interface MemoryManager {
     fun atX(index: Int): Register
     fun atY(index: Int): Register
     fun put(address: Int, byte: Register)
+    fun immediate(): Register
+    fun zeroPage(): Register
+    fun zeroPageX(): Register
 }
