@@ -94,6 +94,16 @@ internal class P6502Test {
     }
 
     @Test
+    fun `fetch word indirectly and step cpu forward one`() {
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        val word = cpu.fetchWordIndirect()
+        assertEquals(0xABCD, word.value)
+        assertEquals(1, cpu.pc.value)
+    }
+
+    @Test
     fun `add a byte to memory and fetch it`() {
         cpu.mmu.put(0, UnsignedByte(1))
         val current = cpu.fetch()
