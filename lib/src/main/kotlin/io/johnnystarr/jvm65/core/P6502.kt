@@ -61,6 +61,11 @@ class P6502() : Processor, InstructionSet {
             0x21 -> and(AddressMode.INDIRECT_X)
             0x31 -> and(AddressMode.INDIRECT_Y)
             // ASL
+            0x0A -> asl(AddressMode.ACCUMULATOR)
+            0x06 -> asl(AddressMode.ZEROPAGE)
+            0x16 -> asl(AddressMode.ZEROPAGE_X)
+            0x0E -> asl(AddressMode.ABSOLUTE)
+            0x1E -> asl(AddressMode.ABSOLUTE_X)
         }
     }
 
@@ -176,7 +181,7 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun and(mode: AddressMode) {
-        a = when(mode) {
+        a = when (mode) {
             AddressMode.IMMEDIATE  -> a.and(mmu.immediate())
             AddressMode.ZEROPAGE   -> a.and(mmu.zeroPage())
             AddressMode.ZEROPAGE_X -> a.and(mmu.zeroPageX())
@@ -193,7 +198,14 @@ class P6502() : Processor, InstructionSet {
      * Arithmetic shift left
      */
     override fun asl(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.ACCUMULATOR -> a.shiftLeft()
+            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value).shiftLeft()
+            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value).shiftLeft()
+            AddressMode.ABSOLUTE    -> mmu.absolute().shiftLeft()
+            AddressMode.ABSOLUTE_X  -> mmu.absoluteX().shiftLeft()
+            else -> throw IllegalStateException("ASL mode $mode does not exist.")
+        }
     }
 
     /**
