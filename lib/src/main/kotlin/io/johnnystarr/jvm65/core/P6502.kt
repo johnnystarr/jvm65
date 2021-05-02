@@ -217,14 +217,16 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun asl(mode: AddressMode) {
-        when (mode) {
-            AddressMode.ACCUMULATOR -> a.shiftLeft()
-            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value).shiftLeft()
-            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value).shiftLeft()
-            AddressMode.ABSOLUTE    -> mmu.absolute().shiftLeft()
-            AddressMode.ABSOLUTE_X  -> mmu.absoluteX().shiftLeft()
+        val byte = when (mode) {
+            AddressMode.ACCUMULATOR -> a
+            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value)
+            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value)
+            AddressMode.ABSOLUTE    -> mmu.absolute()
+            AddressMode.ABSOLUTE_X  -> mmu.absoluteX()
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
         }
+        byte.shiftLeft()
+        updateFlags(byte)
     }
 
     /**
