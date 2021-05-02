@@ -302,7 +302,10 @@ class P6502() : Processor, InstructionSet {
      * Clear decimal
      */
     override fun cld(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> decimalFlag = false
+            else -> throw IllegalStateException("CLD mode $mode does not exist.")
+        }
     }
 
     /**
