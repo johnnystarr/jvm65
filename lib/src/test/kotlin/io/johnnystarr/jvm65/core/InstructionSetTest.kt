@@ -351,4 +351,45 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x31))
         assertEquals(0, cpu.a.value)
     }
+
+    @Test
+    fun `0x0A asl 1 accumulator`() {
+        cpu.a.value = 1
+        cpu.execute(UnsignedByte(0x0A))
+        assertEquals(2, cpu.a.value)
+    }
+
+    @Test
+    fun `0x06 asl 1 zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x06))
+        assertEquals(2, cpu.mmu.at(0).value)
+    }
+
+    @Test
+    fun `0x16 asl 1 zeropage x`() {
+        cpu.x.value = 1
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x16))
+        assertEquals(2, cpu.mmu.at(1).value)
+    }
+
+    @Test
+    fun `0x0E asl 1 absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x0E))
+        assertEquals(2, cpu.mmu.at(0xABCD).value)
+    }
+
+    @Test
+    fun `0x1E asl 1 absolute x`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x1E))
+        assertEquals(2, cpu.mmu.at(0xABCE).value)
+    }
 }
