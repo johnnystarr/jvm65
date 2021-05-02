@@ -531,7 +531,10 @@ class P6502() : Processor, InstructionSet {
      * Set interrupt disable
      */
     override fun sei(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> interruptDisableFlag = true
+            else -> throw IllegalStateException("SEC mode $mode does not exist.")
+        }
     }
 
     /**

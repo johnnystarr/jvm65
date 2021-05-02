@@ -413,4 +413,11 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x58))
         assertFalse(cpu.interruptDisableFlag)
     }
+
+    @Test
+    fun `0x78 set interrupt disable flag`() {
+        cpu.interruptDisableFlag = false
+        cpu.execute(UnsignedByte(0x78))
+        assertTrue(cpu.interruptDisableFlag)
+    }
 }
