@@ -37,7 +37,7 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      */
     override fun atX(index: Int): UnsignedByte {
         val x = this.cpu.x.value
-        return this.at(index + x)
+        return at(index + x)
     }
 
     /**
@@ -47,7 +47,7 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      */
     override fun atY(index: Int): UnsignedByte {
         val y = this.cpu.y.value
-        return this.at(index + y)
+        return at(index + y)
     }
 
     /**
@@ -58,6 +58,70 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
      */
     override fun put(address: Int, byte: Register) {
         if (byte is UnsignedByte)
-            this.memory[address] = byte
+            memory[address] = byte
+    }
+
+    /**
+     * Retrieves a literal byte from memory
+     * @return [UnsignedByte] byte from memory
+     */
+    override fun immediate(): UnsignedByte {
+        return cpu.fetch()
+    }
+
+    /**
+     * Retrieves byte at zeropage address
+     * @return [UnsignedByte] byte from zeropage address
+     */
+    override fun zeroPage(): UnsignedByte {
+        return at(cpu.fetch().value)
+    }
+
+    /**
+     * Retrieves byte at zeropage address offset by X
+     * @return [UnsignedByte] byte from zeropage address offset by x
+     */
+    override fun zeroPageX(): UnsignedByte {
+        return atX(cpu.fetch().value)
+    }
+
+    /**
+     * Retrieves byte at absolute 16-bit address
+     * @return [UnsignedByte] byte from absolute 16-bit address
+     */
+    override fun absolute(): UnsignedByte {
+        return at(cpu.fetchWord().value)
+    }
+
+    /**
+     * Retrieves byte at absolute 16-bit address offset by X
+     * @return [UnsignedByte] byte from absolute 16-bit address offset by X
+     */
+    override fun absoluteX(): UnsignedByte {
+        return atX(cpu.fetchWord().value)
+    }
+
+    /**
+     * Retrieves byte at absolute 16-bit address offset by Y
+     * @return [UnsignedByte] byte from absolute 16-bit address offset by Y
+     */
+    override fun absoluteY(): UnsignedByte{
+        return atY(cpu.fetchWord().value)
+    }
+
+    /**
+     * Retrieves byte indirectly using a zeropage pointer indexed by X
+     * @return [UnsignedByte] byte from indirect 16-bit address indexed by X
+     */
+    override fun indirectX(): UnsignedByte {
+        return at(cpu.fetchWordIndirect(true).value)
+    }
+
+    /**
+     * Retrieves byte indirectly using a zeropage pointer offset by Y
+     * @return [UnsignedByte] byte from indirect 16-bit address offset by Y
+     */
+    override fun indirectY(): UnsignedByte {
+        return atY(cpu.fetchWordIndirect(false).value)
     }
 }

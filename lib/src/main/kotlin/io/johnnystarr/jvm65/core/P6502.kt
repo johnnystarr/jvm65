@@ -33,6 +33,9 @@ class P6502() : Processor, InstructionSet {
     // stack
     var stack = EightBitStack()
 
+    // if we're keeping track of cycles
+    var cycles = 0
+
     /**
      * Execute an instruction
      * @return [Boolean] WIP
@@ -67,13 +70,13 @@ class P6502() : Processor, InstructionSet {
      */
     override fun status(): UnsignedByte {
         val s = UnsignedByte(0)
-        if (this.carryFlag) s.value = s.value or 0b00000001
-        if (this.zeroFlag) s.value = s.value or 0b00000010
-        if (this.interruptDisableFlag) s.value = s.value or 0b00000100
-        if (this.decimalFlag) s.value = s.value or 0b00001000
-        if (this.overflowFlag) s.value = s.value or 0b01000000
-        if (this.negativeFlag) s.value = s.value or 0b10000000
-        this.sr = s
+        if (carryFlag) s.value = s.value or 0b00000001
+        if (zeroFlag) s.value = s.value or 0b00000010
+        if (interruptDisableFlag) s.value = s.value or 0b00000100
+        if (decimalFlag) s.value = s.value or 0b00001000
+        if (overflowFlag) s.value = s.value or 0b01000000
+        if (negativeFlag) s.value = s.value or 0b10000000
+        sr = s
         return s
     }
 
@@ -88,11 +91,44 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
+     * Fetch two bytes from memory into one word
+     * @return [UnsignedWord] big endian word of both bytes
+     */
+    override fun fetchWord(): UnsignedWord {
+        val msb = fetch()
+        val lsb = fetch()
+        return bigEndian(msb, lsb)
+    }
+
+    /**
+     * Fetch two bytes from memory indirectly using a pointer
+     * @param index [Int] typically 0 unless X indexing is used
+     * @return [UnsignedWord] big endian word of both bytes
+     */
+    override fun fetchWordIndirect(useX: Boolean): UnsignedWord {
+        val xIndex = if (useX) this.x.value else 0
+        val pointer = fetch() + xIndex
+        val msb = mmu.at(pointer.value)
+        val lsb = mmu.at(pointer.value + 1)
+        return bigEndian(msb, lsb)
+    }
+
+    /**
      * Peek at the next byte in memory
      * @return [UnsignedByte] the byte that is next in line for fetching
      */
     override fun peek(): UnsignedByte {
         return this.mmu.at(this.pc.value + 1)
+    }
+
+    /**
+     * Transposes two bytes into little endian 16-bit number
+     * @param msb [UnsignedByte] most significant byte
+     * @param lsb [UnsignedByte] least significant byte
+     * @return [UnsignedWord] transposed combination of bytes
+     */
+    override fun bigEndian(msb: UnsignedByte, lsb: UnsignedByte): UnsignedWord {
+        return littleEndian(msb, lsb)
     }
 
     /**
@@ -117,24 +153,40 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
-     * Add with carry
+     * ADC - (ADd with Carry)
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun adc(mode: AddressMode) {
-        val carry = if (this.carryFlag) 1 else 0
-        val byte = this.fetch().value
-        when (mode) {
-            AddressMode.IMMEDIATE  -> this.a = this.a + (byte + carry)
-            AddressMode.ZEROPAGE   -> this.a = this.a + (this.mmu.at(byte).value + carry)
-            AddressMode.ZEROPAGE_X -> this.a = this.a + (this.mmu.atX(byte).value + carry)
-            else -> throw IllegalStateException("Mode $mode does not exist.")
+        val carry = if (carryFlag) 1 else 0
+        a += when (mode) {
+            AddressMode.IMMEDIATE  -> mmu.immediate().value + carry
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value + carry
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value + carry
+            AddressMode.ABSOLUTE   -> mmu.absolute().value + carry
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value + carry
+            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value + carry
+            AddressMode.INDIRECT_X -> mmu.indirectX().value + carry
+            AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
+            else -> throw IllegalStateException("ADC mode $mode does not exist.")
         }
     }
 
     /**
-     * And
+     * AND - Logical AND Operation
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun and(mode: AddressMode) {
-        // implement
+        a = when(mode) {
+            AddressMode.IMMEDIATE  -> a.and(mmu.immediate())
+            AddressMode.ZEROPAGE   -> a.and(mmu.zeroPage())
+            AddressMode.ZEROPAGE_X -> a.and(mmu.zeroPageX())
+            AddressMode.ABSOLUTE   -> a.and(mmu.absolute())
+            AddressMode.ABSOLUTE_X -> a.and(mmu.absoluteX())
+            AddressMode.ABSOLUTE_Y -> a.and(mmu.absoluteY())
+            AddressMode.INDIRECT_X -> a.and(mmu.indirectX())
+            AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
+            else -> throw IllegalStateException("AND mode $mode does not exist.")
+        }
     }
 
     /**

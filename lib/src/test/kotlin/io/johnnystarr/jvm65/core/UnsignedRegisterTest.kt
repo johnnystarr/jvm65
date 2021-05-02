@@ -56,6 +56,13 @@ internal class UnsignedRegisterTest {
     }
 
     @Test
+    fun `and operation 1 to 0`() {
+        register.value = 1
+        val result = register.and(UnsignedRegister(0))
+        assertEquals(0, result.value)
+    }
+
+    @Test
     fun `and operation 0xFF to 0xFF all ones`() {
         register.value = 0xFF
         val result = register.and(UnsignedRegister(0xFF))
