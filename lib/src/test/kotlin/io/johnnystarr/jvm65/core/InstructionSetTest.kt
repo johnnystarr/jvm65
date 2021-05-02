@@ -392,4 +392,53 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x1E))
         assertEquals(2, cpu.mmu.at(0xABCE).value)
     }
+
+    @Test
+    fun `0x18 clear carry flag`() {
+        cpu.carryFlag = true
+        cpu.execute(UnsignedByte(0x18))
+        assertFalse(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x38 set carry flag`() {
+        cpu.carryFlag = false
+        cpu.execute(UnsignedByte(0x38))
+        assertTrue(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x58 clear interrupt disable flag`() {
+        cpu.interruptDisableFlag = true
+        cpu.execute(UnsignedByte(0x58))
+        assertFalse(cpu.interruptDisableFlag)
+    }
+
+    @Test
+    fun `0x78 set interrupt disable flag`() {
+        cpu.interruptDisableFlag = false
+        cpu.execute(UnsignedByte(0x78))
+        assertTrue(cpu.interruptDisableFlag)
+    }
+
+    @Test
+    fun `0xB8 clear overflow flag`() {
+        cpu.overflowFlag = true
+        cpu.execute(UnsignedByte(0xB8))
+        assertFalse(cpu.overflowFlag)
+    }
+
+    @Test
+    fun `0xD8 clear decimal flag`() {
+        cpu.decimalFlag = true
+        cpu.execute(UnsignedByte(0xD8))
+        assertFalse(cpu.decimalFlag)
+    }
+
+    @Test
+    fun `0xF8 set decimal flag`() {
+        cpu.decimalFlag = false
+        cpu.execute(UnsignedByte(0xF8))
+        assertTrue(cpu.decimalFlag)
+    }
 }

@@ -66,6 +66,15 @@ class P6502() : Processor, InstructionSet {
             0x16 -> asl(AddressMode.ZEROPAGE_X)
             0x0E -> asl(AddressMode.ABSOLUTE)
             0x1E -> asl(AddressMode.ABSOLUTE_X)
+
+            // Flag Operations
+            0x18 -> clc(AddressMode.IMPLIED)
+            0x38 -> sec(AddressMode.IMPLIED)
+            0x58 -> cli(AddressMode.IMPLIED)
+            0x78 -> sei(AddressMode.IMPLIED)
+            0xB8 -> clv(AddressMode.IMPLIED)
+            0xD8 -> cld(AddressMode.IMPLIED)
+            0xF8 -> sed(AddressMode.IMPLIED)
         }
     }
 
@@ -196,6 +205,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Arithmetic shift left
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun asl(mode: AddressMode) {
         when (mode) {
@@ -282,28 +292,40 @@ class P6502() : Processor, InstructionSet {
      * Clear carry
      */
     override fun clc(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> carryFlag = false
+            else -> throw IllegalStateException("CLC mode $mode does not exist.")
+        }
     }
 
     /**
      * Clear decimal
      */
     override fun cld(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> decimalFlag = false
+            else -> throw IllegalStateException("CLD mode $mode does not exist.")
+        }
     }
 
     /**
      * Clear interrupt disable
      */
     override fun cli(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> interruptDisableFlag = false
+            else -> throw IllegalStateException("CLI mode $mode does not exist.")
+        }
     }
 
     /**
      * Clear overflow
      */
     override fun clv(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> overflowFlag = false
+            else -> throw IllegalStateException("CLV mode $mode does not exist.")
+        }
     }
 
     /**
@@ -499,21 +521,30 @@ class P6502() : Processor, InstructionSet {
      * Set carry
      */
     override fun sec(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> carryFlag = true
+            else -> throw IllegalStateException("SEC mode $mode does not exist.")
+        }
     }
 
     /**
      * Set decimal
      */
     override fun sed(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> decimalFlag = true
+            else -> throw IllegalStateException("SED mode $mode does not exist.")
+        }
     }
 
     /**
      * Set interrupt disable
      */
     override fun sei(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> interruptDisableFlag = true
+            else -> throw IllegalStateException("SEC mode $mode does not exist.")
+        }
     }
 
     /**
