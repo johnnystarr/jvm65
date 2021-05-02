@@ -394,8 +394,23 @@ internal class InstructionSetTest {
     }
 
     @Test
-    fun `0x18 set carry flag`() {
+    fun `0x18 clear carry flag`() {
+        cpu.carryFlag = true
         cpu.execute(UnsignedByte(0x18))
+        assertFalse(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x38 set carry flag`() {
+        cpu.carryFlag = false
+        cpu.execute(UnsignedByte(0x38))
         assertTrue(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x58 clear interrupt disable flag`() {
+        cpu.interruptDisableFlag = true
+        cpu.execute(UnsignedByte(0x58))
+        assertFalse(cpu.interruptDisableFlag)
     }
 }

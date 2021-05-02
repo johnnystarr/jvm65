@@ -292,7 +292,7 @@ class P6502() : Processor, InstructionSet {
      */
     override fun clc(mode: AddressMode) {
         when (mode) {
-            AddressMode.IMPLIED -> carryFlag = true
+            AddressMode.IMPLIED -> carryFlag = false
             else -> throw IllegalStateException("CLC mode $mode does not exist.")
         }
     }
@@ -308,7 +308,10 @@ class P6502() : Processor, InstructionSet {
      * Clear interrupt disable
      */
     override fun cli(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> interruptDisableFlag = false
+            else -> throw IllegalStateException("CLI mode $mode does not exist.")
+        }
     }
 
     /**
@@ -511,7 +514,10 @@ class P6502() : Processor, InstructionSet {
      * Set carry
      */
     override fun sec(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> carryFlag = true
+            else -> throw IllegalStateException("SEC mode $mode does not exist.")
+        }
     }
 
     /**
