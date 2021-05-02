@@ -392,4 +392,10 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x1E))
         assertEquals(2, cpu.mmu.at(0xABCE).value)
     }
+
+    @Test
+    fun `0x18 set carry flag`() {
+        cpu.execute(UnsignedByte(0x18))
+        assertTrue(cpu.carryFlag)
+    }
 }
