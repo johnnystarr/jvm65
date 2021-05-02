@@ -11,7 +11,7 @@
 A JVM library that provides a 6502 simulator.
 
 ### State of Project
-This project is a WIP and is available as a pre-release for evaluation only_
+_This project is a WIP and is available as a pre-release for evaluation only_
 
 ### Implementation
 jvm65 is written in Kotlin but is interoperable with any JVM language.

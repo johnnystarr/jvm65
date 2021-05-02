@@ -1,4 +1,15 @@
 
+<a name="v0.1.7"></a>
+## [v0.1.7](https://github.com/johnnystarr/jvm65/compare/v0.1.6...v0.1.7)
+
+> 2021-05-01
+
+### Pull Requests
+
+* Merge pull request [#20](https://github.com/johnnystarr/jvm65/issues/20) from johnnystarr/feature/instructions-for-asl
+* Merge pull request [#19](https://github.com/johnnystarr/jvm65/issues/19) from johnnystarr/feature/more-address-mode-handling
+
+
 <a name="v0.1.6"></a>
 ## [v0.1.6](https://github.com/johnnystarr/jvm65/compare/v0.1.5...v0.1.6)
 
