@@ -531,7 +531,10 @@ class P6502() : Processor, InstructionSet {
      * Set decimal
      */
     override fun sed(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> decimalFlag = true
+            else -> throw IllegalStateException("SED mode $mode does not exist.")
+        }
     }
 
     /**

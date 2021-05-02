@@ -434,4 +434,11 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xD8))
         assertFalse(cpu.decimalFlag)
     }
+
+    @Test
+    fun `0xF8 set decimal flag`() {
+        cpu.decimalFlag = false
+        cpu.execute(UnsignedByte(0xF8))
+        assertTrue(cpu.decimalFlag)
+    }
 }
