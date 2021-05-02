@@ -420,4 +420,11 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x78))
         assertTrue(cpu.interruptDisableFlag)
     }
+
+    @Test
+    fun `0xB8 clear overflow flag`() {
+        cpu.overflowFlag = true
+        cpu.execute(UnsignedByte(0xB8))
+        assertFalse(cpu.overflowFlag)
+    }
 }

@@ -205,6 +205,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Arithmetic shift left
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun asl(mode: AddressMode) {
         when (mode) {
@@ -318,7 +319,10 @@ class P6502() : Processor, InstructionSet {
      * Clear overflow
      */
     override fun clv(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> overflowFlag = false
+            else -> throw IllegalStateException("CLV mode $mode does not exist.")
+        }
     }
 
     /**
