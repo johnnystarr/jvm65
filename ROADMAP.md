@@ -3,7 +3,7 @@
 ⚠️ ADC (ADd with Carry)
 --------------------
 
-Affects Flags: N V Z C
+Affects Flags: N V Z C - Flag Checks ❌ 
 
     MODE           SYNTAX       HEX LEN TIM [Standard] [ BCD ]
     Immediate     ADC #$44      $69  2   2      ✅        ❌
@@ -21,7 +21,7 @@ Affects Flags: N V Z C
 ✅ AND (bitwise AND with accumulator)
 ----------------------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     AND #$44      $29  2   2      ✅ 
@@ -39,7 +39,7 @@ Affects Flags: N Z
 ✅ ASL (Arithmetic Shift Left)
 ---------------------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Accumulator   ASL A         $0A  1   2      ✅
@@ -52,7 +52,7 @@ Affects Flags: N Z C
 ❌ BIT (test BITs)
 ---------------
 
-Affects Flags: N V Z
+Affects Flags: N V Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Zero Page     BIT $44       $24  2   3      ❌
@@ -77,7 +77,7 @@ Affect Flags: none
 ❌ BRK (BReaK)
 -----------
 
-Affects Flags: B
+Affects Flags: B - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Implied       BRK           $00  1   7      ❌
@@ -85,7 +85,7 @@ Affects Flags: B
 ❌ CMP (CoMPare accumulator)
 -------------------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     CMP #$44      $C9  2   2      ❌
@@ -102,7 +102,7 @@ Affects Flags: N Z C
 ❌ CPX (ComPare X register)
 ------------------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     CPX #$44      $E0  2   2      ❌
@@ -112,7 +112,7 @@ Affects Flags: N Z C
 ❌ CPY (ComPare Y register)
 ------------------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     CPY #$44      $C0  2   2      ❌
@@ -122,7 +122,7 @@ Affects Flags: N Z C
 ❌ DEC (DECrement memory)
 ----------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Zero Page     DEC $44       $C6  2   5      ❌
@@ -133,7 +133,7 @@ Affects Flags: N Z
 ❌ EOR (bitwise Exclusive OR)
 --------------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     EOR #$44      $49  2   2      ❌
@@ -150,7 +150,7 @@ Affects Flags: N Z
 ✅ Flag (Processor Status) Instructions
 ------------------------------------
 
-Affect Flags: as noted
+Affect Flags: as noted - Flag Checks ✅
 
     MNEMONIC                       HEX       [Status]
     CLC (CLear Carry)              $18          ✅
@@ -166,7 +166,7 @@ Affect Flags: as noted
 ❌ INC (INCrement memory)
 ----------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Zero Page     INC $44       $E6  2   5      ❌
@@ -194,7 +194,7 @@ Affects Flags: none
 ❌ LDA (LoaD Accumulator)
 ----------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     LDA #$44      $A9  2   2      ❌
@@ -211,7 +211,7 @@ Affects Flags: N Z
 ❌ LDX (LoaD X register)
 ---------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     LDX #$44      $A2  2   2      ❌
@@ -225,7 +225,7 @@ Affects Flags: N Z
 ❌ LDY (LoaD Y register)
 ---------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     LDY #$44      $A0  2   2      ❌
@@ -239,7 +239,7 @@ Affects Flags: N Z
 ❌ LSR (Logical Shift Right)
 -------------------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Accumulator   LSR A         $4A  1   2      ❌
@@ -260,7 +260,7 @@ Affects Flags: none
 ❌ ORA (bitwise OR with Accumulator)
 ---------------------------------
 
-Affects Flags: N Z
+Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     ORA #$44      $09  2   2      ❌
@@ -277,7 +277,7 @@ Affects Flags: N Z
 ❌ Register Instructions
 ---------------------
 
-Affect Flags: N Z
+Affect Flags: N Z - Flag Checks ❌
 
     MNEMONIC                 HEX             [Status]
     TAX (Transfer A to X)    $AA                ❌
@@ -292,7 +292,7 @@ Affect Flags: N Z
 ❌ ROL (ROtate Left)
 -----------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Accumulator   ROL A         $2A  1   2      ❌
@@ -304,7 +304,7 @@ Affects Flags: N Z C
 ❌ ROR (ROtate Right)
 ------------------
 
-Affects Flags: N Z C
+Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Accumulator   ROR A         $6A  1   2      ❌
@@ -316,7 +316,7 @@ Affects Flags: N Z C
 ❌ RTI (ReTurn from Interrupt)
 ---------------------------
 
-Affects Flags: all
+Affects Flags: all - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Implied       RTI           $40  1   6      ❌
@@ -332,7 +332,7 @@ Affects Flags: none
 ❌ SBC (SuBtract with Carry)
 -------------------------
 
-Affects Flags: N V Z C
+Affects Flags: N V Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Immediate     SBC #$44      $E9  2   2      ❌
