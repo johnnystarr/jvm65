@@ -44,4 +44,22 @@ data class UnsignedWord (
             else -> UnsignedWord(newValue)
         }
     }
+
+    /**
+     * Binary Coded Decimal Addition
+     * @param increment [Int] amount to add
+     * @return [UnsignedWord] result of addition
+     */
+    override fun bcdPlus(increment: Int): UnsignedWord {
+        return UnsignedWord(0)
+    }
+
+    /**
+     * Binary Coded Decimal Addition
+     * @param decrement [Int] amount to add
+     * @return [UnsignedWord] result of subtraction
+     */
+    override fun bcdMinus(decrement: Int): UnsignedWord {
+        return UnsignedWord(0)
+    }
 }
