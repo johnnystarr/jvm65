@@ -98,7 +98,7 @@ internal class P6502Test {
         cpu.mmu.put(0, UnsignedByte(0x0A))
         cpu.mmu.put(0x0A, UnsignedByte(0xCD))
         cpu.mmu.put(0x0B, UnsignedByte(0xAB))
-        val word = cpu.fetchWordIndirect(false)
+        val word = cpu.fetchWordIndirect(useX = false)
         assertEquals(0xABCD, word.value)
         assertEquals(1, cpu.pc.value)
     }
@@ -109,7 +109,7 @@ internal class P6502Test {
         cpu.mmu.put(0, UnsignedByte(0x09))
         cpu.mmu.put(0x0A, UnsignedByte(0xCD))
         cpu.mmu.put(0x0B, UnsignedByte(0xAB))
-        val word = cpu.fetchWordIndirect(true)
+        val word = cpu.fetchWordIndirect(useX = true)
         assertEquals(0xABCD, word.value)
         assertEquals(1, cpu.pc.value)
     }

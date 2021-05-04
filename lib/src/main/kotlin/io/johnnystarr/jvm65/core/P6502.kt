@@ -287,7 +287,7 @@ class P6502() : Processor, InstructionSet {
      * Update flags based on latest byte operation
      * @param byte [UnsignedByte] byte last operated on
      */
-    override fun updateFlags(byte: UnsignedByte) {
+    override fun updateFlags(byte: UnsignedByte, checkOverflow: Boolean) {
         when (byte.state) {
             RegisterState.NONE -> {}
             RegisterState.ZEROED -> zeroFlag = true
@@ -298,6 +298,9 @@ class P6502() : Processor, InstructionSet {
         }
         if ((byte.value and 0x80) == 0x80)
             negativeFlag = true
+        if (checkOverflow) {
+            overflowFlag = byte.value in 0x80..0xFF || byte.value > 0x7F
+        }
     }
 
     /**
@@ -322,7 +325,7 @@ class P6502() : Processor, InstructionSet {
         } else {
             a = a.bcdPlus(increment, carry)
         }
-        updateFlags(a)
+        updateFlags(a, checkOverflow = true)
     }
 
     /**
@@ -341,7 +344,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
-        updateFlags(a)
+        updateFlags(a, checkOverflow = false)
     }
 
     /**
@@ -358,7 +361,7 @@ class P6502() : Processor, InstructionSet {
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
         }
         byte.shiftLeft()
-        updateFlags(byte)
+        updateFlags(byte, checkOverflow = false)
     }
 
     /**
