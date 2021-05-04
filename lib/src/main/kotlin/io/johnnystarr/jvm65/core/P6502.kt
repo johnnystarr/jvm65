@@ -4,8 +4,6 @@
 
 package io.johnnystarr.jvm65.core
 
-import java.lang.Exception
-
 /**
  * 6502 Processor Class
  *
@@ -42,7 +40,6 @@ class P6502() : Processor, InstructionSet {
      */
     override fun execute(opcode: UnsignedByte) {
         when (opcode.value) {
-            // ADC
             0x69 -> adc(AddressMode.IMMEDIATE)
             0x65 -> adc(AddressMode.ZEROPAGE)
             0x75 -> adc(AddressMode.ZEROPAGE_X)
@@ -51,7 +48,6 @@ class P6502() : Processor, InstructionSet {
             0x79 -> adc(AddressMode.ABSOLUTE_Y)
             0x61 -> adc(AddressMode.INDIRECT_X)
             0x71 -> adc(AddressMode.INDIRECT_Y)
-            // AND
             0x29 -> and(AddressMode.IMMEDIATE)
             0x25 -> and(AddressMode.ZEROPAGE)
             0x35 -> and(AddressMode.ZEROPAGE_X)
@@ -60,14 +56,48 @@ class P6502() : Processor, InstructionSet {
             0x39 -> and(AddressMode.ABSOLUTE_Y)
             0x21 -> and(AddressMode.INDIRECT_X)
             0x31 -> and(AddressMode.INDIRECT_Y)
-            // ASL
             0x0A -> asl(AddressMode.ACCUMULATOR)
             0x06 -> asl(AddressMode.ZEROPAGE)
             0x16 -> asl(AddressMode.ZEROPAGE_X)
             0x0E -> asl(AddressMode.ABSOLUTE)
             0x1E -> asl(AddressMode.ABSOLUTE_X)
-
-            // Flag Operations
+            0x24 -> bit(AddressMode.ZEROPAGE)
+            0x2C -> bit(AddressMode.ABSOLUTE)
+            0x10 -> bpl(AddressMode.RELATIVE)
+            0x30 -> bmi(AddressMode.RELATIVE)
+            0x50 -> bvc(AddressMode.RELATIVE)
+            0x70 -> bvs(AddressMode.RELATIVE)
+            0x90 -> bcc(AddressMode.RELATIVE)
+            0xB0 -> bcs(AddressMode.RELATIVE)
+            0xD0 -> bne(AddressMode.RELATIVE)
+            0xF0 -> beq(AddressMode.RELATIVE)
+            0x00 -> brk(AddressMode.IMPLIED)
+            0xC9 -> cmp(AddressMode.IMMEDIATE)
+            0xC5 -> cmp(AddressMode.ZEROPAGE)
+            0xD5 -> cmp(AddressMode.ZEROPAGE_X)
+            0xCD -> cmp(AddressMode.ABSOLUTE)
+            0xDD -> cmp(AddressMode.ABSOLUTE_X)
+            0xD9 -> cmp(AddressMode.ABSOLUTE_Y)
+            0xC1 -> cmp(AddressMode.INDIRECT_X)
+            0xD1 -> cmp(AddressMode.INDIRECT_Y)
+            0xE0 -> cpx(AddressMode.IMMEDIATE)
+            0xE4 -> cpx(AddressMode.ZEROPAGE)
+            0xEC -> cpx(AddressMode.ABSOLUTE)
+            0xC0 -> cpy(AddressMode.IMMEDIATE)
+            0xC4 -> cpy(AddressMode.ZEROPAGE)
+            0xCC -> cpy(AddressMode.ABSOLUTE)
+            0xC6 -> dec(AddressMode.ZEROPAGE)
+            0xD6 -> dec(AddressMode.ZEROPAGE_X)
+            0xCE -> dec(AddressMode.ABSOLUTE)
+            0xDE -> dec(AddressMode.ABSOLUTE_X)
+            0x49 -> eor(AddressMode.IMMEDIATE)
+            0x45 -> eor(AddressMode.ZEROPAGE)
+            0x55 -> eor(AddressMode.ZEROPAGE_X)
+            0x4D -> eor(AddressMode.ABSOLUTE)
+            0x5D -> eor(AddressMode.ABSOLUTE_X)
+            0x59 -> eor(AddressMode.ABSOLUTE_Y)
+            0x41 -> eor(AddressMode.INDIRECT_X)
+            0x51 -> eor(AddressMode.INDIRECT_Y)
             0x18 -> clc(AddressMode.IMPLIED)
             0x38 -> sec(AddressMode.IMPLIED)
             0x58 -> cli(AddressMode.IMPLIED)
@@ -75,6 +105,93 @@ class P6502() : Processor, InstructionSet {
             0xB8 -> clv(AddressMode.IMPLIED)
             0xD8 -> cld(AddressMode.IMPLIED)
             0xF8 -> sed(AddressMode.IMPLIED)
+            0xE6 -> inc(AddressMode.ZEROPAGE)
+            0xF6 -> inc(AddressMode.ZEROPAGE_X)
+            0xEE -> inc(AddressMode.ABSOLUTE)
+            0xFE -> inc(AddressMode.ABSOLUTE_X)
+            0x4C -> jmp(AddressMode.ABSOLUTE)
+            0x6C -> jmp(AddressMode.INDIRECT)
+            0x20 -> jsr(AddressMode.ABSOLUTE)
+            0xA9 -> lda(AddressMode.IMMEDIATE)
+            0xA5 -> lda(AddressMode.ZEROPAGE)
+            0xB5 -> lda(AddressMode.ZEROPAGE_X)
+            0xAD -> lda(AddressMode.ABSOLUTE)
+            0xBD -> lda(AddressMode.ABSOLUTE_X)
+            0xB9 -> lda(AddressMode.ABSOLUTE_Y)
+            0xA1 -> lda(AddressMode.INDIRECT_X)
+            0xB1 -> lda(AddressMode.INDIRECT_Y)
+            0xA2 -> ldx(AddressMode.IMMEDIATE)
+            0xA6 -> ldx(AddressMode.ZEROPAGE)
+            0xB6 -> ldx(AddressMode.ZEROPAGE_Y)
+            0xAE -> ldx(AddressMode.ABSOLUTE)
+            0xBE -> ldx(AddressMode.ABSOLUTE_Y)
+            0xA0 -> ldy(AddressMode.IMMEDIATE)
+            0xA4 -> ldy(AddressMode.ZEROPAGE)
+            0xB4 -> ldy(AddressMode.ZEROPAGE_X)
+            0xAC -> ldy(AddressMode.ABSOLUTE)
+            0xBC -> ldy(AddressMode.ABSOLUTE_X)
+            0x4A -> lsr(AddressMode.ACCUMULATOR)
+            0x46 -> lsr(AddressMode.ZEROPAGE)
+            0x56 -> lsr(AddressMode.ZEROPAGE_X)
+            0x4E -> lsr(AddressMode.ABSOLUTE)
+            0x5E -> lsr(AddressMode.ABSOLUTE_X)
+            0xEA -> nop(AddressMode.IMPLIED)
+            0x09 -> ora(AddressMode.IMMEDIATE)
+            0x05 -> ora(AddressMode.ZEROPAGE)
+            0x15 -> ora(AddressMode.ZEROPAGE_X)
+            0x0D -> ora(AddressMode.ABSOLUTE)
+            0x1D -> ora(AddressMode.ABSOLUTE_X)
+            0x19 -> ora(AddressMode.ABSOLUTE_Y)
+            0x01 -> ora(AddressMode.INDIRECT_X)
+            0x11 -> ora(AddressMode.INDIRECT_Y)
+            0xAA -> tax(AddressMode.IMPLIED)
+            0x8A -> txa(AddressMode.IMPLIED)
+            0xCA -> dex(AddressMode.IMPLIED)
+            0xE8 -> inx(AddressMode.IMPLIED)
+            0xA8 -> tay(AddressMode.IMPLIED)
+            0x98 -> tya(AddressMode.IMPLIED)
+            0x88 -> dey(AddressMode.IMPLIED)
+            0xC8 -> iny(AddressMode.IMPLIED)
+            0x2A -> rol(AddressMode.ACCUMULATOR)
+            0x26 -> rol(AddressMode.ZEROPAGE)
+            0x36 -> rol(AddressMode.ZEROPAGE_X)
+            0x2E -> rol(AddressMode.ABSOLUTE)
+            0x3E -> rol(AddressMode.ABSOLUTE_X)
+            0x6A -> ror(AddressMode.ACCUMULATOR)
+            0x66 -> ror(AddressMode.ZEROPAGE)
+            0x76 -> ror(AddressMode.ZEROPAGE_X)
+            0x6E -> ror(AddressMode.ABSOLUTE)
+            0x7E -> ror(AddressMode.ABSOLUTE_X)
+            0x40 -> rti(AddressMode.IMPLIED)
+            0x60 -> rts(AddressMode.IMPLIED)
+            0xE9 -> sbc(AddressMode.IMMEDIATE)
+            0xE5 -> sbc(AddressMode.ZEROPAGE)
+            0xF5 -> sbc(AddressMode.ZEROPAGE_X)
+            0xED -> sbc(AddressMode.ABSOLUTE)
+            0xFD -> sbc(AddressMode.ABSOLUTE_X)
+            0xF9 -> sbc(AddressMode.ABSOLUTE_Y)
+            0xE1 -> sbc(AddressMode.INDIRECT_X)
+            0xF1 -> sbc(AddressMode.INDIRECT_Y)
+            0x85 -> sta(AddressMode.ZEROPAGE)
+            0x95 -> sta(AddressMode.ZEROPAGE_X)
+            0x8D -> sta(AddressMode.ABSOLUTE)
+            0x9D -> sta(AddressMode.ABSOLUTE_X)
+            0x99 -> sta(AddressMode.ABSOLUTE_Y)
+            0x81 -> sta(AddressMode.INDIRECT_X)
+            0x91 -> sta(AddressMode.INDIRECT_Y)
+            0x9A -> txs(AddressMode.IMPLIED)
+            0xBA -> tsx(AddressMode.IMPLIED)
+            0x48 -> pha(AddressMode.IMPLIED)
+            0x68 -> pla(AddressMode.IMPLIED)
+            0x08 -> php(AddressMode.IMPLIED)
+            0x28 -> plp(AddressMode.IMPLIED)
+            0x86 -> stx(AddressMode.ZEROPAGE)
+            0x96 -> stx(AddressMode.ZEROPAGE_Y)
+            0x8E -> stx(AddressMode.ABSOLUTE)
+            0x84 -> sty(AddressMode.ZEROPAGE)
+            0x94 -> sty(AddressMode.ZEROPAGE_X)
+            0x8C -> sty(AddressMode.ABSOLUTE)
+            else -> throw IllegalArgumentException("Illegal Opcode: ${opcode.value}")
         }
     }
 
@@ -167,6 +284,15 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
+     * Update flags based on latest byte operation
+     * @param byte [UnsignedByte] byte last operated on
+     */
+    override fun updateFlags(byte: UnsignedByte) {
+        (byte.state == RegisterState.ZEROED)
+            zeroFlag = true
+    }
+
+    /**
      * ADC - (ADd with Carry)
      * @param mode [AddressMode] the current contextual address mode
      */
@@ -183,6 +309,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
             else -> throw IllegalStateException("ADC mode $mode does not exist.")
         }
+        updateFlags(a)
     }
 
     /**
@@ -201,6 +328,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
+        updateFlags(a)
     }
 
     /**
@@ -208,18 +336,21 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun asl(mode: AddressMode) {
-        when (mode) {
-            AddressMode.ACCUMULATOR -> a.shiftLeft()
-            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value).shiftLeft()
-            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value).shiftLeft()
-            AddressMode.ABSOLUTE    -> mmu.absolute().shiftLeft()
-            AddressMode.ABSOLUTE_X  -> mmu.absoluteX().shiftLeft()
+        val byte = when (mode) {
+            AddressMode.ACCUMULATOR -> a
+            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value)
+            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value)
+            AddressMode.ABSOLUTE    -> mmu.absolute()
+            AddressMode.ABSOLUTE_X  -> mmu.absoluteX()
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
         }
+        byte.shiftLeft()
+        updateFlags(byte)
     }
 
     /**
      * Branch on carry clear
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bcc(mode: AddressMode) {
         // implement
@@ -227,6 +358,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on carry set
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bcs(mode: AddressMode) {
         // implement
@@ -234,6 +366,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on equal
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun beq(mode: AddressMode) {
         // implement
@@ -241,6 +374,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Bit test
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bit(mode: AddressMode) {
         // implement
@@ -248,6 +382,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on minus
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bmi(mode: AddressMode) {
         // implement
@@ -255,6 +390,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on not equal
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bne(mode: AddressMode) {
         // implement
@@ -262,6 +398,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on plus
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bpl(mode: AddressMode) {
         // implement
@@ -269,6 +406,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Break / interrupt
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun brk(mode: AddressMode) {
         // implement
@@ -276,6 +414,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on overflow clear
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bvc(mode: AddressMode) {
         // implement
@@ -283,6 +422,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Branch on overflow set
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun bvs(mode: AddressMode) {
         // implement
@@ -290,6 +430,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Clear carry
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun clc(mode: AddressMode) {
         when (mode) {
@@ -300,6 +441,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Clear decimal
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun cld(mode: AddressMode) {
         when (mode) {
@@ -310,6 +452,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Clear interrupt disable
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun cli(mode: AddressMode) {
         when (mode) {
@@ -320,6 +463,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Clear overflow
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun clv(mode: AddressMode) {
         when (mode) {
@@ -330,6 +474,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Compare with accumulator
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun cmp(mode: AddressMode) {
         // implement
@@ -337,6 +482,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Compare with X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun cpx(mode: AddressMode) {
         // implement
@@ -344,6 +490,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Compare with Y
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun cpy(mode: AddressMode) {
         // implement
@@ -351,6 +498,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Decrement
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun dec(mode: AddressMode) {
         // implement
@@ -358,6 +506,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Decrement X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun dex(mode: AddressMode) {
         // implement
@@ -365,6 +514,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Decrement Y
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun dey(mode: AddressMode) {
         // implement
@@ -372,6 +522,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Exclusive or
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun eor(mode: AddressMode) {
         // implement
@@ -379,6 +530,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Increment
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun inc(mode: AddressMode) {
         // implement
@@ -386,6 +538,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Increment X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun inx(mode: AddressMode) {
         // implement
@@ -393,6 +546,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Increment Y
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun iny(mode: AddressMode) {
         // implement
@@ -400,6 +554,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Jump
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun jmp(mode: AddressMode) {
         // implement
@@ -407,6 +562,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Jump subroutine
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun jsr(mode: AddressMode) {
         // implement
@@ -414,6 +570,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Load accumulator
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun lda(mode: AddressMode) {
         // implement
@@ -421,6 +578,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Load X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun ldx(mode: AddressMode) {
         // implement
@@ -428,6 +586,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Load Y
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun ldy(mode: AddressMode) {
         // implement
@@ -435,6 +594,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Logical shift right
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun lsr(mode: AddressMode) {
         // implement
@@ -442,6 +602,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * No operation
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun nop(mode: AddressMode) {
         // implement
@@ -449,6 +610,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Or with accumulator
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun ora(mode: AddressMode) {
         // implement
@@ -456,6 +618,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Push accumulator onto stack
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun pha(mode: AddressMode) {
         // implement
@@ -463,6 +626,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Push processor status onto stack
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun php(mode: AddressMode) {
         // implement
@@ -470,6 +634,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Pull accumulator from stack
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun pla(mode: AddressMode) {
         // implement
@@ -477,6 +642,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Pull processor status from stack
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun plp(mode: AddressMode) {
         // implement
@@ -484,6 +650,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Rotate left
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun rol(mode: AddressMode) {
         // implement
@@ -491,6 +658,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Rotate right
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun ror(mode: AddressMode) {
         // implement
@@ -498,6 +666,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Return from interrupt
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun rti(mode: AddressMode) {
         // implement
@@ -505,6 +674,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Return from subroutine
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun rts(mode: AddressMode) {
         // implement
@@ -512,6 +682,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Subtract with carry
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun sbc(mode: AddressMode) {
         // implement
@@ -519,6 +690,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Set carry
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun sec(mode: AddressMode) {
         when (mode) {
@@ -529,6 +701,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Set decimal
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun sed(mode: AddressMode) {
         when (mode) {
@@ -539,6 +712,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Set interrupt disable
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun sei(mode: AddressMode) {
         when (mode) {
@@ -549,6 +723,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Store accumulator
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun sta(mode: AddressMode) {
         // implement
@@ -556,6 +731,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Store X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun stx(mode: AddressMode) {
         // implement
@@ -563,6 +739,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Store Y
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun sty(mode: AddressMode) {
         // implement
@@ -570,6 +747,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transfer accumulator to X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun tax(mode: AddressMode) {
         // implement
@@ -577,6 +755,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transfer accumulator to Y
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun tay(mode: AddressMode) {
         // implement
@@ -584,6 +763,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transfer stack pointer to X
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun tsx(mode: AddressMode) {
         // implement
@@ -591,6 +771,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transfer X to accumulator
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun txa(mode: AddressMode) {
         // implement
@@ -598,6 +779,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transfer X to stack pointer
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun txs(mode: AddressMode) {
         // implement
@@ -605,6 +787,7 @@ class P6502() : Processor, InstructionSet {
 
     /**
      * Transfer Y to accumulator
+     * @param mode [AddressMode] the current contextual address mode
      */
     override fun tya(mode: AddressMode) {
         // implement
