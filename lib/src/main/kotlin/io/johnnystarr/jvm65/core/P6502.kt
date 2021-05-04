@@ -289,9 +289,12 @@ class P6502() : Processor, InstructionSet {
      */
     override fun updateFlags(byte: UnsignedByte) {
         when (byte.state) {
+            RegisterState.NONE -> {}
             RegisterState.ZEROED -> zeroFlag = true
             RegisterState.SIGNED_NEGATIVE -> overflowFlag = true
             RegisterState.SIGNED_POSITIVE -> overflowFlag = false
+            RegisterState.POSITIVE_WRAPAROUND -> cycles += 1
+            RegisterState.NEGATIVE_WRAPAROUND -> cycles += 1
         }
         if ((byte.value and 0x80) == 0x80)
             negativeFlag = true
