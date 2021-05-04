@@ -288,8 +288,13 @@ class P6502() : Processor, InstructionSet {
      * @param byte [UnsignedByte] byte last operated on
      */
     override fun updateFlags(byte: UnsignedByte) {
-        (byte.state == RegisterState.ZEROED)
-            zeroFlag = true
+        when (byte.state) {
+            RegisterState.ZEROED -> zeroFlag = true
+            RegisterState.SIGNED_NEGATIVE -> overflowFlag = true
+            RegisterState.SIGNED_POSITIVE -> overflowFlag = false
+        }
+        if ((byte.value and 0x80) == 0x80)
+            negativeFlag = true
     }
 
     /**
