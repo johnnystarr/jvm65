@@ -306,16 +306,21 @@ class P6502() : Processor, InstructionSet {
      */
     override fun adc(mode: AddressMode) {
         val carry = if (carryFlag) 1 else 0
-        a += when (mode) {
-            AddressMode.IMMEDIATE  -> mmu.immediate().value + carry
-            AddressMode.ZEROPAGE   -> mmu.zeroPage().value + carry
-            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value + carry
-            AddressMode.ABSOLUTE   -> mmu.absolute().value + carry
-            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value + carry
-            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value + carry
-            AddressMode.INDIRECT_X -> mmu.indirectX().value + carry
-            AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
+        val increment = when (mode) {
+            AddressMode.IMMEDIATE  -> mmu.immediate().value
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value
+            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value
+            AddressMode.INDIRECT_X -> mmu.indirectX().value
+            AddressMode.INDIRECT_Y -> mmu.indirectY().value
             else -> throw IllegalStateException("ADC mode $mode does not exist.")
+        }
+        if (!decimalFlag) {
+            a += increment + carry
+        } else {
+            a = a.bcdPlus(increment, carry)
         }
         updateFlags(a)
     }
