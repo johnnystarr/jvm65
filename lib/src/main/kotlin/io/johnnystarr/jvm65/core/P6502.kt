@@ -302,6 +302,16 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
+     * Branch to an signed offset
+     */
+    override fun branch(offset: UnsignedByte) {
+        if (offset.value < 0x80)
+            pc += offset.value
+        else
+            pc -= (0xFF - offset.value)
+    }
+
+    /**
      * ADC - (ADd with Carry)
      * @param mode [AddressMode] the current contextual address mode
      */
@@ -367,7 +377,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bcc(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!carryFlag) branch(fetch())
+            else -> throw IllegalStateException("BCC mode $mode does not exist.")
+        }
     }
 
     /**
@@ -375,7 +388,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bcs(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (carryFlag) branch(fetch())
+            else -> throw IllegalStateException("BCS mode $mode does not exist.")
+        }
     }
 
     /**
@@ -383,7 +399,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun beq(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (zeroFlag) branch(fetch())
+            else -> throw IllegalStateException("BEQ mode $mode does not exist.")
+        }
     }
 
     /**
@@ -408,7 +427,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bmi(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (negativeFlag) branch(fetch())
+            else -> throw IllegalStateException("BMI mode $mode does not exist.")
+        }
     }
 
     /**
@@ -416,7 +438,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bne(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!zeroFlag) branch(fetch())
+            else -> throw IllegalStateException("BNE mode $mode does not exist.")
+        }
     }
 
     /**
@@ -424,7 +449,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bpl(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!negativeFlag) branch(fetch())
+            else -> throw IllegalStateException("BPL mode $mode does not exist.")
+        }
     }
 
     /**
@@ -440,7 +468,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bvc(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!overflowFlag) branch(fetch())
+            else -> throw IllegalStateException("BVC mode $mode does not exist.")
+        }
     }
 
     /**
@@ -448,7 +479,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bvs(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (overflowFlag) branch(fetch())
+            else -> throw IllegalStateException("BVS mode $mode does not exist.")
+        }
     }
 
     /**

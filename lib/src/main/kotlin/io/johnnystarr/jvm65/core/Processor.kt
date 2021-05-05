@@ -18,4 +18,5 @@ interface Processor {
     fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord
     fun splitWord(word: UnsignedWord): List<UnsignedByte>
     fun updateFlags(byte: UnsignedByte, checkOverflow: Boolean)
+    fun branch(offset: UnsignedByte)
 }
