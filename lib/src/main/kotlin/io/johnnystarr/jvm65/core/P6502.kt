@@ -352,8 +352,8 @@ class P6502() : Processor, InstructionSet {
     override fun asl(mode: AddressMode) {
         val byte = when (mode) {
             AddressMode.ACCUMULATOR -> a
-            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value)
-            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value)
+            AddressMode.ZEROPAGE    -> mmu.zeroPage()
+            AddressMode.ZEROPAGE_X  -> mmu.zeroPageX()
             AddressMode.ABSOLUTE    -> mmu.absolute()
             AddressMode.ABSOLUTE_X  -> mmu.absoluteX()
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
@@ -391,7 +391,16 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bit(mode: AddressMode) {
-        // implement
+        val byte = when (mode) {
+            AddressMode.ZEROPAGE -> mmu.zeroPage()
+            AddressMode.ABSOLUTE -> mmu.absolute()
+            else -> throw IllegalStateException("BIT mode $mode does not exist.")
+        }
+        val result = (a.value and byte.value)
+        // BIT just sets flags
+        zeroFlag = (result == 0)
+        negativeFlag = ((result and 0x80) == 0x80)
+        overflowFlag = ((result and 0x40) == 0x40)
     }
 
     /**

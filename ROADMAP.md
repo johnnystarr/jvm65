@@ -49,14 +49,14 @@ Affects Flags: N Z C - Flag Checks ❌
     Absolute,X    ASL $4400,X   $1E  3   7      ✅
 
 
-❌ BIT (test BITs)
+✅ BIT (test BITs)
 ---------------
 
 Affects Flags: N V Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Zero Page     BIT $44       $24  2   3      ❌
-    Absolute      BIT $4400     $2C  3   4      ❌
+    Zero Page     BIT $44       $24  2   3      ✅
+    Absolute      BIT $4400     $2C  3   4      ✅
 
 
 ❌ Branch Instructions

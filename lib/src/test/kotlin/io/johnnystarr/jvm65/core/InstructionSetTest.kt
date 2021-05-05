@@ -362,14 +362,16 @@ internal class InstructionSetTest {
     @Test
     fun `0x06 asl 1 zeropage`() {
         cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
         cpu.execute(UnsignedByte(0x06))
-        assertEquals(2, cpu.mmu.at(0).value)
+        assertEquals(2, cpu.mmu.at(1).value)
     }
 
     @Test
     fun `0x16 asl 1 zeropage x`() {
         cpu.x.value = 1
         cpu.mmu.put(1, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
         cpu.execute(UnsignedByte(0x16))
         assertEquals(2, cpu.mmu.at(1).value)
     }
@@ -440,5 +442,43 @@ internal class InstructionSetTest {
         cpu.decimalFlag = false
         cpu.execute(UnsignedByte(0xF8))
         assertTrue(cpu.decimalFlag)
+    }
+
+    @Test
+    fun `0x24 bit test 1 and 1 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x24))
+        assertFalse(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0x24 bit test 1 and 0 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x24))
+        assertTrue(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0x2C bit test 1 and 1 absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x2C))
+        assertFalse(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0x2C bit test 1 and 0 absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(0))
+        cpu.execute(UnsignedByte(0x2C))
+        assertTrue(cpu.zeroFlag)
     }
 }
