@@ -44,4 +44,24 @@ data class UnsignedByte (
             else -> UnsignedByte(newValue)
         }
     }
+
+    /**
+     * Binary Coded Decimal Addition
+     * @param increment [Int] amount to add
+     * @param carry [Int] 1 or 0 based on carry flag
+     * @return [UnsignedByte] result of addition
+     */
+    override fun bcdPlus(increment: Int, carry: Int): UnsignedByte {
+        return UnsignedByte(0)
+    }
+
+    /**
+     * Binary Coded Decimal Addition
+     * @param decrement [Int] amount to add
+     * @param carry [Int] 1 or 0 based on carry flag
+     * @return [UnsignedByte] result of subtraction
+     */
+    override fun bcdMinus(decrement: Int, carry: Int): UnsignedByte {
+        return UnsignedByte(0)
+    }
 }

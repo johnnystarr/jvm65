@@ -10,15 +10,18 @@ package io.johnnystarr.jvm65.core
  * @param state [RegisterState] default state of register
  * @constructor creates an Unsigned Register
  */
-open class UnsignedRegister (open var value: Int, open var state: RegisterState = RegisterState.NONE) : Register {
+open class UnsignedRegister (
+    open var value: Int,
+    open var state: RegisterState = RegisterState.NONE
+) : Register {
 
     /**
      * Shift register left by 1
      * @return [Unit]
      */
     override fun shiftLeft() {
-        this.value = this.value shl 1
-        if (this.value == 0) this.state = RegisterState.ZEROED
+        value = value shl 1
+        if (value == 0) state = RegisterState.ZEROED
     }
 
     /**
@@ -26,17 +29,17 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * @return [Unit]
      */
     override fun shiftRight() {
-        this.value = this.value ushr 1
-        if (this.value == 0) this.state = RegisterState.ZEROED
+        value = value ushr 1
+        if (value == 0) state = RegisterState.ZEROED
     }
 
     /**
-     * Set this register value to 0
+     * Set register value to 0
      * @return [Unit]
      */
     override fun clear() {
-        this.value = 0
-        this.state = RegisterState.ZEROED
+        value = 0
+        state = RegisterState.ZEROED
     }
 
     /**
@@ -44,7 +47,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * @return [Unit]
      */
     override fun inc() {
-        this.value += 1
+        value += 1
     }
 
     /**
@@ -52,7 +55,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * @return [Unit]
      */
     override fun dec() {
-        this.value -= 1
+        value -= 1
     }
 
     /**
@@ -60,7 +63,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * @return [UnsignedRegister] result of AND operation
      */
     override fun and(register: UnsignedRegister): UnsignedByte {
-        return (UnsignedByte(this.value and register.value))
+        return (UnsignedByte(value and register.value))
     }
 
     /**
@@ -68,7 +71,7 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * @return [UnsignedRegister] result of OR operation
      */
     override fun or(register: UnsignedRegister): UnsignedByte {
-        return (UnsignedByte(this.value or register.value))
+        return (UnsignedByte(value or register.value))
     }
 
     /**
@@ -76,6 +79,6 @@ open class UnsignedRegister (open var value: Int, open var state: RegisterState 
      * @return [UnsignedRegister] result of XOR operation
      */
     override fun xor(register: UnsignedRegister): UnsignedByte {
-        return (UnsignedByte(this.value xor register.value))
+        return (UnsignedByte(value xor register.value))
     }
 }

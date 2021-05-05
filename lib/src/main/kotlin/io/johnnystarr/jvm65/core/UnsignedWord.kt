@@ -44,4 +44,24 @@ data class UnsignedWord (
             else -> UnsignedWord(newValue)
         }
     }
+
+    /**
+     * Binary Coded Decimal Addition
+     * @param increment [Int] amount to add
+     * @param carry [Int] 1 or 0 based on carry flag
+     * @return [UnsignedWord] result of addition
+     */
+    override fun bcdPlus(increment: Int, carry: Int): UnsignedWord {
+        return UnsignedWord(0)
+    }
+
+    /**
+     * Binary Coded Decimal Addition
+     * @param decrement [Int] amount to add
+     * @param carry [Int] 1 or 0 based on carry flag
+     * @return [UnsignedWord] result of subtraction
+     */
+    override fun bcdMinus(decrement: Int, carry: Int): UnsignedWord {
+        return UnsignedWord(0)
+    }
 }

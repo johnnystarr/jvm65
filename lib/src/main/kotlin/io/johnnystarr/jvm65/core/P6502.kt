@@ -287,9 +287,20 @@ class P6502() : Processor, InstructionSet {
      * Update flags based on latest byte operation
      * @param byte [UnsignedByte] byte last operated on
      */
-    override fun updateFlags(byte: UnsignedByte) {
-        (byte.state == RegisterState.ZEROED)
-            zeroFlag = true
+    override fun updateFlags(byte: UnsignedByte, checkOverflow: Boolean) {
+        when (byte.state) {
+            RegisterState.NONE -> {}
+            RegisterState.ZEROED -> zeroFlag = true
+            RegisterState.SIGNED_NEGATIVE -> overflowFlag = true
+            RegisterState.SIGNED_POSITIVE -> overflowFlag = false
+            RegisterState.POSITIVE_WRAPAROUND -> cycles += 1
+            RegisterState.NEGATIVE_WRAPAROUND -> cycles += 1
+        }
+        if ((byte.value and 0x80) == 0x80)
+            negativeFlag = true
+        if (checkOverflow) {
+            overflowFlag = byte.value in 0x80..0xFF || byte.value > 0x7F
+        }
     }
 
     /**
@@ -298,18 +309,23 @@ class P6502() : Processor, InstructionSet {
      */
     override fun adc(mode: AddressMode) {
         val carry = if (carryFlag) 1 else 0
-        a += when (mode) {
-            AddressMode.IMMEDIATE  -> mmu.immediate().value + carry
-            AddressMode.ZEROPAGE   -> mmu.zeroPage().value + carry
-            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value + carry
-            AddressMode.ABSOLUTE   -> mmu.absolute().value + carry
-            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value + carry
-            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value + carry
-            AddressMode.INDIRECT_X -> mmu.indirectX().value + carry
-            AddressMode.INDIRECT_Y -> mmu.indirectY().value + carry
+        val increment = when (mode) {
+            AddressMode.IMMEDIATE  -> mmu.immediate().value
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value
+            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value
+            AddressMode.INDIRECT_X -> mmu.indirectX().value
+            AddressMode.INDIRECT_Y -> mmu.indirectY().value
             else -> throw IllegalStateException("ADC mode $mode does not exist.")
         }
-        updateFlags(a)
+        if (!decimalFlag) {
+            a += increment + carry
+        } else {
+            a = a.bcdPlus(increment, carry)
+        }
+        updateFlags(a, checkOverflow = true)
     }
 
     /**
@@ -328,7 +344,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
-        updateFlags(a)
+        updateFlags(a, checkOverflow = false)
     }
 
     /**
@@ -345,7 +361,7 @@ class P6502() : Processor, InstructionSet {
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
         }
         byte.shiftLeft()
-        updateFlags(byte)
+        updateFlags(byte, checkOverflow = false)
     }
 
     /**
