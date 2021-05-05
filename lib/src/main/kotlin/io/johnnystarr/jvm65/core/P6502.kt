@@ -291,8 +291,6 @@ class P6502() : Processor, InstructionSet {
         when (byte.state) {
             RegisterState.NONE -> {}
             RegisterState.ZEROED -> zeroFlag = true
-            RegisterState.SIGNED_NEGATIVE -> overflowFlag = true
-            RegisterState.SIGNED_POSITIVE -> overflowFlag = false
             RegisterState.POSITIVE_WRAPAROUND -> cycles += 1
             RegisterState.NEGATIVE_WRAPAROUND -> cycles += 1
         }
