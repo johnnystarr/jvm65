@@ -481,4 +481,21 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x2C))
         assertTrue(cpu.zeroFlag)
     }
+
+    @Test
+    fun `0x10 branch on plus (forward 4 bytes)`() {
+        cpu.negativeFlag = false
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0x10))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x10 branch on plus (backwards 4 bytes)`() {
+        cpu.negativeFlag = false
+        cpu.pc.value = 0x300
+        cpu.mmu.put(0x300, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0x10))
+        assertEquals(0x2FC, cpu.pc.value)
+    }
 }

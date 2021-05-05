@@ -308,7 +308,7 @@ class P6502() : Processor, InstructionSet {
         if (offset.value < 0x80)
             pc += offset.value
         else
-            pc -= (0xFF - offset.value)
+            pc -= (256 - offset.value)
     }
 
     /**
