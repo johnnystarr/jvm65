@@ -82,7 +82,7 @@ Affects Flags: B - Flag Checks ✅
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Implied       BRK           $00  1   7      ✅
 
-❌ CMP (CoMPare accumulator)
+✅ CMP (CoMPare accumulator)
 -------------------------
 
 Affects Flags: N Z C - Flag Checks ❌
@@ -93,9 +93,9 @@ Affects Flags: N Z C - Flag Checks ❌
     Zero Page,X   CMP $44,X     $D5  2   4      ✅
     Absolute      CMP $4400     $CD  3   4      ✅
     Absolute,X    CMP $4400,X   $DD  3   4+     ✅
-    Absolute,Y    CMP $4400,Y   $D9  3   4+     ❌
-    Indirect,X    CMP ($44,X)   $C1  2   6      ❌
-    Indirect,Y    CMP ($44),Y   $D1  2   5+     ❌
+    Absolute,Y    CMP $4400,Y   $D9  3   4+     ✅
+    Indirect,X    CMP ($44,X)   $C1  2   6      ✅
+    Indirect,Y    CMP ($44),Y   $D1  2   5+     ✅
 
     + add 1 cycle if page boundary crossed
 
