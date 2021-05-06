@@ -623,4 +623,52 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x00))
         assertTrue(cpu.breakFlag)
     }
+
+    @Test
+    fun `0xC9 cmp 1 with 1 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xC9))
+        assertTrue(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0xC5 cmp 1 with 1 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xC5))
+        assertTrue(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0xD5 cmp 1 with 1 zeropage,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xD5))
+        assertTrue(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0xCD cmp 1 with 1 absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xCD))
+        assertTrue(cpu.zeroFlag)
+    }
+
+    @Test
+    fun `0xDD cmp 1 with 1 absolute, X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xDD))
+        assertTrue(cpu.zeroFlag)
+    }
 }
