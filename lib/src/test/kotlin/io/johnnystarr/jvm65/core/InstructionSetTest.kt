@@ -493,9 +493,43 @@ internal class InstructionSetTest {
     @Test
     fun `0x10 branch on plus (backwards 4 bytes)`() {
         cpu.negativeFlag = false
-        cpu.pc.value = 0x300
-        cpu.mmu.put(0x300, UnsignedByte(251))
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
         cpu.execute(UnsignedByte(0x10))
-        assertEquals(0x2FC, cpu.pc.value)
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x30 branch on minus (forward 4 bytes)`() {
+        cpu.negativeFlag = true
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0x30))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x30 branch on minus (backwards 4 bytes)`() {
+        cpu.negativeFlag = true
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0x30))
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x50 branch on overflow clear (forward 4 bytes)`() {
+        cpu.overflowFlag = false
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0x50))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x50 branch on overflow clear (backwards 4 bytes)`() {
+        cpu.overflowFlag = false
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0x50))
+        assertEquals(6, cpu.pc.value)
     }
 }

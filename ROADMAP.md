@@ -65,9 +65,9 @@ Affects Flags: N V Z - Flag Checks ❌
 Affect Flags: none
 
     MNEMONIC                       HEX       [Status]
-    BPL (Branch on PLus)           $10          ❌
-    BMI (Branch on MInus)          $30          ❌
-    BVC (Branch on oVerflow Clear) $50          ❌
+    BPL (Branch on PLus)           $10          ✅
+    BMI (Branch on MInus)          $30          ✅
+    BVC (Branch on oVerflow Clear) $50          ✅
     BVS (Branch on oVerflow Set)   $70          ❌
     BCC (Branch on Carry Clear)    $90          ❌
     BCS (Branch on Carry Set)      $B0          ❌
