@@ -64,4 +64,24 @@ data class UnsignedWord (
     override fun bcdMinus(decrement: Int, carry: Int): UnsignedWord {
         return UnsignedWord(0)
     }
+
+    /**
+     * Increment register by 1
+     * @return [UnsignedWord] incremented value
+     */
+    override fun inc(): UnsignedWord {
+        val result = plus(1)
+        value = result.value
+        return result
+    }
+
+    /**
+     * Decrement register by 1
+     * @return [UnsignedWord] decremented value
+     */
+    override fun dec(): UnsignedWord {
+        val result = minus(1)
+        value = result.value
+        return result
+    }
 }

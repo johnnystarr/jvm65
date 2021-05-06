@@ -59,7 +59,7 @@ Affects Flags: N V Z - Flag Checks ❌
     Absolute      BIT $4400     $2C  3   4      ✅
 
 
-❌ Branch Instructions
+✅ Branch Instructions
 -------------------
 
 Affect Flags: none
@@ -68,19 +68,19 @@ Affect Flags: none
     BPL (Branch on PLus)           $10          ✅
     BMI (Branch on MInus)          $30          ✅
     BVC (Branch on oVerflow Clear) $50          ✅
-    BVS (Branch on oVerflow Set)   $70          ❌
-    BCC (Branch on Carry Clear)    $90          ❌
-    BCS (Branch on Carry Set)      $B0          ❌
-    BNE (Branch on Not Equal)      $D0          ❌
-    BEQ (Branch on EQual)          $F0          ❌
+    BVS (Branch on oVerflow Set)   $70          ✅
+    BCC (Branch on Carry Clear)    $90          ✅
+    BCS (Branch on Carry Set)      $B0          ✅
+    BNE (Branch on Not Equal)      $D0          ✅
+    BEQ (Branch on EQual)          $F0          ✅
 
-❌ BRK (BReaK)
+✅ BRK (BReaK)
 -----------
 
-Affects Flags: B - Flag Checks ❌
+Affects Flags: B - Flag Checks ✅
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Implied       BRK           $00  1   7      ❌
+    Implied       BRK           $00  1   7      ✅
 
 ❌ CMP (CoMPare accumulator)
 -------------------------

@@ -24,6 +24,7 @@ class P6502() : Processor, InstructionSet {
     var decimalFlag = false
     var overflowFlag = false
     var negativeFlag = false
+    var breakFlag = false
 
     // memory manager
     var mmu = MMU(0xFFFF, this)
@@ -217,7 +218,7 @@ class P6502() : Processor, InstructionSet {
      */
     override fun fetch(): UnsignedByte {
         val current = this.mmu.at(this.pc.value)
-        this.pc += 1
+        this.pc.inc()
         return current
     }
 
@@ -286,8 +287,20 @@ class P6502() : Processor, InstructionSet {
     /**
      * Update flags based on latest byte operation
      * @param byte [UnsignedByte] byte last operated on
+     * @param checkOverflow [Boolean] checks overflow flag for certain operations only
      */
     override fun updateFlags(byte: UnsignedByte, checkOverflow: Boolean) {
+        updateFlags(byte)
+        if (checkOverflow) {
+            overflowFlag = byte.value in 0x80..0xFF || byte.value > 0x7F
+        }
+    }
+
+    /**
+     * Update flags based on latest byte operation
+     * @param byte [UnsignedByte] byte last operated on
+     */
+    override fun updateFlags(byte: UnsignedByte) {
         when (byte.state) {
             RegisterState.NONE -> {}
             RegisterState.ZEROED -> zeroFlag = true
@@ -296,9 +309,6 @@ class P6502() : Processor, InstructionSet {
         }
         if ((byte.value and 0x80) == 0x80)
             negativeFlag = true
-        if (checkOverflow) {
-            overflowFlag = byte.value in 0x80..0xFF || byte.value > 0x7F
-        }
     }
 
     /**
@@ -352,7 +362,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
-        updateFlags(a, checkOverflow = false)
+        updateFlags(a)
     }
 
     /**
@@ -369,7 +379,7 @@ class P6502() : Processor, InstructionSet {
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
         }
         byte.shiftLeft()
-        updateFlags(byte, checkOverflow = false)
+        updateFlags(byte)
     }
 
     /**
@@ -460,7 +470,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun brk(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> breakFlag = true
+            else -> throw IllegalStateException("BRK mode $mode does not exist.")
+        }
     }
 
     /**

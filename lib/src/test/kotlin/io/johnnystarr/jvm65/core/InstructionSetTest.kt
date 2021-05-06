@@ -532,4 +532,95 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x50))
         assertEquals(6, cpu.pc.value)
     }
+
+    @Test
+    fun `0x70 branch on overflow set (forward 4 bytes)`() {
+        cpu.overflowFlag = true
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0x70))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x70 branch on overflow set (backwards 4 bytes)`() {
+        cpu.overflowFlag = true
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0x70))
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x90 branch on carry clear (forward 4 bytes)`() {
+        cpu.carryFlag = false
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0x90))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x90 branch on carry clear (backwards 4 bytes)`() {
+        cpu.carryFlag = false
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0x90))
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0xB0 branch on carry set (forward 4 bytes)`() {
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0xB0))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0xB0 branch on carry set (backwards 4 bytes)`() {
+        cpu.carryFlag = true
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0xB0))
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0xD0 branch on not equal (forward 4 bytes)`() {
+        cpu.zeroFlag = false
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0xD0))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0xD0 branch on not equal (backwards 4 bytes)`() {
+        cpu.zeroFlag = false
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0xD0))
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0xF0 branch on equal (forward 4 bytes)`() {
+        cpu.zeroFlag = true
+        cpu.mmu.put(0, UnsignedByte(4))
+        cpu.execute(UnsignedByte(0xF0))
+        assertEquals(5, cpu.pc.value)
+    }
+
+    @Test
+    fun `0xF0 branch on equal (backwards 4 bytes)`() {
+        cpu.zeroFlag = true
+        cpu.pc.value = 10
+        cpu.mmu.put(10, UnsignedByte(251))
+        cpu.execute(UnsignedByte(0xF0))
+        assertEquals(6, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x00 break execution`() {
+        cpu.execute(UnsignedByte(0x00))
+        assertTrue(cpu.breakFlag)
+    }
 }
