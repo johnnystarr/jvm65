@@ -24,6 +24,7 @@ class P6502() : Processor, InstructionSet {
     var decimalFlag = false
     var overflowFlag = false
     var negativeFlag = false
+    var breakFlag = false
 
     // memory manager
     var mmu = MMU(0xFFFF, this)
@@ -217,7 +218,7 @@ class P6502() : Processor, InstructionSet {
      */
     override fun fetch(): UnsignedByte {
         val current = this.mmu.at(this.pc.value)
-        this.pc += 1
+        this.pc.inc()
         return current
     }
 
@@ -286,21 +287,38 @@ class P6502() : Processor, InstructionSet {
     /**
      * Update flags based on latest byte operation
      * @param byte [UnsignedByte] byte last operated on
+     * @param checkOverflow [Boolean] checks overflow flag for certain operations only
      */
     override fun updateFlags(byte: UnsignedByte, checkOverflow: Boolean) {
+        updateFlags(byte)
+        if (checkOverflow) {
+            overflowFlag = byte.value in 0x80..0xFF || byte.value > 0x7F
+        }
+    }
+
+    /**
+     * Update flags based on latest byte operation
+     * @param byte [UnsignedByte] byte last operated on
+     */
+    override fun updateFlags(byte: UnsignedByte) {
         when (byte.state) {
             RegisterState.NONE -> {}
             RegisterState.ZEROED -> zeroFlag = true
-            RegisterState.SIGNED_NEGATIVE -> overflowFlag = true
-            RegisterState.SIGNED_POSITIVE -> overflowFlag = false
             RegisterState.POSITIVE_WRAPAROUND -> cycles += 1
             RegisterState.NEGATIVE_WRAPAROUND -> cycles += 1
         }
         if ((byte.value and 0x80) == 0x80)
             negativeFlag = true
-        if (checkOverflow) {
-            overflowFlag = byte.value in 0x80..0xFF || byte.value > 0x7F
-        }
+    }
+
+    /**
+     * Branch to an signed offset
+     */
+    override fun branch(offset: UnsignedByte) {
+        if (offset.value < 0x80)
+            pc += offset.value
+        else
+            pc -= (256 - offset.value)
     }
 
     /**
@@ -344,7 +362,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_Y -> a.and(mmu.indirectY())
             else -> throw IllegalStateException("AND mode $mode does not exist.")
         }
-        updateFlags(a, checkOverflow = false)
+        updateFlags(a)
     }
 
     /**
@@ -354,14 +372,14 @@ class P6502() : Processor, InstructionSet {
     override fun asl(mode: AddressMode) {
         val byte = when (mode) {
             AddressMode.ACCUMULATOR -> a
-            AddressMode.ZEROPAGE    -> mmu.at(mmu.zeroPage().value)
-            AddressMode.ZEROPAGE_X  -> mmu.at(mmu.zeroPageX().value)
+            AddressMode.ZEROPAGE    -> mmu.zeroPage()
+            AddressMode.ZEROPAGE_X  -> mmu.zeroPageX()
             AddressMode.ABSOLUTE    -> mmu.absolute()
             AddressMode.ABSOLUTE_X  -> mmu.absoluteX()
             else -> throw IllegalStateException("ASL mode $mode does not exist.")
         }
         byte.shiftLeft()
-        updateFlags(byte, checkOverflow = false)
+        updateFlags(byte)
     }
 
     /**
@@ -369,7 +387,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bcc(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!carryFlag) branch(fetch())
+            else -> throw IllegalStateException("BCC mode $mode does not exist.")
+        }
     }
 
     /**
@@ -377,7 +398,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bcs(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (carryFlag) branch(fetch())
+            else -> throw IllegalStateException("BCS mode $mode does not exist.")
+        }
     }
 
     /**
@@ -385,7 +409,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun beq(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (zeroFlag) branch(fetch())
+            else -> throw IllegalStateException("BEQ mode $mode does not exist.")
+        }
     }
 
     /**
@@ -393,7 +420,16 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bit(mode: AddressMode) {
-        // implement
+        val byte = when (mode) {
+            AddressMode.ZEROPAGE -> mmu.zeroPage()
+            AddressMode.ABSOLUTE -> mmu.absolute()
+            else -> throw IllegalStateException("BIT mode $mode does not exist.")
+        }
+        val result = (a.value and byte.value)
+        // BIT just sets flags
+        zeroFlag = (result == 0)
+        negativeFlag = ((result and 0x80) == 0x80)
+        overflowFlag = ((result and 0x40) == 0x40)
     }
 
     /**
@@ -401,7 +437,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bmi(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (negativeFlag) branch(fetch())
+            else -> throw IllegalStateException("BMI mode $mode does not exist.")
+        }
     }
 
     /**
@@ -409,7 +448,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bne(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!zeroFlag) branch(fetch())
+            else -> throw IllegalStateException("BNE mode $mode does not exist.")
+        }
     }
 
     /**
@@ -417,7 +459,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bpl(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!negativeFlag) branch(fetch())
+            else -> throw IllegalStateException("BPL mode $mode does not exist.")
+        }
     }
 
     /**
@@ -425,7 +470,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun brk(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> breakFlag = true
+            else -> throw IllegalStateException("BRK mode $mode does not exist.")
+        }
     }
 
     /**
@@ -433,7 +481,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bvc(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (!overflowFlag) branch(fetch())
+            else -> throw IllegalStateException("BVC mode $mode does not exist.")
+        }
     }
 
     /**
@@ -441,7 +492,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun bvs(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.RELATIVE -> if (overflowFlag) branch(fetch())
+            else -> throw IllegalStateException("BVS mode $mode does not exist.")
+        }
     }
 
     /**

@@ -64,4 +64,24 @@ data class UnsignedByte (
     override fun bcdMinus(decrement: Int, carry: Int): UnsignedByte {
         return UnsignedByte(0)
     }
+
+    /**
+     * Increment register by 1
+     * @return [UnsignedByte] incremented value
+     */
+    override fun inc(): UnsignedByte {
+        val result = plus(1)
+        value = result.value
+        return result
+    }
+
+    /**
+     * Decrement register by 1
+     * @return [UnsignedByte] decremented value
+     */
+    override fun dec(): UnsignedByte {
+        val result = minus(1)
+        value = result.value
+        return result
+    }
 }

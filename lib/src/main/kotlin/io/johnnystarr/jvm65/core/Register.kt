@@ -11,8 +11,6 @@ interface Register {
     fun shiftLeft()
     fun shiftRight()
     fun clear()
-    fun inc()
-    fun dec()
     fun and(register: UnsignedRegister): UnsignedByte
     fun or(register: UnsignedRegister): UnsignedByte
     fun xor(register: UnsignedRegister): UnsignedByte

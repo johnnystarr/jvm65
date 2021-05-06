@@ -11,4 +11,6 @@ interface Arithmetic {
     operator fun minus(decrement: Int): UnsignedRegister
     fun bcdPlus(increment: Int, carry: Int): UnsignedRegister
     fun bcdMinus(decrement: Int, carry: Int): UnsignedRegister
+    fun inc(): UnsignedRegister
+    fun dec(): UnsignedRegister
 }

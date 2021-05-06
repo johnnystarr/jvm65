@@ -43,22 +43,6 @@ open class UnsignedRegister (
     }
 
     /**
-     * Increment register by 1
-     * @return [Unit]
-     */
-    override fun inc() {
-        value += 1
-    }
-
-    /**
-     * Decrement register by 1
-     * @return [Unit]
-     */
-    override fun dec() {
-        value -= 1
-    }
-
-    /**
      * Logical AND on register
      * @return [UnsignedRegister] result of AND operation
      */
