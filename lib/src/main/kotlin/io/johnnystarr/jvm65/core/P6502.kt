@@ -591,7 +591,14 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun dec(mode: AddressMode) {
-        // implement
+        val byte = when (mode) {
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().dec()
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().dec()
+            AddressMode.ABSOLUTE   -> mmu.absolute().dec()
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().dec()
+            else -> throw IllegalStateException("DEC mode $mode does not exist.")
+        }
+        updateFlags(byte)
     }
 
     /**
@@ -623,7 +630,14 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun inc(mode: AddressMode) {
-        // implement
+        val byte = when (mode) {
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().inc()
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().inc()
+            AddressMode.ABSOLUTE   -> mmu.absolute().inc()
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().inc()
+            else -> throw IllegalStateException("INC mode $mode does not exist.")
+        }
+        updateFlags(byte)
     }
 
     /**

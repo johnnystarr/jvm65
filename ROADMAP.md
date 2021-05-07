@@ -119,16 +119,16 @@ Affects Flags: N Z C - Flag Checks ❌
     Zero Page     CPY $44       $C4  2   3      ✅
     Absolute      CPY $4400     $CC  3   4      ✅
 
-❌ DEC (DECrement memory)
+✅ DEC (DECrement memory)
 ----------------------
 
 Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Zero Page     DEC $44       $C6  2   5      ❌
-    Zero Page,X   DEC $44,X     $D6  2   6      ❌
-    Absolute      DEC $4400     $CE  3   6      ❌
-    Absolute,X    DEC $4400,X   $DE  3   7      ❌
+    Zero Page     DEC $44       $C6  2   5      ✅
+    Zero Page,X   DEC $44,X     $D6  2   6      ✅
+    Absolute      DEC $4400     $CE  3   6      ✅
+    Absolute,X    DEC $4400,X   $DE  3   7      ✅
 
 ❌ EOR (bitwise Exclusive OR)
 --------------------------
@@ -163,16 +163,16 @@ Affect Flags: as noted - Flag Checks ✅
 
 
 
-❌ INC (INCrement memory)
+✅ INC (INCrement memory)
 ----------------------
 
 Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Zero Page     INC $44       $E6  2   5      ❌
-    Zero Page,X   INC $44,X     $F6  2   6      ❌
-    Absolute      INC $4400     $EE  3   6      ❌
-    Absolute,X    INC $4400,X   $FE  3   7      ❌
+    Zero Page     INC $44       $E6  2   5      ✅
+    Zero Page,X   INC $44,X     $F6  2   6      ✅
+    Absolute      INC $4400     $EE  3   6      ✅
+    Absolute,X    INC $4400,X   $FE  3   7      ✅
 
 ❌ JMP (JuMP)
 ----------
