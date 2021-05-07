@@ -819,6 +819,62 @@ internal class InstructionSetTest {
         assertEquals(0, cpu.a.value)
     }
 
+    @Test
+    fun `0x4D 1 eor 1 = 0 absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x4D))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x5D 1 eor 1 = 0 absolute,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x5D))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x59 1 eor 1 = 0 absolute,Y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x59))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x41 1 eor 1 = 0 ($09, X) indirect x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x41))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x51 1 eor 1 = 0 ($0A),Y indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x51))
+        assertEquals(0, cpu.a.value)
+    }
+
     /**
      * Flag (Processor Status) Instructions
      */
