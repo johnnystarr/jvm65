@@ -274,20 +274,20 @@ Affects Flags: N Z - Flag Checks ❌
 
     + add 1 cycle if page boundary crossed
 
-❌ Register Instructions
+✅ Register Instructions
 ---------------------
 
 Affect Flags: N Z - Flag Checks ❌
 
     MNEMONIC                 HEX             [Status]
-    TAX (Transfer A to X)    $AA                ❌
-    TXA (Transfer X to A)    $8A                ❌
-    DEX (DEcrement X)        $CA                ❌
-    INX (INcrement X)        $E8                ❌
-    TAY (Transfer A to Y)    $A8                ❌
-    TYA (Transfer Y to A)    $98                ❌
-    DEY (DEcrement Y)        $88                ❌
-    INY (INcrement Y)        $C8                ❌
+    TAX (Transfer A to X)    $AA                ✅
+    TXA (Transfer X to A)    $8A                ✅
+    DEX (DEcrement X)        $CA                ✅
+    INX (INcrement X)        $E8                ✅
+    TAY (Transfer A to Y)    $A8                ✅
+    TYA (Transfer Y to A)    $98                ✅
+    DEY (DEcrement Y)        $88                ✅
+    INY (INcrement Y)        $C8                ✅
 
 ❌ ROL (ROtate Left)
 -----------------

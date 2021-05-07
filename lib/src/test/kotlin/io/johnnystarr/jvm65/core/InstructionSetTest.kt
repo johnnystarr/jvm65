@@ -1004,6 +1004,64 @@ internal class InstructionSetTest {
      * Register Instructions
      */
 
+    @Test
+    fun `0xAA tax`() {
+        cpu.a.value = 0x0A
+        cpu.x.value = 0
+        cpu.execute(UnsignedByte(0xAA))
+        assertEquals(0x0A, cpu.x.value)
+    }
+
+    @Test
+    fun `0x8A txa`() {
+        cpu.a.value = 0
+        cpu.x.value = 0x0A
+        cpu.execute(UnsignedByte(0x8A))
+        assertEquals(0x0A, cpu.a.value)
+    }
+
+    @Test
+    fun `0xCA dex`() {
+        cpu.x.value = 2
+        cpu.execute(UnsignedByte(0xCA))
+        assertEquals(1, cpu.x.value)
+    }
+
+    @Test
+    fun `0xE8 inx`() {
+        cpu.x.value = 1
+        cpu.execute(UnsignedByte(0xE8))
+        assertEquals(2, cpu.x.value)
+    }
+
+    @Test
+    fun `0xA8 tay`() {
+        cpu.a.value = 0x0A
+        cpu.execute(UnsignedByte(0xA8))
+        assertEquals(0x0A, cpu.y.value)
+    }
+
+    @Test
+    fun `0x98 tya`() {
+        cpu.y.value = 0x0A
+        cpu.execute(UnsignedByte(0x98))
+        assertEquals(0x0A, cpu.a.value)
+    }
+
+    @Test
+    fun `0x88 dey`() {
+        cpu.y.value = 2
+        cpu.execute(UnsignedByte(0x88))
+        assertEquals(1, cpu.y.value)
+    }
+
+    @Test
+    fun `0xC8 iny`() {
+        cpu.y.value = 1
+        cpu.execute(UnsignedByte(0xC8))
+        assertEquals(2, cpu.y.value)
+    }
+
     /**
      * ROL - Rotate Left
      */
