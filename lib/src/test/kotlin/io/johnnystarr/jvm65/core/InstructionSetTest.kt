@@ -862,6 +862,16 @@ internal class InstructionSetTest {
         assertEquals(0, cpu.a.value)
     }
 
+    @Test
+    fun `0x55 1 eor 1 = 0 zeropage,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x55))
+        assertEquals(0, cpu.a.value)
+    }
+
     /**
      * INC - Increment Memory
      */
