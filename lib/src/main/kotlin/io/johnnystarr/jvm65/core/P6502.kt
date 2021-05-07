@@ -606,7 +606,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun dex(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> x.dec()
+            else -> throw IllegalStateException("DEX mode $mode does not exist.")
+        }
+        updateFlags(x)
     }
 
     /**
@@ -614,7 +618,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun dey(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> y.dec()
+            else -> throw IllegalStateException("DEY mode $mode does not exist.")
+        }
+        updateFlags(y)
     }
 
     /**
@@ -647,7 +655,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun inx(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> x.inc()
+            else -> throw IllegalStateException("INX mode $mode does not exist.")
+        }
+        updateFlags(x)
     }
 
     /**
@@ -655,7 +667,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun iny(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> y.inc()
+            else -> throw IllegalStateException("INY mode $mode does not exist.")
+        }
+        updateFlags(y)
     }
 
     /**
@@ -856,7 +872,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun tax(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> x.value = a.value
+            else -> throw IllegalStateException("TAX mode $mode does not exist.")
+        }
+        updateFlags(x)
     }
 
     /**
@@ -864,7 +884,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun tay(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> y.value = a.value
+            else -> throw IllegalStateException("TAY mode $mode does not exist.")
+        }
+        updateFlags(y)
     }
 
     /**
@@ -880,7 +904,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun txa(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> a.value = x.value
+            else -> throw IllegalStateException("TXA mode $mode does not exist.")
+        }
+        updateFlags(a)
     }
 
     /**
@@ -896,6 +924,10 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun tya(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.IMPLIED -> a.value = y.value
+            else -> throw IllegalStateException("TYA mode $mode does not exist.")
+        }
+        updateFlags(a)
     }
 }

@@ -1004,6 +1004,22 @@ internal class InstructionSetTest {
      * Register Instructions
      */
 
+    @Test
+    fun `0xAA tax`() {
+        cpu.a.value = 0x0A
+        cpu.x.value = 0
+        cpu.execute(UnsignedByte(0xAA))
+        assertEquals(0x0A, cpu.x.value)
+    }
+
+    @Test
+    fun `0x8A txa`() {
+        cpu.a.value = 0
+        cpu.x.value = 0x0A
+        cpu.execute(UnsignedByte(0x8A))
+        assertEquals(0x0A, cpu.a.value)
+    }
+
     /**
      * ROL - Rotate Left
      */

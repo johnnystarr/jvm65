@@ -280,8 +280,8 @@ Affects Flags: N Z - Flag Checks ❌
 Affect Flags: N Z - Flag Checks ❌
 
     MNEMONIC                 HEX             [Status]
-    TAX (Transfer A to X)    $AA                ❌
-    TXA (Transfer X to A)    $8A                ❌
+    TAX (Transfer A to X)    $AA                ✅
+    TXA (Transfer X to A)    $8A                ✅
     DEX (DEcrement X)        $CA                ❌
     INX (INcrement X)        $E8                ❌
     TAY (Transfer A to Y)    $A8                ❌
