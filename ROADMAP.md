@@ -136,8 +136,8 @@ Affects Flags: N Z - Flag Checks ❌
 Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     EOR #$44      $49  2   2      ❌
-    Zero Page     EOR $44       $45  2   3      ❌
+    Immediate     EOR #$44      $49  2   2      ✅
+    Zero Page     EOR $44       $45  2   3      ✅
     Zero Page,X   EOR $44,X     $55  2   4      ❌
     Absolute      EOR $4400     $4D  3   4      ❌
     Absolute,X    EOR $4400,X   $5D  3   4+     ❌
