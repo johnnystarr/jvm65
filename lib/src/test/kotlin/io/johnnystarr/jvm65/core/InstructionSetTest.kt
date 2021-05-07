@@ -12,6 +12,10 @@ internal class InstructionSetTest {
         cpu = P6502()
     }
 
+    /**
+     * ADC - Add with Carry
+     */
+
     @Test
     fun `0x69 adc 1 + 1 immediate`() {
         cpu.a.value = 1
@@ -186,6 +190,10 @@ internal class InstructionSetTest {
         assertEquals(3, cpu.a.value)
     }
 
+    /**
+     * AND - Logical AND
+     */
+
     @Test
     fun `0x29 and 1 with 1 immediate`() {
         cpu.a.value = 1
@@ -352,6 +360,10 @@ internal class InstructionSetTest {
         assertEquals(0, cpu.a.value)
     }
 
+    /**
+     * ASL - Arithmetic Shift Left
+     */
+
     @Test
     fun `0x0A asl 1 accumulator`() {
         cpu.a.value = 1
@@ -395,54 +407,9 @@ internal class InstructionSetTest {
         assertEquals(2, cpu.mmu.at(0xABCE).value)
     }
 
-    @Test
-    fun `0x18 clear carry flag`() {
-        cpu.carryFlag = true
-        cpu.execute(UnsignedByte(0x18))
-        assertFalse(cpu.carryFlag)
-    }
-
-    @Test
-    fun `0x38 set carry flag`() {
-        cpu.carryFlag = false
-        cpu.execute(UnsignedByte(0x38))
-        assertTrue(cpu.carryFlag)
-    }
-
-    @Test
-    fun `0x58 clear interrupt disable flag`() {
-        cpu.interruptDisableFlag = true
-        cpu.execute(UnsignedByte(0x58))
-        assertFalse(cpu.interruptDisableFlag)
-    }
-
-    @Test
-    fun `0x78 set interrupt disable flag`() {
-        cpu.interruptDisableFlag = false
-        cpu.execute(UnsignedByte(0x78))
-        assertTrue(cpu.interruptDisableFlag)
-    }
-
-    @Test
-    fun `0xB8 clear overflow flag`() {
-        cpu.overflowFlag = true
-        cpu.execute(UnsignedByte(0xB8))
-        assertFalse(cpu.overflowFlag)
-    }
-
-    @Test
-    fun `0xD8 clear decimal flag`() {
-        cpu.decimalFlag = true
-        cpu.execute(UnsignedByte(0xD8))
-        assertFalse(cpu.decimalFlag)
-    }
-
-    @Test
-    fun `0xF8 set decimal flag`() {
-        cpu.decimalFlag = false
-        cpu.execute(UnsignedByte(0xF8))
-        assertTrue(cpu.decimalFlag)
-    }
+    /**
+     * BIT Testing
+     */
 
     @Test
     fun `0x24 bit test 1 and 1 zeropage`() {
@@ -481,6 +448,10 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x2C))
         assertTrue(cpu.zeroFlag)
     }
+
+    /**
+     * Bxx - Branch Operations
+     */
 
     @Test
     fun `0x10 branch on plus (forward 4 bytes)`() {
@@ -618,11 +589,19 @@ internal class InstructionSetTest {
         assertEquals(6, cpu.pc.value)
     }
 
+    /**
+     * BRK - Break Operation
+     */
+
     @Test
     fun `0x00 break execution`() {
         cpu.execute(UnsignedByte(0x00))
         assertTrue(cpu.breakFlag)
     }
+
+    /**
+     * CMP - Compare with Accumulator
+     */
 
     @Test
     fun `0xC9 cmp 1 with 1 immediate`() {
@@ -707,6 +686,10 @@ internal class InstructionSetTest {
         assertTrue(cpu.zeroFlag)
     }
 
+    /**
+     * CPX - Compare X
+     */
+
     @Test
     fun `0xE0 cpx 1 with 1 immediate`() {
         cpu.x.value = 1
@@ -734,6 +717,10 @@ internal class InstructionSetTest {
         assertTrue(cpu.zeroFlag)
     }
 
+    /**
+     * CPY - Compare Y
+     */
+
     @Test
     fun `0xC0 cpy 1 with 1 immediate`() {
         cpu.y.value = 1
@@ -760,6 +747,10 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xCC))
         assertTrue(cpu.zeroFlag)
     }
+
+    /**
+     * DEC - Decrement Memory
+     */
 
     @Test
     fun `0xC6 dec 5-1 zeropage`() {
@@ -797,6 +788,150 @@ internal class InstructionSetTest {
         assertEquals(4, cpu.mmu.at(0xABCE).value)
     }
 
+    /**
+     * EOR - Exclusive OR Operations
+     */
+
+    @Test
+    fun `0x49 1 eor 1 = 0 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x49))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x45 1 eor 1 = 0 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x45))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x55 1 eor 1 = 0 zeropage,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x55))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x4D 1 eor 1 = 0 absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x4D))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x5D 1 eor 1 = 0 absolute,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x5D))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x59 1 eor 1 = 0 absolute,Y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x59))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x41 1 eor 1 = 0 ($09, X) indirect x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x41))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0x51 1 eor 1 = 0 ($0A),Y indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x51))
+        assertEquals(0, cpu.a.value)
+    }
+
+    /**
+     * Flag (Processor Status) Instructions
+     */
+
+    @Test
+    fun `0x18 clear carry flag`() {
+        cpu.carryFlag = true
+        cpu.execute(UnsignedByte(0x18))
+        assertFalse(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x38 set carry flag`() {
+        cpu.carryFlag = false
+        cpu.execute(UnsignedByte(0x38))
+        assertTrue(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x58 clear interrupt disable flag`() {
+        cpu.interruptDisableFlag = true
+        cpu.execute(UnsignedByte(0x58))
+        assertFalse(cpu.interruptDisableFlag)
+    }
+
+    @Test
+    fun `0x78 set interrupt disable flag`() {
+        cpu.interruptDisableFlag = false
+        cpu.execute(UnsignedByte(0x78))
+        assertTrue(cpu.interruptDisableFlag)
+    }
+
+    @Test
+    fun `0xB8 clear overflow flag`() {
+        cpu.overflowFlag = true
+        cpu.execute(UnsignedByte(0xB8))
+        assertFalse(cpu.overflowFlag)
+    }
+
+    @Test
+    fun `0xD8 clear decimal flag`() {
+        cpu.decimalFlag = true
+        cpu.execute(UnsignedByte(0xD8))
+        assertFalse(cpu.decimalFlag)
+    }
+
+    @Test
+    fun `0xF8 set decimal flag`() {
+        cpu.decimalFlag = false
+        cpu.execute(UnsignedByte(0xF8))
+        assertTrue(cpu.decimalFlag)
+    }
+
+    /**
+     * INC - Increment Memory
+     */
+
     @Test
     fun `0xE6 inc 5+1 zeropage`() {
         cpu.mmu.put(0, UnsignedByte(1))
@@ -832,4 +967,76 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xFE))
         assertEquals(6, cpu.mmu.at(0xABCE).value)
     }
+
+    /**
+     * JMP - Jump to Address
+     */
+
+    /**
+     * JSR - Jump Subroutine
+     */
+
+    /**
+     * LDA - Load Accumulator
+     */
+
+    /**
+     * LDX - Load X Register
+     */
+
+    /**
+     * LDY - Load Y Register
+     */
+
+    /**
+     * LSR - Logical Shift Right
+     */
+
+    /**
+     * NOP - No Operation
+     */
+
+    /**
+     * ORA - Logical OR with Accumulator
+     */
+
+    /**
+     * Register Instructions
+     */
+
+    /**
+     * ROL - Rotate Left
+     */
+
+    /**
+     * ROR - Rotate Right
+     */
+
+    /**
+     * RTI - Return from Interrupt
+     */
+
+    /**
+     * RTS - Return from Subroutine
+     */
+
+    /**
+     * SBC - Subtract with Carry
+     */
+
+    /**
+     * STA - Store Accumulator
+     */
+
+    /**
+     * Stack Instructions
+     */
+
+    /**
+     * STX - Store X Register
+     */
+
+    /**
+     * STY - Store Y Register
+     */
 }
