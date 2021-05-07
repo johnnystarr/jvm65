@@ -408,59 +408,6 @@ internal class InstructionSetTest {
     }
 
     /**
-     * Flag Operations
-     */
-
-    @Test
-    fun `0x18 clear carry flag`() {
-        cpu.carryFlag = true
-        cpu.execute(UnsignedByte(0x18))
-        assertFalse(cpu.carryFlag)
-    }
-
-    @Test
-    fun `0x38 set carry flag`() {
-        cpu.carryFlag = false
-        cpu.execute(UnsignedByte(0x38))
-        assertTrue(cpu.carryFlag)
-    }
-
-    @Test
-    fun `0x58 clear interrupt disable flag`() {
-        cpu.interruptDisableFlag = true
-        cpu.execute(UnsignedByte(0x58))
-        assertFalse(cpu.interruptDisableFlag)
-    }
-
-    @Test
-    fun `0x78 set interrupt disable flag`() {
-        cpu.interruptDisableFlag = false
-        cpu.execute(UnsignedByte(0x78))
-        assertTrue(cpu.interruptDisableFlag)
-    }
-
-    @Test
-    fun `0xB8 clear overflow flag`() {
-        cpu.overflowFlag = true
-        cpu.execute(UnsignedByte(0xB8))
-        assertFalse(cpu.overflowFlag)
-    }
-
-    @Test
-    fun `0xD8 clear decimal flag`() {
-        cpu.decimalFlag = true
-        cpu.execute(UnsignedByte(0xD8))
-        assertFalse(cpu.decimalFlag)
-    }
-
-    @Test
-    fun `0xF8 set decimal flag`() {
-        cpu.decimalFlag = false
-        cpu.execute(UnsignedByte(0xF8))
-        assertTrue(cpu.decimalFlag)
-    }
-
-    /**
      * BIT Testing
      */
 
@@ -873,6 +820,59 @@ internal class InstructionSetTest {
     }
 
     /**
+     * Flag (Processor Status) Instructions
+     */
+
+    @Test
+    fun `0x18 clear carry flag`() {
+        cpu.carryFlag = true
+        cpu.execute(UnsignedByte(0x18))
+        assertFalse(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x38 set carry flag`() {
+        cpu.carryFlag = false
+        cpu.execute(UnsignedByte(0x38))
+        assertTrue(cpu.carryFlag)
+    }
+
+    @Test
+    fun `0x58 clear interrupt disable flag`() {
+        cpu.interruptDisableFlag = true
+        cpu.execute(UnsignedByte(0x58))
+        assertFalse(cpu.interruptDisableFlag)
+    }
+
+    @Test
+    fun `0x78 set interrupt disable flag`() {
+        cpu.interruptDisableFlag = false
+        cpu.execute(UnsignedByte(0x78))
+        assertTrue(cpu.interruptDisableFlag)
+    }
+
+    @Test
+    fun `0xB8 clear overflow flag`() {
+        cpu.overflowFlag = true
+        cpu.execute(UnsignedByte(0xB8))
+        assertFalse(cpu.overflowFlag)
+    }
+
+    @Test
+    fun `0xD8 clear decimal flag`() {
+        cpu.decimalFlag = true
+        cpu.execute(UnsignedByte(0xD8))
+        assertFalse(cpu.decimalFlag)
+    }
+
+    @Test
+    fun `0xF8 set decimal flag`() {
+        cpu.decimalFlag = false
+        cpu.execute(UnsignedByte(0xF8))
+        assertTrue(cpu.decimalFlag)
+    }
+
+    /**
      * INC - Increment Memory
      */
 
@@ -911,4 +911,76 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xFE))
         assertEquals(6, cpu.mmu.at(0xABCE).value)
     }
+
+    /**
+     * JMP - Jump to Address
+     */
+
+    /**
+     * JSR - Jump Subroutine
+     */
+
+    /**
+     * LDA - Load Accumulator
+     */
+
+    /**
+     * LDX - Load X Register
+     */
+
+    /**
+     * LDY - Load Y Register
+     */
+
+    /**
+     * LSR - Logical Shift Right
+     */
+
+    /**
+     * NOP - No Operation
+     */
+
+    /**
+     * ORA - Logical OR with Accumulator
+     */
+
+    /**
+     * Register Instructions
+     */
+
+    /**
+     * ROL - Rotate Left
+     */
+
+    /**
+     * ROR - Rotate Right
+     */
+
+    /**
+     * RTI - Return from Interrupt
+     */
+
+    /**
+     * RTS - Return from Subroutine
+     */
+
+    /**
+     * SBC - Subtract with Carry
+     */
+
+    /**
+     * STA - Store Accumulator
+     */
+
+    /**
+     * Stack Instructions
+     */
+
+    /**
+     * STX - Store X Register
+     */
+
+    /**
+     * STY - Store Y Register
+     */
 }
