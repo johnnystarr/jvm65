@@ -13,5 +13,5 @@ interface Register {
     fun clear()
     fun and(register: UnsignedRegister): UnsignedByte
     fun or(register: UnsignedRegister): UnsignedByte
-    fun xor(register: UnsignedRegister): UnsignedByte
+    fun eor(register: UnsignedRegister): UnsignedByte
 }

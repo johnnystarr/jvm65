@@ -75,8 +75,8 @@ internal class UnsignedRegisterTest {
     }
 
     @Test
-    fun `xor operation 1 to 1`() {
+    fun `eor operation 1 to 1`() {
         register.value = 1
-        assertEquals(0, register.xor(UnsignedRegister(1)).value)
+        assertEquals(0, register.eor(UnsignedRegister(1)).value)
     }
 }

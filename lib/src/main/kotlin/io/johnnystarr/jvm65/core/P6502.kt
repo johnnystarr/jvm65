@@ -623,7 +623,7 @@ class P6502() : Processor, InstructionSet {
      */
     override fun eor(mode: AddressMode) {
         val byte = decodeAddressModes(mode, "EOR")
-        a = a.xor(byte)
+        a = a.eor(byte)
         updateFlags(a)
     }
 

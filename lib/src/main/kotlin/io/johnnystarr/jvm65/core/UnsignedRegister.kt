@@ -59,10 +59,10 @@ open class UnsignedRegister (
     }
 
     /**
-     * Logical XOR on register
-     * @return [UnsignedRegister] result of XOR operation
+     * Logical EOR on register
+     * @return [UnsignedRegister] result of EOR operation
      */
-    override fun xor(register: UnsignedRegister): UnsignedByte {
+    override fun eor(register: UnsignedRegister): UnsignedByte {
         return (UnsignedByte(value xor register.value))
     }
 }
