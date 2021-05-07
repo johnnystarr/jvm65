@@ -99,25 +99,25 @@ Affects Flags: N Z C - Flag Checks ❌
 
     + add 1 cycle if page boundary crossed
 
-❌ CPX (ComPare X register)
+✅ CPX (ComPare X register)
 ------------------------
 
 Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     CPX #$44      $E0  2   2      ❌
-    Zero Page     CPX $44       $E4  2   3      ❌
-    Absolute      CPX $4400     $EC  3   4      ❌
+    Immediate     CPX #$44      $E0  2   2      ✅
+    Zero Page     CPX $44       $E4  2   3      ✅
+    Absolute      CPX $4400     $EC  3   4      ✅
 
-❌ CPY (ComPare Y register)
+✅ CPY (ComPare Y register)
 ------------------------
 
 Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     CPY #$44      $C0  2   2      ❌
-    Zero Page     CPY $44       $C4  2   3      ❌
-    Absolute      CPY $4400     $CC  3   4      ❌
+    Immediate     CPY #$44      $C0  2   2      ✅
+    Zero Page     CPY $44       $C4  2   3      ✅
+    Absolute      CPY $4400     $CC  3   4      ✅
 
 ❌ DEC (DECrement memory)
 ----------------------

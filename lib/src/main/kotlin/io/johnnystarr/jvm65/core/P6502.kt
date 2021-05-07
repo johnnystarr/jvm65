@@ -246,11 +246,11 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
-     * Provides byte address lookup based on address mode
+     * Provides byte address lookup based on pirmary address modes
      * @param mode [AddressMode] the mode to decode
      * @param instruction [String] the instruction we are presently running
      */
-    override fun decodeAddressMode(mode: AddressMode, instruction: String): UnsignedByte {
+    override fun decodeAddressModes(mode: AddressMode, instruction: String): UnsignedByte {
         return when(mode) {
             AddressMode.IMMEDIATE  -> mmu.immediate()
             AddressMode.ZEROPAGE   -> mmu.zeroPage()
@@ -261,6 +261,20 @@ class P6502() : Processor, InstructionSet {
             AddressMode.INDIRECT_X -> mmu.indirectX()
             AddressMode.INDIRECT_Y -> mmu.indirectY()
             else -> throw IllegalStateException("$instruction: mode $mode does not exist.")
+        }
+    }
+
+    /**
+     * Provides byte address lookup based on CP* address modes
+     * @param mode [AddressMode] the mode to decode
+     * @param instruction [String] the instruction we are presently running
+     */
+    override fun decodeCPAddressModes(mode: AddressMode, instruction: String): UnsignedByte {
+        return when (mode) {
+            AddressMode.IMMEDIATE -> mmu.immediate()
+            AddressMode.ZEROPAGE -> mmu.zeroPage()
+            AddressMode.ABSOLUTE -> mmu.absolute()
+            else -> throw IllegalStateException("CPX mode $mode does not exist.")
         }
     }
 
@@ -346,7 +360,7 @@ class P6502() : Processor, InstructionSet {
      */
     override fun adc(mode: AddressMode) {
         val carry = if (carryFlag) 1 else 0
-        val increment = decodeAddressMode(mode, "ADC").value
+        val increment = decodeAddressModes(mode, "ADC").value
         if (!decimalFlag) {
             a += increment + carry
         } else {
@@ -360,7 +374,7 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun and(mode: AddressMode) {
-        val byte = decodeAddressMode(mode, "AND")
+        val byte = decodeAddressModes(mode, "AND")
         a = a.and(byte)
         updateFlags(a)
     }
@@ -547,7 +561,7 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun cmp(mode: AddressMode) {
-        val byte = decodeAddressMode(mode, "ADC").value
+        val byte = decodeAddressModes(mode, "ADC").value
         val result = a - byte
         updateFlags(result, checkOverflow = true)
     }
@@ -557,7 +571,9 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun cpx(mode: AddressMode) {
-        // implement
+        val byte = decodeCPAddressModes(mode, "CPX")
+        val result = x - byte.value
+        updateFlags(result, checkOverflow = true)
     }
 
     /**
@@ -565,7 +581,9 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun cpy(mode: AddressMode) {
-        // implement
+        val byte = decodeCPAddressModes(mode, "CPY")
+        val result = y - byte.value
+        updateFlags(result, checkOverflow = true)
     }
 
     /**

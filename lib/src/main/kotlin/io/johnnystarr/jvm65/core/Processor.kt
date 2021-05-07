@@ -13,7 +13,8 @@ interface Processor {
     fun fetch(): Register
     fun fetchWord(): Register
     fun fetchWordIndirect(useX: Boolean): Register
-    fun decodeAddressMode(mode: AddressMode, instruction: String): UnsignedByte
+    fun decodeAddressModes(mode: AddressMode, instruction: String): UnsignedByte
+    fun decodeCPAddressModes(mode: AddressMode, instruction: String): UnsignedByte
     fun peek(): Register
     fun bigEndian(msb: UnsignedByte, lsb: UnsignedByte): UnsignedWord
     fun littleEndian(lsb: UnsignedByte, msb: UnsignedByte): UnsignedWord
