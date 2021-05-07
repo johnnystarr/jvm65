@@ -760,4 +760,76 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xCC))
         assertTrue(cpu.zeroFlag)
     }
+
+    @Test
+    fun `0xC6 dec 5-1 zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xC6))
+        assertEquals(4, cpu.mmu.at(1).value)
+    }
+
+    @Test
+    fun `0xD6 dec 5-1 zeropage,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xD6))
+        assertEquals(4, cpu.mmu.at(2).value)
+    }
+
+    @Test
+    fun `0xCE dec 5-1 absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xCE))
+        assertEquals(4, cpu.mmu.at(0xABCD).value)
+    }
+
+    @Test
+    fun `0xDE dec 5-1 absolute,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xDE))
+        assertEquals(4, cpu.mmu.at(0xABCE).value)
+    }
+
+    @Test
+    fun `0xE6 inc 5+1 zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xE6))
+        assertEquals(6, cpu.mmu.at(1).value)
+    }
+
+    @Test
+    fun `0xF6 inc 5+1 zeropage,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xF6))
+        assertEquals(6, cpu.mmu.at(2).value)
+    }
+
+    @Test
+    fun `0xEE inc 5+1 absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xEE))
+        assertEquals(6, cpu.mmu.at(0xABCD).value)
+    }
+
+    @Test
+    fun `0xFE inc 5+1 absolute,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(5))
+        cpu.execute(UnsignedByte(0xFE))
+        assertEquals(6, cpu.mmu.at(0xABCE).value)
+    }
 }
