@@ -82,42 +82,42 @@ Affects Flags: B - Flag Checks ✅
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Implied       BRK           $00  1   7      ✅
 
-❌ CMP (CoMPare accumulator)
+✅ CMP (CoMPare accumulator)
 -------------------------
 
 Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     CMP #$44      $C9  2   2      ❌
-    Zero Page     CMP $44       $C5  2   3      ❌
-    Zero Page,X   CMP $44,X     $D5  2   4      ❌
-    Absolute      CMP $4400     $CD  3   4      ❌
-    Absolute,X    CMP $4400,X   $DD  3   4+     ❌
-    Absolute,Y    CMP $4400,Y   $D9  3   4+     ❌
-    Indirect,X    CMP ($44,X)   $C1  2   6      ❌
-    Indirect,Y    CMP ($44),Y   $D1  2   5+     ❌
+    Immediate     CMP #$44      $C9  2   2      ✅
+    Zero Page     CMP $44       $C5  2   3      ✅
+    Zero Page,X   CMP $44,X     $D5  2   4      ✅
+    Absolute      CMP $4400     $CD  3   4      ✅
+    Absolute,X    CMP $4400,X   $DD  3   4+     ✅
+    Absolute,Y    CMP $4400,Y   $D9  3   4+     ✅
+    Indirect,X    CMP ($44,X)   $C1  2   6      ✅
+    Indirect,Y    CMP ($44),Y   $D1  2   5+     ✅
 
     + add 1 cycle if page boundary crossed
 
-❌ CPX (ComPare X register)
+✅ CPX (ComPare X register)
 ------------------------
 
 Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     CPX #$44      $E0  2   2      ❌
-    Zero Page     CPX $44       $E4  2   3      ❌
-    Absolute      CPX $4400     $EC  3   4      ❌
+    Immediate     CPX #$44      $E0  2   2      ✅
+    Zero Page     CPX $44       $E4  2   3      ✅
+    Absolute      CPX $4400     $EC  3   4      ✅
 
-❌ CPY (ComPare Y register)
+✅ CPY (ComPare Y register)
 ------------------------
 
 Affects Flags: N Z C - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     CPY #$44      $C0  2   2      ❌
-    Zero Page     CPY $44       $C4  2   3      ❌
-    Absolute      CPY $4400     $CC  3   4      ❌
+    Immediate     CPY #$44      $C0  2   2      ✅
+    Zero Page     CPY $44       $C4  2   3      ✅
+    Absolute      CPY $4400     $CC  3   4      ✅
 
 ❌ DEC (DECrement memory)
 ----------------------
