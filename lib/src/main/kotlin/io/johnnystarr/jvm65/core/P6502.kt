@@ -622,7 +622,9 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun eor(mode: AddressMode) {
-        // implement
+        val byte = decodeAddressModes(mode, "EOR")
+        a = a.xor(byte)
+        updateFlags(a)
     }
 
     /**

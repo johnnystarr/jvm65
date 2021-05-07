@@ -12,6 +12,10 @@ internal class InstructionSetTest {
         cpu = P6502()
     }
 
+    /**
+     * ADC - Add with Carry
+     */
+
     @Test
     fun `0x69 adc 1 + 1 immediate`() {
         cpu.a.value = 1
@@ -186,6 +190,10 @@ internal class InstructionSetTest {
         assertEquals(3, cpu.a.value)
     }
 
+    /**
+     * AND - Logical AND
+     */
+
     @Test
     fun `0x29 and 1 with 1 immediate`() {
         cpu.a.value = 1
@@ -352,6 +360,10 @@ internal class InstructionSetTest {
         assertEquals(0, cpu.a.value)
     }
 
+    /**
+     * ASL - Arithmetic Shift Left
+     */
+
     @Test
     fun `0x0A asl 1 accumulator`() {
         cpu.a.value = 1
@@ -394,6 +406,10 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x1E))
         assertEquals(2, cpu.mmu.at(0xABCE).value)
     }
+
+    /**
+     * Flag Operations
+     */
 
     @Test
     fun `0x18 clear carry flag`() {
@@ -444,6 +460,10 @@ internal class InstructionSetTest {
         assertTrue(cpu.decimalFlag)
     }
 
+    /**
+     * BIT Testing
+     */
+
     @Test
     fun `0x24 bit test 1 and 1 zeropage`() {
         cpu.a.value = 1
@@ -481,6 +501,10 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0x2C))
         assertTrue(cpu.zeroFlag)
     }
+
+    /**
+     * Bxx - Branch Operations
+     */
 
     @Test
     fun `0x10 branch on plus (forward 4 bytes)`() {
@@ -618,11 +642,19 @@ internal class InstructionSetTest {
         assertEquals(6, cpu.pc.value)
     }
 
+    /**
+     * BRK - Break Operation
+     */
+
     @Test
     fun `0x00 break execution`() {
         cpu.execute(UnsignedByte(0x00))
         assertTrue(cpu.breakFlag)
     }
+
+    /**
+     * CMP - Compare with Accumulator
+     */
 
     @Test
     fun `0xC9 cmp 1 with 1 immediate`() {
@@ -707,6 +739,10 @@ internal class InstructionSetTest {
         assertTrue(cpu.zeroFlag)
     }
 
+    /**
+     * CPX - Compare X
+     */
+
     @Test
     fun `0xE0 cpx 1 with 1 immediate`() {
         cpu.x.value = 1
@@ -734,6 +770,10 @@ internal class InstructionSetTest {
         assertTrue(cpu.zeroFlag)
     }
 
+    /**
+     * CPY - Compare Y
+     */
+
     @Test
     fun `0xC0 cpy 1 with 1 immediate`() {
         cpu.y.value = 1
@@ -760,6 +800,10 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xCC))
         assertTrue(cpu.zeroFlag)
     }
+
+    /**
+     * DEC - Decrement Memory
+     */
 
     @Test
     fun `0xC6 dec 5-1 zeropage`() {
@@ -796,6 +840,22 @@ internal class InstructionSetTest {
         cpu.execute(UnsignedByte(0xDE))
         assertEquals(4, cpu.mmu.at(0xABCE).value)
     }
+
+    /**
+     * EOR - Exclusive OR Operations
+     */
+
+    @Test
+    fun `0x49 1 eor 1 = 0 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x49))
+        assertEquals(0, cpu.a.value)
+    }
+
+    /**
+     * INC - Increment Memory
+     */
 
     @Test
     fun `0xE6 inc 5+1 zeropage`() {
