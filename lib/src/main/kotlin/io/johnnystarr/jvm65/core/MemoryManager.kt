@@ -21,6 +21,7 @@ interface MemoryManager {
     fun absolute(): Register
     fun absoluteX(): Register
     fun absoluteY(): Register
+    fun indirect(): Register
     fun indirectX(): Register
     fun indirectY(): Register
 }

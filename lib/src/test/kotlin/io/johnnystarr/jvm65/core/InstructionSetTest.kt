@@ -972,6 +972,24 @@ internal class InstructionSetTest {
      * JMP - Jump to Address
      */
 
+    @Test
+    fun `0x4C jmp absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x4C))
+        assertEquals(0xABCD, cpu.pc.value)
+    }
+
+    @Test
+    fun `0x6C jmp (indirect)`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(0xCE))
+        cpu.mmu.put(0xABCE, UnsignedByte(0xFA))
+        cpu.execute(UnsignedByte(0x6C))
+        assertEquals(0xFACE, cpu.pc.value)
+    }
+
     /**
      * JSR - Jump Subroutine
      */
