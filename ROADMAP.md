@@ -174,14 +174,14 @@ Affects Flags: N Z - Flag Checks ❌
     Absolute      INC $4400     $EE  3   6      ✅
     Absolute,X    INC $4400,X   $FE  3   7      ✅
 
-❌ JMP (JuMP)
+✅ JMP (JuMP)
 ----------
 
 Affects Flags: none
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Absolute      JMP $5597     $4C  3   3      ❌
-    Indirect      JMP ($5597)   $6C  3   5      ❌
+    Absolute      JMP $5597     $4C  3   3      ✅
+    Indirect      JMP ($5597)   $6C  3   5      ✅
 
 ❌ JSR (Jump to SubRoutine)
 ------------------------

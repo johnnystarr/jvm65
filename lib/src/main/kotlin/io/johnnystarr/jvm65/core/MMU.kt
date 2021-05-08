@@ -118,6 +118,17 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
     }
 
     /**
+     * Retrieves 16-bit address indirectly, used for JMP($ABCD)
+     * @return [UnsignedWord] indirect word
+     */
+    override fun indirect(): UnsignedWord {
+        val address = cpu.fetchWord().value
+        val lsb = at(address)
+        val msb = at(address + 1)
+        return cpu.littleEndian(lsb, msb)
+    }
+
+    /**
      * Retrieves byte indirectly using a zeropage pointer indexed by X
      * @return [UnsignedByte] byte from indirect 16-bit address indexed by X
      */

@@ -679,7 +679,11 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun jmp(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.ABSOLUTE -> pc.value = fetchWord().value
+            AddressMode.INDIRECT -> pc.value = mmu.indirect().value
+            else -> throw IllegalStateException("JMP mode $mode does not exist.")
+        }
     }
 
     /**
