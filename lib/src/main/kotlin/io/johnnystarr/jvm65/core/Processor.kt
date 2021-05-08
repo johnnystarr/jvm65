@@ -22,4 +22,5 @@ interface Processor {
     fun updateFlags(byte: UnsignedByte, checkOverflow: Boolean)
     fun updateFlags(byte: UnsignedByte)
     fun branch(offset: UnsignedByte)
+    fun carryToInt(): Int
 }

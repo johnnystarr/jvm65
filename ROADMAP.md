@@ -257,20 +257,20 @@ Affects Flags: none
     MODE           SYNTAX       HEX LEN TIM  [Status]
     Implied       NOP           $EA  1   2      ✅
 
-❌ ORA (bitwise OR with Accumulator)
+✅ ORA (bitwise OR with Accumulator)
 ---------------------------------
 
 Affects Flags: N Z - Flag Checks ❌
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     ORA #$44      $09  2   2      ❌
-    Zero Page     ORA $44       $05  2   3      ❌
-    Zero Page,X   ORA $44,X     $15  2   4      ❌
-    Absolute      ORA $4400     $0D  3   4      ❌
-    Absolute,X    ORA $4400,X   $1D  3   4+     ❌
-    Absolute,Y    ORA $4400,Y   $19  3   4+     ❌
-    Indirect,X    ORA ($44,X)   $01  2   6      ❌
-    Indirect,Y    ORA ($44),Y   $11  2   5+     ❌
+    Immediate     ORA #$44      $09  2   2      ✅
+    Zero Page     ORA $44       $05  2   3      ✅
+    Zero Page,X   ORA $44,X     $15  2   4      ✅
+    Absolute      ORA $4400     $0D  3   4      ✅
+    Absolute,X    ORA $4400,X   $1D  3   4+     ✅
+    Absolute,Y    ORA $4400,Y   $19  3   4+     ✅
+    Indirect,X    ORA ($44,X)   $01  2   6      ✅
+    Indirect,Y    ORA ($44),Y   $11  2   5+     ✅
 
     + add 1 cycle if page boundary crossed
 
@@ -334,15 +334,15 @@ Affects Flags: none
 
 Affects Flags: N V Z C - Flag Checks ❌
 
-    MODE           SYNTAX       HEX LEN TIM  [Status]
-    Immediate     SBC #$44      $E9  2   2      ❌
-    Zero Page     SBC $44       $E5  2   3      ❌
-    Zero Page,X   SBC $44,X     $F5  2   4      ❌
-    Absolute      SBC $4400     $ED  3   4      ❌
-    Absolute,X    SBC $4400,X   $FD  3   4+     ❌
-    Absolute,Y    SBC $4400,Y   $F9  3   4+     ❌
-    Indirect,X    SBC ($44,X)   $E1  2   6      ❌
-    Indirect,Y    SBC ($44),Y   $F1  2   5+     ❌
+    MODE           SYNTAX       HEX LEN TIM  [Status] [ BCD ]
+    Immediate     SBC #$44      $E9  2   2      ❌       ❌
+    Zero Page     SBC $44       $E5  2   3      ❌       ❌
+    Zero Page,X   SBC $44,X     $F5  2   4      ❌       ❌
+    Absolute      SBC $4400     $ED  3   4      ❌       ❌
+    Absolute,X    SBC $4400,X   $FD  3   4+     ❌       ❌
+    Absolute,Y    SBC $4400,Y   $F9  3   4+     ❌       ❌
+    Indirect,X    SBC ($44,X)   $E1  2   6      ❌       ❌
+    Indirect,Y    SBC ($44),Y   $F1  2   5+     ❌       ❌
 
     + add 1 cycle if page boundary crossed
 
