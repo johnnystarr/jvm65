@@ -346,19 +346,19 @@ Affects Flags: N V Z C - Flag Checks ❌
 
     + add 1 cycle if page boundary crossed
 
-❌ STA (STore Accumulator)
+✅ STA (STore Accumulator)
 -----------------------
 
 Affects Flags: none
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Zero Page     STA $44       $85  2   3      ❌
-    Zero Page,X   STA $44,X     $95  2   4      ❌
-    Absolute      STA $4400     $8D  3   4      ❌
-    Absolute,X    STA $4400,X   $9D  3   5      ❌
-    Absolute,Y    STA $4400,Y   $99  3   5      ❌
-    Indirect,X    STA ($44,X)   $81  2   6      ❌
-    Indirect,Y    STA ($44),Y   $91  2   6      ❌
+    Zero Page     STA $44       $85  2   3      ✅
+    Zero Page,X   STA $44,X     $95  2   4      ✅
+    Absolute      STA $4400     $8D  3   4      ✅
+    Absolute,X    STA $4400,X   $9D  3   5      ✅
+    Absolute,Y    STA $4400,Y   $99  3   5      ✅
+    Indirect,X    STA ($44,X)   $81  2   6      ✅
+    Indirect,Y    STA ($44),Y   $91  2   6      ✅
 
 ❌ Stack Instructions
 ------------------
@@ -371,22 +371,22 @@ Affects Flags: none
     PHP (PusH Processor status)     $08  3      ❌
     PLP (PuLl Processor status)     $28  4      ❌
 
-❌ STX (STore X register)
+✅ STX (STore X register)
 ----------------------
 
 Affects Flags: none
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Zero Page     STX $44       $86  2   3      ❌
-    Zero Page,Y   STX $44,Y     $96  2   4      ❌
-    Absolute      STX $4400     $8E  3   4      ❌
+    Zero Page     STX $44       $86  2   3      ✅
+    Zero Page,Y   STX $44,Y     $96  2   4      ✅
+    Absolute      STX $4400     $8E  3   4      ✅
 
-❌ STY (STore Y register)
+✅ STY (STore Y register)
 ----------------------
 
 Affects Flags: none
 
     MODE           SYNTAX       HEX LEN TIM  [Status]
-    Zero Page     STY $44       $84  2   3      ❌
-    Zero Page,X   STY $44,X     $94  2   4      ❌
-    Absolute      STY $4400     $8C  3   4      ❌
+    Zero Page     STY $44       $84  2   3      ✅
+    Zero Page,X   STY $44,X     $94  2   4      ✅
+    Absolute      STY $4400     $8C  3   4      ✅
