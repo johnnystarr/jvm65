@@ -217,8 +217,8 @@ class P6502() : Processor, InstructionSet {
      * @return [UnsignedByte] the byte the PC is pointing to before step
      */
     override fun fetch(): UnsignedByte {
-        val current = this.mmu.at(this.pc.value)
-        this.pc.inc()
+        val current = mmu.at(pc.value)
+        pc.inc()
         return current
     }
 
@@ -238,7 +238,7 @@ class P6502() : Processor, InstructionSet {
      * @return [UnsignedWord] big endian word of both bytes
      */
     override fun fetchWordIndirect(useX: Boolean): UnsignedWord {
-        val xIndex = if (useX) this.x.value else 0
+        val xIndex = if (useX) x.value else 0
         val pointer = fetch() + xIndex
         val msb = mmu.at(pointer.value)
         val lsb = mmu.at(pointer.value + 1)
@@ -274,7 +274,7 @@ class P6502() : Processor, InstructionSet {
             AddressMode.IMMEDIATE -> mmu.immediate()
             AddressMode.ZEROPAGE -> mmu.zeroPage()
             AddressMode.ABSOLUTE -> mmu.absolute()
-            else -> throw IllegalStateException("CPX mode $mode does not exist.")
+            else -> throw IllegalStateException("$instruction mode $mode does not exist.")
         }
     }
 
@@ -283,7 +283,7 @@ class P6502() : Processor, InstructionSet {
      * @return [UnsignedByte] the byte that is next in line for fetching
      */
     override fun peek(): UnsignedByte {
-        return this.mmu.at(this.pc.value + 1)
+        return mmu.at(pc.value + 1)
     }
 
     /**
@@ -704,7 +704,15 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun ldx(mode: AddressMode) {
-        // implement
+        x.value = when (mode) {
+            AddressMode.IMMEDIATE  -> mmu.immediate().value
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value
+            AddressMode.ZEROPAGE_Y -> mmu.zeroPageY().value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value
+            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value
+            else -> throw IllegalStateException("LDX mode $mode does note exist.")
+        }
+        updateFlags(x)
     }
 
     /**
@@ -712,7 +720,15 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun ldy(mode: AddressMode) {
-        // implement
+        y.value = when (mode) {
+            AddressMode.IMMEDIATE  -> mmu.immediate().value
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageY().value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value
+            AddressMode.ABSOLUTE_X -> mmu.absoluteY().value
+            else -> throw IllegalStateException("LDY mode $mode does note exist.")
+        }
+        updateFlags(y)
     }
 
     /**

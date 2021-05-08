@@ -86,6 +86,14 @@ class MMU(size: Int, var cpu: P6502) : MemoryManager {
     }
 
     /**
+     * Retrieves byte at zeropage address offset by Y
+     * @return [UnsignedByte] byte from zeropage address offset by y
+     */
+    override fun zeroPageY(): UnsignedByte {
+        return atY(cpu.fetch().value)
+    }
+
+    /**
      * Retrieves byte at absolute 16-bit address
      * @return [UnsignedByte] byte from absolute 16-bit address
      */
