@@ -30,7 +30,7 @@ class P6502() : Processor, InstructionSet {
     var mmu = MMU(0xFFFF, this)
 
     // stack
-    var stack = EightBitStack()
+    var stack = EightBitStack(this)
 
     // if we're keeping track of cycles
     var cycles = 0

@@ -9,7 +9,7 @@ package io.johnnystarr.jvm65.core
  *
  * @constructor creates an EightBitStack
  */
-class EightBitStack() : Stack<UnsignedByte> {
+class EightBitStack(var cpu: P6502) : Stack<UnsignedByte> {
 
     override val elements: MutableList<UnsignedByte> = mutableListOf()
 

@@ -10,7 +10,7 @@ internal class EightBitStackTest {
 
     @BeforeEach
     fun setUp() {
-        stack = EightBitStack()
+        stack = EightBitStack(P6502())
     }
 
     @Test
