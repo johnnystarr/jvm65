@@ -744,7 +744,8 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun nop(mode: AddressMode) {
-        // implement
+        if (mode != AddressMode.IMPLIED)
+            throw IllegalStateException("NOP mode $mode does not exist.")
     }
 
     /**
