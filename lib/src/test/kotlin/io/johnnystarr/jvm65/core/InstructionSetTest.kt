@@ -1185,6 +1185,89 @@ internal class InstructionSetTest {
      * ORA - Logical OR with Accumulator
      */
 
+    @Test
+    fun `0x09 1 ora 0 = 1 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x09))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x05 1 ora 0 = 1 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x05))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x15 1 ora 0 = 1 zeropage,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x15))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x0D 1 ora 0 = 1 absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x0D))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x1D 1 ora 0 = 1 absolute,X`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x1D))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x19 1 ora 0 = 1 absolute,Y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x19))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x01 1 ora 0 = 1 ($09, X) indirect x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x01))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0x11 1 ora 0 = 1 ($0A),Y indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x11))
+        assertEquals(1, cpu.a.value)
+    }
+
     /**
      * Register Instructions
      */
@@ -1266,6 +1349,180 @@ internal class InstructionSetTest {
     /**
      * SBC - Subtract with Carry
      */
+
+    @Test
+    fun `0xE9 sbc 1 - 1 immediate`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xE9))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xE9 sbc 2 - 1 - carry immediate`() {
+        cpu.a.value = 2
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xE9))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xE5 sbc 1 - $00 zeropage`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xE5))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xE5 sbc 2 - $00 - carry zeropage`() {
+        cpu.a.value = 2
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xE5))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xF5 sbc 1 - $00,X zeropage`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0B, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xF5))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xF5 sbc 1 - $00,X - carry zeropage`() {
+        cpu.a.value = 2
+        cpu.x.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0B, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xF5))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xED sbc 1 - $ABCD absolute`() {
+        cpu.a.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xED))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xED sbc 2 - $ABCD - carry absolute`() {
+        cpu.a.value = 2
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xED))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xFD sbc 1 - $ABCD,X absolute x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xFD))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xFD sbc 2 - $ABCD,X - carry absolute x`() {
+        cpu.a.value = 2
+        cpu.x.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xFD))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xF9 sbc 1 - $ABCD,Y absolute y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xF9))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xF9 sbc 2 - $ABCD,Y - carry absolute y`() {
+        cpu.a.value = 2
+        cpu.y.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xF9))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xE1 sbc 1 - ($09, X) indirect x`() {
+        cpu.a.value = 1
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xE1))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xE1 sbc 2 - ($09, X) - carry indirect x`() {
+        cpu.a.value = 2
+        cpu.x.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xE1))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xF1 sbc 1 - ($0A),Y indirect y`() {
+        cpu.a.value = 1
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xF1))
+        assertEquals(0, cpu.a.value)
+    }
+
+    @Test
+    fun `0xF1 sbc 2 - ($0A),Y - carry indirect y`() {
+        cpu.a.value = 2
+        cpu.y.value = 1
+        cpu.carryFlag = true
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xF1))
+        assertEquals(0, cpu.a.value)
+    }
 
     /**
      * STA - Store Accumulator

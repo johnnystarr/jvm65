@@ -355,11 +355,19 @@ class P6502() : Processor, InstructionSet {
     }
 
     /**
+     * Returns a 1 or 0 based on carry flag
+     * @return [Int] result
+     */
+    override fun carryToInt(): Int {
+        return if (carryFlag) 1 else 0
+    }
+
+    /**
      * ADC - (ADd with Carry)
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun adc(mode: AddressMode) {
-        val carry = if (carryFlag) 1 else 0
+        val carry = carryToInt()
         val increment = decodeAddressModes(mode, "ADC").value
         if (!decimalFlag) {
             a += increment + carry
@@ -757,7 +765,9 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun ora(mode: AddressMode) {
-        // implement
+        val byte = decodeAddressModes(mode, "ORA")
+        a = a.or(byte)
+        updateFlags(a)
     }
 
     /**
@@ -829,7 +839,14 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun sbc(mode: AddressMode) {
-        // implement
+        val carry = carryToInt()
+        val decrement = decodeAddressModes(mode, "SBC").value
+        if (!decimalFlag) {
+            a -= (decrement + carry)
+        } else {
+            a = a.bcdMinus(decrement, carry)
+        }
+        updateFlags(a, checkOverflow = true)
     }
 
     /**
