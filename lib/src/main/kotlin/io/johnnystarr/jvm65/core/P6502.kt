@@ -866,7 +866,17 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun sta(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value = a.value
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value = a.value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value = a.value
+            AddressMode.ABSOLUTE_X -> mmu.absoluteX().value = a.value
+            AddressMode.ABSOLUTE_Y -> mmu.absoluteY().value = a.value
+            AddressMode.INDIRECT_X -> mmu.indirectX().value = a.value
+            AddressMode.INDIRECT_Y -> mmu.indirectY().value = a.value
+            else -> throw IllegalStateException("STA mode $mode does not exist.")
+        }
+        updateFlags(a)
     }
 
     /**
@@ -874,7 +884,13 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun stx(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value = x.value
+            AddressMode.ZEROPAGE_Y -> mmu.zeroPageY().value = x.value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value = x.value
+            else -> throw IllegalStateException("STX mode $mode does not exist.")
+        }
+        updateFlags(x)
     }
 
     /**
@@ -882,7 +898,13 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun sty(mode: AddressMode) {
-        // implement
+        when (mode) {
+            AddressMode.ZEROPAGE   -> mmu.zeroPage().value = y.value
+            AddressMode.ZEROPAGE_X -> mmu.zeroPageX().value = y.value
+            AddressMode.ABSOLUTE   -> mmu.absolute().value = y.value
+            else -> throw IllegalStateException("STY mode $mode does not exist.")
+        }
+        updateFlags(y)
     }
 
     /**
