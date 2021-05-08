@@ -695,7 +695,8 @@ class P6502() : Processor, InstructionSet {
      * @param mode [AddressMode] the current contextual address mode
      */
     override fun lda(mode: AddressMode) {
-        // implement
+        a.value = decodeAddressModes(mode, "LDA").value
+        updateFlags(a)
     }
 
     /**

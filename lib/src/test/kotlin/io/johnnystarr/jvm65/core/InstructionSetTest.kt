@@ -980,6 +980,81 @@ internal class InstructionSetTest {
      * LDA - Load Accumulator
      */
 
+    @Test
+    fun `0xA9 lda immediate`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA9))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xA5 lda zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA5))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xB5 lda zeropage,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB5))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xAD lda absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xAD))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xBD lda absolute,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xBD))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xB9 lda absolute,Y`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB9))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xA1 lda ($09, X) indirect x`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA1))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xB1 lda ($0A),Y indirect y`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB1))
+        assertEquals(1, cpu.a.value)
+    }
+
     /**
      * LDX - Load X Register
      */

@@ -23,6 +23,10 @@ pr-create: ## Create a Pull Request on 'develop' in Github
 
 pr-merge: ## Merge a Pull Request
 	@gh pr merge --delete-branch
+	@git pull origin main
+
+pr-status: ## Check PR Status
+	@gh pr status
 
 commit: ## Commit changes to Git
 	@printf "Commit Message: "; read message; git add -A; git commit -m "$$message"
