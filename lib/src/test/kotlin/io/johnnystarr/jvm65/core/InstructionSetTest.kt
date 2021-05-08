@@ -980,13 +980,174 @@ internal class InstructionSetTest {
      * LDA - Load Accumulator
      */
 
+    @Test
+    fun `0xA9 lda immediate`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA9))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xA5 lda zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA5))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xB5 lda zeropage,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB5))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xAD lda absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xAD))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xBD lda absolute,X`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xBD))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xB9 lda absolute,Y`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB9))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xA1 lda ($09, X) indirect x`() {
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA1))
+        assertEquals(1, cpu.a.value)
+    }
+
+    @Test
+    fun `0xB1 lda ($0A),Y indirect y`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB1))
+        assertEquals(1, cpu.a.value)
+    }
+
     /**
      * LDX - Load X Register
      */
 
+    @Test
+    fun `0xA2 ldx immediate`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA2))
+        assertEquals(1, cpu.x.value)
+    }
+
+    @Test
+    fun `0xA6 ldx zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA6))
+        assertEquals(1, cpu.x.value)
+    }
+
+    @Test
+    fun `0xB6 ldx zeropage,Y`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB6))
+        assertEquals(1, cpu.x.value)
+    }
+
+    @Test
+    fun `0xAE ldx absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xAE))
+        assertEquals(1, cpu.x.value)
+    }
+
+    @Test
+    fun `0xBE ldx absolute,Y`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xBE))
+        assertEquals(1, cpu.x.value)
+    }
+
     /**
      * LDY - Load Y Register
      */
+
+    @Test
+    fun `0xA0 ldy immediate`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA0))
+        assertEquals(1, cpu.y.value)
+    }
+
+    @Test
+    fun `0xA4 ldy zeropage`() {
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(1, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xA4))
+        assertEquals(1, cpu.y.value)
+    }
+
+    @Test
+    fun `0xB4 ldy zeropage,X`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.mmu.put(2, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xB4))
+        assertEquals(1, cpu.y.value)
+    }
+
+    @Test
+    fun `0xAC ldy absolute`() {
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCD, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xAC))
+        assertEquals(1, cpu.y.value)
+    }
+
+    @Test
+    fun `0xBC ldy absolute,X`() {
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.mmu.put(0xABCE, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0xBC))
+        assertEquals(1, cpu.y.value)
+    }
 
     /**
      * LSR - Logical Shift Right
@@ -995,6 +1156,12 @@ internal class InstructionSetTest {
     /**
      * NOP - No Operation
      */
+
+    @Test
+    fun `0xEA nop`() {
+        cpu.execute(UnsignedByte(0xEA))
+        assertTrue(true)
+    }
 
     /**
      * ORA - Logical OR with Accumulator
