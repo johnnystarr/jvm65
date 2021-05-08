@@ -1253,6 +1253,74 @@ internal class InstructionSetTest {
      * STA - Store Accumulator
      */
 
+    @Test
+    fun `0x85 sta zeropage`() {
+        cpu.a.value = 0x0A
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x85))
+        assertEquals(0x0A, cpu.mmu.at(1).value)
+    }
+
+    @Test
+    fun `0x95 sta zeropage,X`() {
+        cpu.a.value = 0x0A
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x95))
+        assertEquals(0x0A, cpu.mmu.at(2).value)
+    }
+
+    @Test
+    fun `0x8D sta absolute`() {
+        cpu.a.value = 0x0A
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x8D))
+        assertEquals(0x0A, cpu.mmu.at(0xABCD).value)
+    }
+
+    @Test
+    fun `0x9D sta absolute,X`() {
+        cpu.a.value = 0x0A
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x9D))
+        assertEquals(0x0A, cpu.mmu.at(0xABCE).value)
+    }
+
+    @Test
+    fun `0x99 sta absolute,Y`() {
+        cpu.a.value = 0x0A
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x99))
+        assertEquals(0x0A, cpu.mmu.at(0xABCE).value)
+    }
+
+    @Test
+    fun `0x81 sta ($09, X) indirect x`() {
+        cpu.a.value = 0x0A
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x09))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x81))
+        assertEquals(0x0A, cpu.mmu.at(0xABCD).value)
+    }
+
+    @Test
+    fun `0x91 sta ($0A),Y indirect y`() {
+        cpu.a.value = 0x0A
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(0x0A))
+        cpu.mmu.put(0x0A, UnsignedByte(0xCD))
+        cpu.mmu.put(0x0B, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x91))
+        assertEquals(0x0A, cpu.mmu.at(0xABCE).value)
+    }
+
     /**
      * Stack Instructions
      */
@@ -1261,7 +1329,59 @@ internal class InstructionSetTest {
      * STX - Store X Register
      */
 
+    @Test
+    fun `0x86 stx zeropage`() {
+        cpu.x.value = 0x0A
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x86))
+        assertEquals(0x0A, cpu.mmu.at(1).value)
+    }
+
+    @Test
+    fun `0x96 stx zeropage,Y`() {
+        cpu.x.value = 0x0A
+        cpu.y.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x96))
+        assertEquals(0x0A, cpu.mmu.at(2).value)
+    }
+
+    @Test
+    fun `0x8E stx absolute`() {
+        cpu.x.value = 0x0A
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x8E))
+        assertEquals(0x0A, cpu.mmu.at(0xABCD).value)
+    }
+
     /**
      * STY - Store Y Register
      */
+
+    @Test
+    fun `0x84 sty zeropage`() {
+        cpu.y.value = 0x0A
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x84))
+        assertEquals(0x0A, cpu.mmu.at(1).value)
+    }
+
+    @Test
+    fun `0x94 sty zeropage,X`() {
+        cpu.y.value = 0x0A
+        cpu.x.value = 1
+        cpu.mmu.put(0, UnsignedByte(1))
+        cpu.execute(UnsignedByte(0x94))
+        assertEquals(0x0A, cpu.mmu.at(2).value)
+    }
+
+    @Test
+    fun `0x8C sty absolute`() {
+        cpu.y.value = 0x0A
+        cpu.mmu.put(0, UnsignedByte(0xCD))
+        cpu.mmu.put(1, UnsignedByte(0xAB))
+        cpu.execute(UnsignedByte(0x8C))
+        assertEquals(0x0A, cpu.mmu.at(0xABCD).value)
+    }
 }
