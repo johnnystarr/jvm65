@@ -1,4 +1,26 @@
 
+<a name="v0.1.8"></a>
+## [v0.1.8](https://github.com/johnnystarr/jvm65/compare/v0.1.7...v0.1.8)
+
+> 2021-05-07
+
+### Redux
+
+* including ld(x/y) instructions
+
+### Pull Requests
+
+* Merge pull request [#29](https://github.com/johnnystarr/jvm65/issues/29) from johnnystarr/feature/load-instructions
+* Merge pull request [#28](https://github.com/johnnystarr/jvm65/issues/28) from johnnystarr/feature/register-instructions
+* Merge pull request [#27](https://github.com/johnnystarr/jvm65/issues/27) from johnnystarr/feature/eor-instructions
+* Merge pull request [#26](https://github.com/johnnystarr/jvm65/issues/26) from johnnystarr/feature/dec-and-inc-memory-instructions
+* Merge pull request [#25](https://github.com/johnnystarr/jvm65/issues/25) from johnnystarr/feature/cmp-compare-instructions
+* Merge pull request [#24](https://github.com/johnnystarr/jvm65/issues/24) from johnnystarr/feature/implementing-more-instructions
+* Merge pull request [#23](https://github.com/johnnystarr/jvm65/issues/23) from johnnystarr/feature/refactoring-register-states
+* Merge pull request [#22](https://github.com/johnnystarr/jvm65/issues/22) from johnnystarr/feature/need-to-start-setting-flags-after-operations
+* Merge pull request [#21](https://github.com/johnnystarr/jvm65/issues/21) from johnnystarr/feature/easy-wins-with-flags
+
+
 <a name="v0.1.7"></a>
 ## [v0.1.7](https://github.com/johnnystarr/jvm65/compare/v0.1.6...v0.1.7)
 
